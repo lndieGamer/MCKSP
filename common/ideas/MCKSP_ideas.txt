@@ -1,7 +1,7 @@
 ideas = {
     country = {
         something_maybe_happened_idea = {
-            picture = chi_war_of_resistance
+            picture = something_happening_1
 
             modifier = {
                 stability_factor = -0.05
@@ -17,8 +17,7 @@ ideas = {
 
         }
         something_happened_idea = {
-            picture = chi_war_of_resistance2
-
+            picture = something_happening_3
             modifier = {
                 stability_factor = -0.1
                 political_power_factor = -0.15
@@ -29,7 +28,7 @@ ideas = {
             }
         }
         something_definetely_happened_idea = {
-            picture = chi_war_of_resistance3
+            picture = something_happening_3
 
             modifier = {
                 stability_factor = -0.15
