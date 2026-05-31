@@ -1,0 +1,29 @@
+﻿l_english:
+# MCKSP Mod - English party names localisation
+
+ mcksp_uds_party: "UDS"
+ mcksp_uds_party_long: "Union of Democratic Socialism"
+
+ mcksp_lcl_party: "LCL"
+ mcksp_lcl_party_long: "League of Civil Liberties"
+
+ mcksp_cdu_party: "CDU"
+ mcksp_cdu_party_long: "Christian Democratic Union"
+
+ mcksp_neu_party: "NEU"
+ mcksp_neu_party_long: "New Economic Union"
+
+ mcksp_boc_party: "BoC"
+ mcksp_boc_party_long: "Bloc of Consensus"
+
+ mcksp_usp_party: "USP"
+ mcksp_usp_party_long: "Union of Scientific Progress"
+
+ mcksp_uso_party: "USO"
+ mcksp_uso_party_long: "Union of State Order"
+
+ mcksp_rsu_party: "RSU"
+ mcksp_rsu_party_long: "Russian Sovereign Union"
+
+ mcksp_to_party: "TO"
+ mcksp_to_party_long: "Technocratic Order"

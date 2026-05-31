@@ -1,33 +1,40 @@
 ﻿l_english:
 # MCKSP Mod - English ideologies localisation file
 
-# democratic group sub-ideologies
- mcksp_social_liberalism: "Social Liberalism"
- mcksp_social_liberalism_desc: "A combination of bourgeois-democratic principles with egalitarian ones. Secular humanism centered on personal freedom and the cult of self-improvement."
+# 9 MCKSP groups (top-level) + their placeholder types.
 
- mcksp_liberal_humanism: "Liberal Humanism"
- mcksp_liberal_humanism_desc: "Cultural liberalism with an emphasis on art, aesthetics, and individual dignity. Politics as a function of ethics, not the other way around."
+ mcksp_social_liberalism: "UDS"
+ mcksp_social_liberalism_desc: "Union of Democratic Socialism. Pacifist social liberalism: a combination of bourgeois-democratic principles with egalitarian ones, secular humanism, unconditional rejection of war."
+ mcksp_social_liberalism_t: "UDS"
 
- mcksp_christian_democracy: "Christian Democracy"
- mcksp_christian_democracy_desc: "A centrist stance grounded in traditional values and social solidarity. Anti-war conservatism."
+ mcksp_liberal_humanism: "LCL"
+ mcksp_liberal_humanism_desc: "League of Civil Liberties. Liberal humanism with emphasis on culture, art, and individual dignity. Politics as a function of ethics."
+ mcksp_liberal_humanism_t: "LCL"
 
-# communism group sub-ideologies
- mcksp_market_socialism: "Market Socialism"
- mcksp_market_socialism_desc: "The Bukharinist path: NEP without rollback, cooperation and cost-accounting while preserving public ownership of the means of production."
+ mcksp_christian_democracy: "CDU"
+ mcksp_christian_democracy_desc: "Christian Democratic Union. A centrist stance grounded in traditional values and social solidarity. Anti-war conservatism."
+ mcksp_christian_democracy_t: "CDU"
 
-# neutrality group sub-ideologies
- mcksp_pragmatic_syncretism: "Pragmatic Syncretism"
- mcksp_pragmatic_syncretism_desc: "Coalitional realism without ideological rigidity. Power as the art of compromise between extremes."
+ mcksp_market_socialism: "NEU"
+ mcksp_market_socialism_desc: "New Economic Union. The Bukharinist path — NEP without rollback, cooperation and cost-accounting while preserving public ownership."
+ mcksp_market_socialism_t: "NEU"
 
- mcksp_scientific_progressism: "Scientific-Industrial Progressism"
- mcksp_scientific_progressism_desc: "A course of accelerated technological development — aviation, electronics, space exploration. Politics subordinated to scientific and technical progress."
+ mcksp_pragmatic_syncretism: "BoC"
+ mcksp_pragmatic_syncretism_desc: "Bloc of Consensus. Pragmatic syncretism without ideological rigidity. Power as the art of compromise between extremes."
+ mcksp_pragmatic_syncretism_t: "BoC"
 
- mcksp_statist_technocratism: "Statist Technocratism"
- mcksp_statist_technocratism_desc: "The primacy of the state over the individual, governance through a corps of specialists. Security and order above personal freedoms."
+ mcksp_scientific_progressism: "USP"
+ mcksp_scientific_progressism_desc: "Union of Scientific Progress. A course of accelerated technological development — aviation, electronics, space exploration."
+ mcksp_scientific_progressism_t: "USP"
 
- mcksp_national_conservatism: "Sovereigntist National Conservatism"
- mcksp_national_conservatism_desc: "Strong sovereign power, tradition, hierarchy. Orthodoxy, army, people — the three pillars of national revival."
+ mcksp_statist_technocratism: "USO"
+ mcksp_statist_technocratism_desc: "Union of State Order. The primacy of the state over the individual, governance through a corps of specialists. Security and order above personal freedoms."
+ mcksp_statist_technocratism_t: "USO"
 
-# fascism group sub-ideologies (dark finale)
- mcksp_technocratic_order: "Technocratic Order"
- mcksp_technocratic_order_desc: "A degenerated form of statist technocratism: a totalitarian dictatorship of an engineering corps, with unconditional supremacy of the 'competent' over the masses."
+ mcksp_national_conservatism: "RSU"
+ mcksp_national_conservatism_desc: "Russian Sovereign Union. Strong sovereign power, tradition, hierarchy. Orthodoxy, army, people — the three pillars of national revival."
+ mcksp_national_conservatism_t: "RSU"
+
+ mcksp_technocratic_order: "TO"
+ mcksp_technocratic_order_desc: "Technocratic Order. A degenerated form of statist technocratism: a totalitarian dictatorship of an engineering corps, with unconditional supremacy of the 'competent' over the masses."
+ mcksp_technocratic_order_t: "TO"

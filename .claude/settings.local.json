@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rm -fv interface/*.tmp.*)",
+      "Bash(rmdir interface *)",
+      "Bash(rm -v interface/countrypoliticsview.gui)"
+    ]
+  }
+}

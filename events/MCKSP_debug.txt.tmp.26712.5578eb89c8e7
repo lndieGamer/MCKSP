@@ -1,0 +1,105 @@
+add_namespace = mcksp_debug
+
+# DEBUG: democratic + communism подыдеологии. Запуск: event mcksp_debug.1
+country_event = {
+	id = mcksp_debug.1
+	title = mcksp_debug.1.t
+	desc = mcksp_debug.1.desc
+
+	is_triggered_only = yes
+
+	option = {
+		name = mcksp_debug.1.a
+		set_politics = { ruling_party = democratic elections_allowed = no }
+		set_party_name = { ideology = democratic long_name = mcksp_uds_party_long name = mcksp_uds_party }
+		promote_character = SOV_nikita_iakushin
+	}
+	option = {
+		name = mcksp_debug.1.b
+		set_politics = { ruling_party = democratic elections_allowed = no }
+		set_party_name = { ideology = democratic long_name = mcksp_lcl_party_long name = mcksp_lcl_party }
+		promote_character = SOV_arseny_pavlov
+	}
+	option = {
+		name = mcksp_debug.1.c
+		set_politics = { ruling_party = democratic elections_allowed = no }
+		set_party_name = { ideology = democratic long_name = mcksp_cdu_party_long name = mcksp_cdu_party }
+		promote_character = SOV_stepan_pavlov
+	}
+	option = {
+		name = mcksp_debug.1.d
+		set_politics = { ruling_party = communism elections_allowed = no }
+		set_party_name = { ideology = communism long_name = mcksp_neu_party_long name = mcksp_neu_party }
+		promote_character = SOV_demokrit_ikonomidi
+	}
+	option = {
+		name = mcksp_debug.1.cancel
+	}
+}
+
+# DEBUG: neutrality подыдеологии (4 партии). Запуск: event mcksp_debug.2
+country_event = {
+	id = mcksp_debug.2
+	title = mcksp_debug.2.t
+	desc = mcksp_debug.2.desc
+
+	is_triggered_only = yes
+
+	option = {
+		name = mcksp_debug.2.a
+		set_politics = { ruling_party = neutrality elections_allowed = no }
+		set_party_name = { ideology = neutrality long_name = mcksp_boc_party_long name = mcksp_boc_party }
+		promote_character = SOV_gleb_rychkov
+	}
+	option = {
+		name = mcksp_debug.2.b
+		set_politics = { ruling_party = neutrality elections_allowed = no }
+		set_party_name = { ideology = neutrality long_name = mcksp_usp_party_long name = mcksp_usp_party }
+		promote_character = SOV_ivan_danchenko
+	}
+	option = {
+		name = mcksp_debug.2.c
+		set_politics = { ruling_party = neutrality elections_allowed = no }
+		set_party_name = { ideology = neutrality long_name = mcksp_uso_party_long name = mcksp_uso_party }
+		promote_character = SOV_ilya_popov
+	}
+	option = {
+		name = mcksp_debug.2.d
+		set_politics = { ruling_party = neutrality elections_allowed = no }
+		set_party_name = { ideology = neutrality long_name = mcksp_rsu_party_long name = mcksp_rsu_party }
+		promote_character = SOV_evgeny_okeanov
+	}
+	option = {
+		name = mcksp_debug.2.cancel
+	}
+}
+
+# DEBUG: утилиты — флаги, тёмный финал. Запуск: event mcksp_debug.3
+country_event = {
+	id = mcksp_debug.3
+	title = mcksp_debug.3.t
+	desc = mcksp_debug.3.desc
+
+	is_triggered_only = yes
+
+	option = {
+		name = mcksp_debug.3.toggle_flag
+		if = {
+			limit = { has_country_flag = guests_active }
+			clr_country_flag = guests_active
+		}
+		else = {
+			set_country_flag = guests_active
+			activate_guests_system = yes
+		}
+	}
+	option = {
+		name = mcksp_debug.3.to
+		set_politics = { ruling_party = fascism elections_allowed = no }
+		set_party_name = { ideology = fascism long_name = mcksp_to_party_long name = mcksp_to_party }
+		set_country_leader_ideology = mcksp_technocratic_order
+	}
+	option = {
+		name = mcksp_debug.3.cancel
+	}
+}

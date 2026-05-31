@@ -1,0 +1,32 @@
+# Scripted effects for MCKSP political arc.
+#
+# Вызывается из interrogation_event.1.b (опция "Использовать их знания").
+#  - Перераспределяет popularity: ВКП(б) -> 80%, 8 партий по 2-3% (сумма 100).
+#    Ванильный pieChartType и parties_grid автоматически рисуют 9 секторов/строк.
+#  - Засевает параллельные переменные p_<name> для логики коалиций (шаг 5).
+#
+# Рекрут персонажей в страну вынесен в on_actions/MCKSP_on_actions.txt
+# (on_startup), потому что recruit_character не работает в scripted_effects.
+
+activate_guests_system = {
+	set_popularities = {
+		communism = 80
+		mcksp_social_liberalism = 3    # СДС — Никита
+		mcksp_liberal_humanism = 2     # ЛГС — Арсений
+		mcksp_christian_democracy = 2  # ХДС — Степан
+		mcksp_market_socialism = 3     # НЭС — Демокрит
+		mcksp_pragmatic_syncretism = 2 # БС — Глеб
+		mcksp_scientific_progressism = 3 # СНП — Иван
+		mcksp_statist_technocratism = 3 # СГП — Илья
+		mcksp_national_conservatism = 2 # РДС — Евгений
+	}
+
+	set_variable = { p_nikita = 3 }
+	set_variable = { p_arseny = 2 }
+	set_variable = { p_stepan = 2 }
+	set_variable = { p_demokrit = 3 }
+	set_variable = { p_gleb = 2 }
+	set_variable = { p_ivan = 3 }
+	set_variable = { p_ilya = 3 }
+	set_variable = { p_evgeny = 2 }
+}

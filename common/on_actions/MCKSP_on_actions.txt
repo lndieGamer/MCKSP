@@ -1,0 +1,7 @@
+# MCKSP on_actions — пусто.
+# Рекрут персонажей вынесен в history/countries/SOV - Soviet union.txt
+# (override ванильного файла), чтобы лидеры назначались ДО первого рендера
+# parties_grid — иначе engine успевает создать минорных лидеров.
+
+on_actions = {
+}

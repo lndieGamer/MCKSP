@@ -1,0 +1,100 @@
+add_namespace = mcksp_debug
+
+# DEBUG: переключение СССР на одну из наших 9 партий-групп.
+# Каждая партия — отдельная группа идеологий, поэтому set_politics напрямую
+# использует имя группы (mcksp_social_liberalism и т.д.), и promote_character
+# назначает нашего лидера.
+# Запуск: event mcksp_debug.1
+
+country_event = {
+	id = mcksp_debug.1
+	title = mcksp_debug.1.t
+	desc = mcksp_debug.1.desc
+
+	is_triggered_only = yes
+
+	option = {
+		name = mcksp_debug.1.a
+		set_politics = { ruling_party = mcksp_social_liberalism elections_allowed = no }
+		promote_character = SOV_nikita_iakushin
+	}
+	option = {
+		name = mcksp_debug.1.b
+		set_politics = { ruling_party = mcksp_liberal_humanism elections_allowed = no }
+		promote_character = SOV_arseny_pavlov
+	}
+	option = {
+		name = mcksp_debug.1.c
+		set_politics = { ruling_party = mcksp_christian_democracy elections_allowed = no }
+		promote_character = SOV_stepan_pavlov
+	}
+	option = {
+		name = mcksp_debug.1.d
+		set_politics = { ruling_party = mcksp_market_socialism elections_allowed = no }
+		promote_character = SOV_demokrit_ikonomidi
+	}
+	option = {
+		name = mcksp_debug.1.cancel
+	}
+}
+
+# DEBUG: neutrality-like подыдеологии. Запуск: event mcksp_debug.2
+country_event = {
+	id = mcksp_debug.2
+	title = mcksp_debug.2.t
+	desc = mcksp_debug.2.desc
+
+	is_triggered_only = yes
+
+	option = {
+		name = mcksp_debug.2.a
+		set_politics = { ruling_party = mcksp_pragmatic_syncretism elections_allowed = no }
+		promote_character = SOV_gleb_rychkov
+	}
+	option = {
+		name = mcksp_debug.2.b
+		set_politics = { ruling_party = mcksp_scientific_progressism elections_allowed = no }
+		promote_character = SOV_ivan_danchenko
+	}
+	option = {
+		name = mcksp_debug.2.c
+		set_politics = { ruling_party = mcksp_statist_technocratism elections_allowed = no }
+		promote_character = SOV_ilya_popov
+	}
+	option = {
+		name = mcksp_debug.2.d
+		set_politics = { ruling_party = mcksp_national_conservatism elections_allowed = no }
+		promote_character = SOV_evgeny_okeanov
+	}
+	option = {
+		name = mcksp_debug.2.cancel
+	}
+}
+
+# DEBUG: утилиты — флаги, тёмный финал. Запуск: event mcksp_debug.3
+country_event = {
+	id = mcksp_debug.3
+	title = mcksp_debug.3.t
+	desc = mcksp_debug.3.desc
+
+	is_triggered_only = yes
+
+	option = {
+		name = mcksp_debug.3.toggle_flag
+		if = {
+			limit = { has_country_flag = guests_active }
+			clr_country_flag = guests_active
+		}
+		else = {
+			set_country_flag = guests_active
+			activate_guests_system = yes
+		}
+	}
+	option = {
+		name = mcksp_debug.3.to
+		set_politics = { ruling_party = mcksp_technocratic_order elections_allowed = no }
+	}
+	option = {
+		name = mcksp_debug.3.cancel
+	}
+}
