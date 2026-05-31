@@ -9,7 +9,7 @@ characters = {
 			}
 		}
 		country_leader = {
-			ideology = mcksp_social_liberalism
+			ideology = mcksp_social_liberalism_t
 			expire = "1965.1.1.1"
 			id = -1
 		}
@@ -24,7 +24,7 @@ characters = {
 			}
 		}
 		country_leader = {
-			ideology = mcksp_liberal_humanism
+			ideology = mcksp_liberal_humanism_t
 			expire = "1965.1.1.1"
 			id = -1
 		}
@@ -39,7 +39,7 @@ characters = {
 			}
 		}
 		country_leader = {
-			ideology = mcksp_christian_democracy
+			ideology = mcksp_christian_democracy_t
 			expire = "1965.1.1.1"
 			id = -1
 		}
@@ -54,7 +54,7 @@ characters = {
 			}
 		}
 		country_leader = {
-			ideology = mcksp_market_socialism
+			ideology = mcksp_market_socialism_t
 			expire = "1965.1.1.1"
 			id = -1
 		}
@@ -69,7 +69,7 @@ characters = {
 			}
 		}
 		country_leader = {
-			ideology = mcksp_pragmatic_syncretism
+			ideology = mcksp_pragmatic_syncretism_t
 			expire = "1965.1.1.1"
 			id = -1
 		}
@@ -84,7 +84,7 @@ characters = {
 			}
 		}
 		country_leader = {
-			ideology = mcksp_scientific_progressism
+			ideology = mcksp_scientific_progressism_t
 			expire = "1965.1.1.1"
 			id = -1
 		}
@@ -99,7 +99,7 @@ characters = {
 			}
 		}
 		country_leader = {
-			ideology = mcksp_statist_technocratism
+			ideology = mcksp_statist_technocratism_t
 			expire = "1965.1.1.1"
 			id = -1
 		}
@@ -114,7 +114,7 @@ characters = {
 			}
 		}
 		country_leader = {
-			ideology = mcksp_national_conservatism
+			ideology = mcksp_national_conservatism_t
 			expire = "1965.1.1.1"
 			id = -1
 		}
