@@ -20,5 +20,4 @@
  mcksp_debug.3.t: "DEBUG: утилиты"
  mcksp_debug.3.desc: "Тоггл флагов и тёмный финал."
  mcksp_debug.3.toggle_flag: "Toggle guests_active (поднять/снять флаг активации арки)"
- mcksp_debug.3.to: "ТО — Технократический орден (fascism, без персонажа)"
  mcksp_debug.3.cancel: "Отмена"

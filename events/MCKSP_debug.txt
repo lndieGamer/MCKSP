@@ -91,10 +91,6 @@ country_event = {
 		}
 	}
 	option = {
-		name = mcksp_debug.3.to
-		set_politics = { ruling_party = mcksp_technocratic_order elections_allowed = no }
-	}
-	option = {
 		name = mcksp_debug.3.cancel
 	}
 }

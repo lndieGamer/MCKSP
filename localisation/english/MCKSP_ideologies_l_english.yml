@@ -35,6 +35,7 @@
  mcksp_national_conservatism_desc: "Russian Sovereign Union. Strong sovereign power, tradition, hierarchy. Orthodoxy, army, people — the three pillars of national revival."
  mcksp_national_conservatism_t: "RSU"
 
+# TO — not a separate group, a dark transformation of RSU via decision.
+# Name kept for use in set_party_name when the transformation activates.
  mcksp_technocratic_order: "TO"
- mcksp_technocratic_order_desc: "Technocratic Order. A degenerated form of statist technocratism: a totalitarian dictatorship of an engineering corps, with unconditional supremacy of the 'competent' over the masses."
- mcksp_technocratic_order_t: "TO"
+ mcksp_technocratic_order_desc: "Technocratic Order. A degenerated form of sovereigntist national conservatism: a totalitarian dictatorship of an engineering corps, with unconditional supremacy of the 'competent' over the masses."

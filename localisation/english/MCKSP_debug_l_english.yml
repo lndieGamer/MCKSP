@@ -20,5 +20,4 @@
  mcksp_debug.3.t: "DEBUG: utilities"
  mcksp_debug.3.desc: "Flag toggles and dark finale."
  mcksp_debug.3.toggle_flag: "Toggle guests_active (raise/clear arc activation flag)"
- mcksp_debug.3.to: "TO — Technocratic Order (fascism, no character)"
  mcksp_debug.3.cancel: "Cancel"

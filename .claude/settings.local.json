@@ -3,7 +3,10 @@
     "allow": [
       "Bash(rm -fv interface/*.tmp.*)",
       "Bash(rmdir interface *)",
-      "Bash(rm -v interface/countrypoliticsview.gui)"
+      "Bash(rm -v interface/countrypoliticsview.gui)",
+      "Bash(rm -v interface/MCKSP_politics.gui common/scripted_guis/MCKSP_politics_visibility.txt)",
+      "Bash(rmdir common/scripted_guis)",
+      "Bash(rm -v interface/MCKSP_politics_overlays.gui common/scripted_guis/MCKSP_politics_visibility.txt)"
     ]
   }
 }
