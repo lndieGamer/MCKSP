@@ -1,0 +1,10 @@
+characters = {
+	# SOV_Nikita_Iakushin = {
+	# 	name = SOV_Nikita_Iakushin
+	# 	portraits = {
+	# 		civilian = {
+	# 			large = GFX
+	# 		}
+	# 	}
+	# }
+}

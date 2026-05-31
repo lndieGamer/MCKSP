@@ -1,0 +1,438 @@
+add_namespace = start_event
+add_namespace = interrogation_event
+add_namespace = introduction_event
+add_namespace = campaign_event
+
+#Группа стартовых ивентов _____________________________________________________
+
+#Первый стартовый ивент
+country_event = {
+	id = start_event.1
+	title = start_event.1.t
+	desc = start_event.1.d
+	picture = GFX_report_event_stalin_02
+
+	trigger = {
+		is_ai = no
+		tag = SOV
+	}
+	mean_time_to_happen = {
+		days = 1
+	}
+	fire_only_once = yes
+
+	option = {
+		name = start_event.1.a
+		add_ideas = something_maybe_happened_idea
+		SOV = { country_event = { days = 14 id = start_event.2 } }
+	}
+}
+
+#Второй стартовый ивент
+country_event = {
+	id = start_event.2
+	title = start_event.2.t
+	desc = start_event.2.d
+	picture = GFX_report_event_generic
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = start_event.2.a
+		add_ideas = something_happened_idea
+		SOV = { country_event = { days = 35 id = start_event.3 } }
+	}
+}
+
+#Третий стартовый ивент
+country_event = {
+	id = start_event.3
+	title = start_event.3.t
+	desc = start_event.3.d
+	picture = GFX_report_event_generic
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = start_event.3.a
+		add_ideas = something_definetely_happened_idea
+		SOV = { country_event = { days = 7 id = interrogation_event.1 } }
+	}
+}
+
+#Ивент допроса
+country_event = {
+	id = interrogation_event.1
+	title = interrogation_event.1.t
+	desc = interrogation_event.1.d
+	picture = GFX_report_event_generic
+
+	is_triggered_only = yes
+	mean_time_to_happen = {
+		days = 1
+	}
+	fire_only_once = yes
+
+	option = {
+		name = interrogation_event.1.a
+		add_manpower = -10
+		remove_ideas = something_definetely_happened_idea
+	}
+	option = {
+		name = interrogation_event.1.b
+		add_ideas = guests_from_future_idea
+		hidden_effect = {
+			SOV = { country_event = { days = 90 id = introduction_event.1 } }
+		}
+	}
+}
+
+#Сюжетный ивент - работа нашей группы в закрытом НИИ
+country_event = {
+	id = introduction_event.1
+	title = introduction_event.1.t
+	desc = introduction_event.1.d
+	picture = GFX_report_event_generic
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = introduction_event.1.a
+		SOV = { country_event = { id = introduction_event.2 } }
+	}
+	option = {
+		name = introduction_event.1.b
+	}
+}
+
+#Сюжетный ивент - досье на Никиту Якушина
+country_event = {
+	id = introduction_event.2
+	title = introduction_event.2.t
+	desc = introduction_event.2.d
+	picture = GFX_report_event_generic
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = introduction_event.2.a
+		SOV = { country_event = { id = introduction_event.3 } }
+	}
+	option = {
+		name = introduction_event.1.b
+	}
+}
+
+#Сюжетный ивент - досье на Илью Поповва
+country_event = {
+	id = introduction_event.3
+	title = introduction_event.3.t
+	desc = introduction_event.3.d
+	picture = GFX_report_event_generic
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = introduction_event.3.a
+		SOV = { country_event = { id = introduction_event.4 } }
+	}
+	option = {
+		name = introduction_event.1.b
+	}
+}
+
+#Сюжетный ивент - досье на Евгения Океанова
+country_event = {
+	id = introduction_event.4
+	title = introduction_event.4.t
+	desc = introduction_event.4.d
+	picture = GFX_report_event_generic
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = introduction_event.4.a
+		SOV = { country_event = { id = introduction_event.5 } }
+	}
+	option = {
+		name = introduction_event.1.b
+	}
+}
+
+#Сюжетный ивент - досье на Степана Павлова
+country_event = {
+	id = introduction_event.5
+	title = introduction_event.5.t
+	desc = introduction_event.5.d
+	picture = GFX_report_event_ARG_rodolfo_ghioldi
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = introduction_event.5.a
+		SOV = { country_event = { id = introduction_event.6 } }
+	}
+	option = {
+		name = introduction_event.1.b
+	}
+}
+
+#Сюжетный ивент - досье на Ивана Данченко
+country_event = {
+	id = introduction_event.6
+	title = introduction_event.6.t
+	desc = introduction_event.6.d
+	picture = GFX_report_event_generic_bombers
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = introduction_event.6.a
+		SOV = { country_event = { id = introduction_event.7 } }
+	}
+	option = {
+		name = introduction_event.1.b
+	}
+}
+
+#Сюжетный ивент - досье на Глеба Рычкова
+country_event = {
+	id = introduction_event.7
+	title = introduction_event.7.t
+	desc = introduction_event.7.d
+	picture = GFX_report_event_generic
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = introduction_event.7.a
+		SOV = { country_event = { id = introduction_event.8 } }
+	}
+	option = {
+		name = introduction_event.1.b
+	}
+}
+
+#Сюжетный ивент - досье на Демокрита Икономиди
+country_event = {
+	id = introduction_event.8
+	title = introduction_event.8.t
+	desc = introduction_event.8.d
+	picture = GFX_report_event_generic
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = introduction_event.8.a
+		SOV = { country_event = { id = introduction_event.9 } }
+	}
+	option = {
+		name = introduction_event.1.b
+	}
+}
+
+#Сюжетный ивент - досье на Арсения Павлова
+country_event = {
+	id = introduction_event.9
+	title = introduction_event.9.t
+	desc = introduction_event.9.d
+	picture = GFX_report_event_generic
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = introduction_event.9.a
+	}
+}
+
+#Группа ивентов - приход к власти _____________________________________________________
+
+#Ивенты решений ______________________________________________________
+
+#Вовлечение армии
+country_event = {
+	id = campaign_event.1
+	title = campaign_event.1.t
+	desc = campaign_event.1.d	
+	picture = GFX_report_event_soviet_purge_officers_01
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = campaign_event.1.a
+		if = {
+			limit = { has_idea = something_definetely_happened_idea }
+			remove_ideas = something_definetely_happened_idea
+			add_ideas = something_happened_idea
+			}
+		else_if = {
+			limit = { has_idea = something_happened_idea }
+			remove_ideas = something_happened_idea
+			add_ideas = something_maybe_happened_idea
+		}
+		else_if = {
+			limit = { has_idea = something_maybe_happened_idea }
+			remove_ideas = something_maybe_happened_idea
+		}
+	}
+}
+
+#Вовлечение НКВД
+country_event = {
+	id = campaign_event.2
+	title = campaign_event.2.t
+	desc = campaign_event.2.d
+	picture = GFX_report_event_soviet_purge_officers_02
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = campaign_event.2.a
+		if = {
+			limit = { has_idea = something_definetely_happened_idea }
+			remove_ideas = something_definetely_happened_idea
+			add_ideas = something_happened_idea
+			}
+		else_if = {
+			limit = { has_idea = something_happened_idea }
+			remove_ideas = something_happened_idea
+			add_ideas = something_maybe_happened_idea
+		}
+		else_if = {
+			limit = { has_idea = something_maybe_happened_idea }
+			remove_ideas = something_maybe_happened_idea
+		}
+	}
+}
+
+#Пропагандистская кампания
+country_event = {
+	id = campaign_event.3
+	title = campaign_event.3.t
+	desc = campaign_event.3.d	
+	picture = GFX_report_event_stalin_propaganda
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = campaign_event.3.a
+		if = {
+			limit = { has_idea = something_definetely_happened_idea }
+			remove_ideas = something_definetely_happened_idea
+			add_ideas = something_maybe_happened_idea
+			}
+		else_if = {
+			limit = { has_idea = something_happened_idea }
+			remove_ideas = something_happened_idea
+			add_ideas = something_maybe_happened_idea
+		}
+		else_if = {
+			limit = { has_idea = something_maybe_happened_idea }
+			remove_ideas = something_maybe_happened_idea
+		}
+	}
+}
+
+#Ивент с рандомным эффектом - хороший исход
+country_event = {
+	id = campaign_event.4
+	title = campaign_event.4.t
+	desc = campaign_event.4.d
+	picture = GFX_report_event_SOV_litvinov_beck
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = campaign_event.4.a
+		if = {
+			limit = { has_idea = something_definetely_happened_idea }
+			remove_ideas = something_definetely_happened_idea
+			add_ideas = something_happened_idea
+			}
+		else_if = {
+			limit = { has_idea = something_happened_idea }
+			remove_ideas = something_happened_idea
+			add_ideas = something_maybe_happened_idea
+		}
+		else_if = {
+			limit = { has_idea = something_maybe_happened_idea }
+			remove_ideas = something_maybe_happened_idea
+		}
+	}
+}
+
+#Ивент с рандомным эффектом - наилучший исход
+country_event = {
+	id = campaign_event.5
+	title = campaign_event.5.t
+	desc = campaign_event.5.d
+	picture = GFX_report_event_stalin_01
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = campaign_event.5.a
+		if = {
+			limit = { has_idea = something_definetely_happened_idea }
+			remove_ideas = something_definetely_happened_idea
+			add_ideas = something_maybe_happened_idea
+			}
+		else_if = {
+			limit = { has_idea = something_happened_idea }
+			remove_ideas = something_happened_idea
+		}
+		else_if = {
+			limit = { has_idea = something_maybe_happened_idea }
+			remove_ideas = something_maybe_happened_idea
+			add_stability = 0.15
+		}
+	}
+}
+
+#Ивент с рандомным эффектом - плохой исход
+country_event = {
+	id = campaign_event.6
+	title = campaign_event.6.t
+	desc = campaign_event.6.d
+	picture = GFX_report_event_gathering_protest
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = campaign_event.6.a
+		if = {
+			limit = { has_idea = something_definetely_happened_idea }
+			add_stability = -0.15
+			}
+		else_if = {
+			limit = { has_idea = something_happened_idea }
+			remove_ideas = something_happened_idea
+			add_ideas = something_definetely_happened_idea
+		}
+		else_if = {
+			limit = { has_idea = something_maybe_happened_idea }
+			remove_ideas = something_maybe_happened_idea
+			add_ideas = something_happened_idea
+		}
+		else = {
+			add_stability = -0.05
+		}
+	}
+}

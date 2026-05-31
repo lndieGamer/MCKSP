@@ -1,0 +1,25 @@
+﻿l_english:
+# MCKSP Mod - English decisions localisation file
+
+SOV_MCKSP_decisions_cat: "Measures to cover up the 'B Incident'"
+  SOV_MCKSP_decisions_cat_desc: "The events that transpired in Moscow have been dubbed the 'B Incident'. Unfortunately, information about people from another time has already leaked beyond government offices. We must take measures to prevent further dissemination of this information."
+
+  decision_cost_CP_20: "£command_power  §Y20§!"
+  decision_cost_CP_20_blocked: "£command_power  §R20§!"
+  decision_cost_CP_20_tooltip: "It costs £command_power  §Y20§! to take the decision"
+
+  decision_cost_CP_40: "£command_power  §Y40§!"
+  decision_cost_CP_40_blocked: "£command_power  §R40§!"
+  decision_cost_CP_40_tooltip: "It costs £command_power  §Y40§! to take the decision"
+
+  SOV_involve_army: "Involve the Army"
+  SOV_involve_army_desc: "We can task the Red Army with locating and isolating all those involved in the 'B Incident'. This may be risky, but it will help prevent further spread of information."
+
+  SOV_propaganda_speeches: "Propaganda Speeches"
+  SOV_propaganda_speeches_desc: "We can use state media to spread propaganda speeches that will discredit witnesses and build an alternative version of events. This can help calm the public and prevent the spread of rumors"
+
+  SOV_let_things_slide: "Let Things Slide"
+  SOV_let_things_slide_desc: "We can choose to take no action and let events unfold on their own. This is a risky move, but it may help avoid unnecessary attention to the 'B Incident'. Sometimes, the best course of action is to not intervene"
+
+  SOV_special_forces: "Involve NKVD Special Forces"
+  SOV_special_forces_desc: "We can task the NKVD special forces with taking control of the situation. This will require allocating additional resources, but it will help most quickly and effectively prevent further dissemination of information and stabilize the situation."
