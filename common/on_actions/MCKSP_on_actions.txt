@@ -1,22 +1,7 @@
-# Регистрация 8 персонажей-гостей в роли country_leader для СССР при старте игры.
-# Они остаются "спящими" членами ростера до явного promote_character (через
-# debug-ивент сейчас, через сюжетную активацию guests_active — позже).
+# MCKSP on_actions — пусто.
+# Рекрут персонажей вынесен в history/countries/SOV - Soviet union.txt
+# (override ванильного файла), чтобы лидеры назначались ДО первого рендера
+# parties_grid — иначе engine успевает создать минорных лидеров.
+
 on_actions = {
-	on_startup = {
-		effect = {
-			if = {
-				limit = { country_exists = SOV }
-				SOV = {
-					recruit_character = SOV_nikita_iakushin
-					recruit_character = SOV_arseny_pavlov
-					recruit_character = SOV_stepan_pavlov
-					recruit_character = SOV_demokrit_ikonomidi
-					recruit_character = SOV_gleb_rychkov
-					recruit_character = SOV_ivan_danchenko
-					recruit_character = SOV_ilya_popov
-					recruit_character = SOV_evgeny_okeanov
-				}
-			}
-		}
-	}
 }
