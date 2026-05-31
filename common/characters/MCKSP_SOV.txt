@@ -20,7 +20,7 @@ characters = {
 		name = SOV_arseny_pavlov
 		portraits = {
 			civilian = {
-				large = "GFX_portrait_unknown"
+				large = "GFX_portrait_sov_arsIco_large"
 			}
 		}
 		country_leader = {
