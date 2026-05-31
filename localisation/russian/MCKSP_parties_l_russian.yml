@@ -1,0 +1,29 @@
+﻿l_russian:
+# MCKSP Mod - Russian party names localisation
+
+ mcksp_uds_party: "СДС"
+ mcksp_uds_party_long: "Союз демократического социализма"
+
+ mcksp_lcl_party: "ЛГС"
+ mcksp_lcl_party_long: "Лига гражданских свобод"
+
+ mcksp_cdu_party: "ХДС"
+ mcksp_cdu_party_long: "Христианско-демократический союз"
+
+ mcksp_neu_party: "НЭС"
+ mcksp_neu_party_long: "Новый экономический союз"
+
+ mcksp_boc_party: "БС"
+ mcksp_boc_party_long: "Блок согласия"
+
+ mcksp_usp_party: "СНП"
+ mcksp_usp_party_long: "Союз научного прогресса"
+
+ mcksp_uso_party: "СГП"
+ mcksp_uso_party_long: "Союз государственного порядка"
+
+ mcksp_rsu_party: "РДС"
+ mcksp_rsu_party_long: "Русский державный союз"
+
+ mcksp_to_party: "ТО"
+ mcksp_to_party_long: "Технократический орден"

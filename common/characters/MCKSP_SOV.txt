@@ -1,10 +1,123 @@
 characters = {
-	# SOV_Nikita_Iakushin = {
-	# 	name = SOV_Nikita_Iakushin
-	# 	portraits = {
-	# 		civilian = {
-	# 			large = GFX
-	# 		}
-	# 	}
-	# }
+
+	# СДС — Союз демократического социализма
+	SOV_nikita_iakushin = {
+		name = SOV_nikita_iakushin
+		portraits = {
+			civilian = {
+				large = "GFX_portrait_unknown"
+			}
+		}
+		country_leader = {
+			ideology = mcksp_social_liberalism
+			expire = "1965.1.1.1"
+			id = -1
+		}
+	}
+
+	# ЛГС — Лига гражданских свобод
+	SOV_arseny_pavlov = {
+		name = SOV_arseny_pavlov
+		portraits = {
+			civilian = {
+				large = "GFX_portrait_unknown"
+			}
+		}
+		country_leader = {
+			ideology = mcksp_liberal_humanism
+			expire = "1965.1.1.1"
+			id = -1
+		}
+	}
+
+	# ХДС — Христианско-демократический союз
+	SOV_stepan_pavlov = {
+		name = SOV_stepan_pavlov
+		portraits = {
+			civilian = {
+				large = "GFX_portrait_unknown"
+			}
+		}
+		country_leader = {
+			ideology = mcksp_christian_democracy
+			expire = "1965.1.1.1"
+			id = -1
+		}
+	}
+
+	# НЭС — Новый экономический союз
+	SOV_demokrit_ikonomidi = {
+		name = SOV_demokrit_ikonomidi
+		portraits = {
+			civilian = {
+				large = "GFX_portrait_unknown"
+			}
+		}
+		country_leader = {
+			ideology = mcksp_market_socialism
+			expire = "1965.1.1.1"
+			id = -1
+		}
+	}
+
+	# БС — Блок согласия
+	SOV_gleb_rychkov = {
+		name = SOV_gleb_rychkov
+		portraits = {
+			civilian = {
+				large = "GFX_portrait_unknown"
+			}
+		}
+		country_leader = {
+			ideology = mcksp_pragmatic_syncretism
+			expire = "1965.1.1.1"
+			id = -1
+		}
+	}
+
+	# СНП — Союз научного прогресса
+	SOV_ivan_danchenko = {
+		name = SOV_ivan_danchenko
+		portraits = {
+			civilian = {
+				large = "GFX_portrait_unknown"
+			}
+		}
+		country_leader = {
+			ideology = mcksp_scientific_progressism
+			expire = "1965.1.1.1"
+			id = -1
+		}
+	}
+
+	# СГП — Союз государственного порядка
+	SOV_ilya_popov = {
+		name = SOV_ilya_popov
+		portraits = {
+			civilian = {
+				large = "GFX_portrait_unknown"
+			}
+		}
+		country_leader = {
+			ideology = mcksp_statist_technocratism
+			expire = "1965.1.1.1"
+			id = -1
+		}
+	}
+
+	# РДС — Русский державный союз
+	SOV_evgeny_okeanov = {
+		name = SOV_evgeny_okeanov
+		portraits = {
+			civilian = {
+				large = "GFX_portrait_unknown"
+			}
+		}
+		country_leader = {
+			ideology = mcksp_national_conservatism
+			expire = "1965.1.1.1"
+			id = -1
+		}
+	}
+
 }

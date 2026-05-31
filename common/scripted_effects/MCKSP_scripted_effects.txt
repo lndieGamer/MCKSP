@@ -1,0 +1,16 @@
+# Scripted effects for MCKSP political arc
+# Эффект, который засеивает 8 переменных поддержки партий нулями.
+# Вызывается при активации сюжетной арки "гостей" (option .b interrogation_event.1).
+# Пока переменные ничего не делают — служат фундаментом для scripted_gui панели
+# восьми партий (шаг 4) и для роста поддержки через фокусы/события (шаг 6+).
+
+activate_guests_system = {
+	set_variable = { p_nikita = 0 }   # СДС
+	set_variable = { p_arseny = 0 }   # ЛГС
+	set_variable = { p_stepan = 0 }   # ХДС
+	set_variable = { p_demokrit = 0 } # НЭС
+	set_variable = { p_gleb = 0 }     # БС
+	set_variable = { p_ivan = 0 }     # СНП
+	set_variable = { p_ilya = 0 }     # СГП
+	set_variable = { p_evgeny = 0 }   # РДС
+}

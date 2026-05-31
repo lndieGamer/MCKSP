@@ -1,0 +1,24 @@
+﻿l_english:
+# MCKSP Mod - English debug events localisation
+
+ mcksp_debug.1.t: "DEBUG: democratic / communism"
+ mcksp_debug.1.desc: "Switch USSR to one of the democratic or communism sub-ideologies."
+ mcksp_debug.1.a: "UDS — Nikita Iakushin"
+ mcksp_debug.1.b: "LCL — Arseny Pavlov"
+ mcksp_debug.1.c: "CDU — Stepan Pavlov"
+ mcksp_debug.1.d: "NEU — Demokrit Ikonomidi"
+ mcksp_debug.1.cancel: "Cancel"
+
+ mcksp_debug.2.t: "DEBUG: neutrality"
+ mcksp_debug.2.desc: "Switch USSR to one of the 4 neutrality sub-ideologies."
+ mcksp_debug.2.a: "BoC — Gleb Rychkov"
+ mcksp_debug.2.b: "USP — Ivan Danchenko"
+ mcksp_debug.2.c: "USO — Ilya Popov"
+ mcksp_debug.2.d: "RSU — Evgeny Okeanov"
+ mcksp_debug.2.cancel: "Cancel"
+
+ mcksp_debug.3.t: "DEBUG: utilities"
+ mcksp_debug.3.desc: "Flag toggles and dark finale."
+ mcksp_debug.3.toggle_flag: "Toggle guests_active (raise/clear arc activation flag)"
+ mcksp_debug.3.to: "TO — Technocratic Order (fascism, no character)"
+ mcksp_debug.3.cancel: "Cancel"

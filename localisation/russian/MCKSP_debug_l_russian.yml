@@ -1,0 +1,24 @@
+﻿l_russian:
+# MCKSP Mod - Russian debug events localisation
+
+ mcksp_debug.1.t: "DEBUG: democratic / communism"
+ mcksp_debug.1.desc: "Переключение СССР на одну из подыдеологий democratic или communism групп."
+ mcksp_debug.1.a: "СДС — Никита Якушин"
+ mcksp_debug.1.b: "ЛГС — Арсений Павлов"
+ mcksp_debug.1.c: "ХДС — Степан Павлов"
+ mcksp_debug.1.d: "НЭС — Демокрит Икономиди"
+ mcksp_debug.1.cancel: "Отмена"
+
+ mcksp_debug.2.t: "DEBUG: neutrality"
+ mcksp_debug.2.desc: "Переключение СССР на одну из 4 подыдеологий группы neutrality."
+ mcksp_debug.2.a: "БС — Глеб Рычков"
+ mcksp_debug.2.b: "СНП — Иван Данченко"
+ mcksp_debug.2.c: "СГП — Илья Попов"
+ mcksp_debug.2.d: "РДС — Евгений Океанов"
+ mcksp_debug.2.cancel: "Отмена"
+
+ mcksp_debug.3.t: "DEBUG: утилиты"
+ mcksp_debug.3.desc: "Тоггл флагов и тёмный финал."
+ mcksp_debug.3.toggle_flag: "Toggle guests_active (поднять/снять флаг активации арки)"
+ mcksp_debug.3.to: "ТО — Технократический орден (fascism, без персонажа)"
+ mcksp_debug.3.cancel: "Отмена"
