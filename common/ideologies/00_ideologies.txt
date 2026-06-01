@@ -298,7 +298,7 @@ ideologies = {
 		ai_ideology_wanted_units_factor = 1.15
 		ai_give_core_state_control_threshold = 10000
 	}
-
+	
 	mcksp_liberal_humanism = {
 		types = {
 			mcksp_liberal_humanism_t = { can_be_randomly_selected = no }
