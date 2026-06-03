@@ -17,7 +17,7 @@ ideas = {
 
         }
         something_happened_idea = {
-            picture = something_happening_3
+            picture = something_happening_2
             modifier = {
                 stability_factor = -0.1
                 political_power_factor = -0.15

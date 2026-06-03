@@ -1,0 +1,22 @@
+
+spriteTypes{
+
+	SpriteType = {
+	name = "GFX_idea_something_happening_1"
+	texturefile = "gfx/interface/ideas/something_happening_1.dds"
+	}
+	
+	SpriteType = {
+	name = "GFX_idea_something_happening_2"
+	texturefile = "gfx/interface/ideas/something_happening_2.dds"
+	}
+
+
+	SpriteType = {
+	name = "GFX_idea_something_happening_3"
+	texturefile = "gfx/interface/ideas/something_happening_3.dds"
+	}
+}
+
+
+

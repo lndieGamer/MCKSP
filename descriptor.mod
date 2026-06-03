@@ -6,4 +6,4 @@ tags={
 }
 name="MCKSP"
 supported_version="1.16.9"
-picture="MCKSP_image.jpg"
+picture="thumbnail.png"

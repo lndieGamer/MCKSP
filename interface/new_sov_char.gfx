@@ -1,0 +1,11 @@
+spriteTypes{
+	spriteType = {
+		name = "GFX_portrait_sov_arsIco_large"
+		texturefile = "gfx\leaders\SOV\portrait_SOV_arsIco.dds"
+	}
+
+	spriteType = {
+		name = "GFX_portrait_sov_stepa_large"
+		texturefile = "gfx\leaders\SOV\portrait_SOV_stepa.dds"
+	}
+}
