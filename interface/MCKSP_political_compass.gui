@@ -1,0 +1,178 @@
+###############################################################################
+#  MCKSP — Политический компас (политические координаты)
+#  Файл: interface/MCKSP_political_compass.gui
+#
+#  Самостоятельные окна, не привязаны к countrypoliticsview. Видимостью
+#  управляет scripted_gui (см. одноимённый .txt).
+#
+#  Координаты позиций — абсолютные экранные.
+#  countrypoliticsview сидит на абсолюте (-6, 78), ширина 550 → правый край ~544.
+#
+#  Координаты восьмёрки на компасе ЗАФИКСИРОВАНЫ. Формула пикселя
+#  (шаг сетки 18px при поле 360px на ось −10..+10):
+#       x = PLOT_CX + econ*18 - 7          (PLOT_CX = 220)
+#       y = PLOT_CY - soc *18 - 7          (PLOT_CY = 250, +соц вверх)
+###############################################################################
+
+guiTypes = {
+
+	# --------------------------------------------------------------------------
+	# КНОПКА-СТРЕЛКА. Прикрепляется к countrypoliticsview через scripted_gui
+	# (parent_window_name) — поэтому появляется/исчезает вместе с панелью политики.
+	# Координаты ОТНОСИТЕЛЬНЫЕ к origin панели политики:
+	#   x=540 — правый край списка партий (326+214=540)
+	#   y=312 — на одной линии со списком
+	# --------------------------------------------------------------------------
+	containerWindowType = {
+		name = "MCKSP_compass_button_window"
+		position = { x = 540 y = 312 }
+		size = { width = 26 height = 46 }
+		clipping = no
+
+		buttonType = {
+			name = "MCKSP_open_compass"
+			position = { x = 0 y = 0 }
+			quadTextureSprite = "GFX_MCKSP_compass_arrow_button"
+			pdx_tooltip = "MCKSP_COMPASS_BUTTON_TT"
+			clicksound = click_default
+		}
+	}
+
+	# --------------------------------------------------------------------------
+	# ОКНО КОМПАСА. Самостоятельное. Выезжает вправо из-за countrypoliticsview.
+	# --------------------------------------------------------------------------
+	containerWindowType = {
+		name = "MCKSP_compass_window"
+		position      = { x = -470 y = 80 }      # спрятано слева за экраном
+		show_position = { x = 575  y = 80 }      # выехало вправо от панели и стрелки
+		show_animation_type = decelerated
+		hide_animation_type = accelerated
+		animation_time = 300
+		size = { width = 460 height = 700 }
+		show_sound = open_sub_window
+
+		background = {
+			name = "Background"
+			quadTextureSprite = "GFX_tiled_plain_bg"
+		}
+
+		# --- шапка ---
+		iconType = {
+			name = "header_bg"
+			spriteType = "GFX_header_bg"
+			position = { x = 7 y = 5 }
+			Orientation = "UPPER_LEFT"
+		}
+		instantTextboxType = {
+			name = "title"
+			position = { x = 37 y = 7 }
+			font = "hoi_36header"
+			text = "MCKSP_COMPASS_TITLE"
+			maxWidth = 360
+			maxHeight = 20
+			format = left
+		}
+		buttonType = {
+			name = "close_button"
+			position = { x = -40 y = 7 }
+			quadTextureSprite = "GFX_closebutton"
+			shortcut = "ESCAPE"
+			Orientation = "UPPER_RIGHT"
+			clicksound = click_close
+			pdx_tooltip = "CLOSE"
+		}
+
+		# --- поле компаса (сетка + подкраска квадрантов + оси + подписи) ---
+		iconType = {
+			name = "compass_grid"
+			position = { x = 40 y = 70 }
+			quadTextureSprite = "GFX_MCKSP_compass_grid_360"
+		}
+
+		# подписи осей
+		instantTextboxType = { name = "ax_top"    position = { x = 150 y = 54  } font = "hoi_16mbs" text = "MCKSP_AXIS_AUTH"  maxWidth = 140 format = center alwaystransparent = yes }
+		instantTextboxType = { name = "ax_bottom" position = { x = 150 y = 432 } font = "hoi_16mbs" text = "MCKSP_AXIS_LIB"   maxWidth = 140 format = center alwaystransparent = yes }
+		instantTextboxType = { name = "ax_left"   position = { x = 44  y = 250 } font = "hoi_16mbs" text = "MCKSP_AXIS_LEFT"  maxWidth = 120 format = left   alwaystransparent = yes }
+		instantTextboxType = { name = "ax_right"  position = { x = 300 y = 250 } font = "hoi_16mbs" text = "MCKSP_AXIS_RIGHT" maxWidth = 120 format = right  alwaystransparent = yes }
+
+		# --- 8 точек (статично; кадр = цвет идеологии партии лидера) ---
+		# frame: 1=СДС 2=ЛГС 3=НЭС 4=БС 5=ХДС 6=СНП 7=СГП 8=РДС
+		iconType = { name = "dot_nikita"   position = { x = 177 y = 333 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 1 pdx_tooltip = "MCKSP_PT_NIKITA" }
+		iconType = { name = "dot_arseny"   position = { x = 195 y = 315 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 2 pdx_tooltip = "MCKSP_PT_ARSENY" }
+		iconType = { name = "dot_demokrit" position = { x = 141 y = 225 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 3 pdx_tooltip = "MCKSP_PT_DEMOKRIT" }
+		iconType = { name = "dot_gleb"     position = { x = 231 y = 225 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 4 pdx_tooltip = "MCKSP_PT_GLEB" }
+		iconType = { name = "dot_stepan"   position = { x = 249 y = 207 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 5 pdx_tooltip = "MCKSP_PT_STEPAN" }
+		iconType = { name = "dot_ivan"     position = { x = 231 y = 171 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 6 pdx_tooltip = "MCKSP_PT_IVAN" }
+		iconType = { name = "dot_ilya"     position = { x = 249 y = 135 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 7 pdx_tooltip = "MCKSP_PT_ILYA" }
+		iconType = { name = "dot_evgeny"   position = { x = 285 y = 99  } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 8 pdx_tooltip = "MCKSP_PT_EVGENY" }
+
+		# --- легенда (имена) под полем: 8 статичных строк, 4 ряда × 2 колонки.
+		# Цвет точки = кадр идеологии (тот же strip что и на компасе).
+		containerWindowType = {
+			name = "compass_legend"
+			position = { x = 20 y = 470 }
+			size = { width = 420 height = 110 }
+			clipping = no
+
+			background = {
+				name = "Background"
+				quadTextureSprite = "GFX_tiled_window_transparent"
+			}
+
+			# Колонка 1 (x=4 dot, x=22 text)
+			iconType = { name = "lg_dot_nikita"   position = { x = 4   y = 6  } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 1 }
+			instantTextboxType = { name = "lg_n_nikita"   position = { x = 22  y = 4  } font = "hoi_16mbs" text = "MCKSP_LG_NIKITA"   maxWidth = 170 maxHeight = 18 format = left }
+
+			iconType = { name = "lg_dot_demokrit" position = { x = 4   y = 30 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 3 }
+			instantTextboxType = { name = "lg_n_demokrit" position = { x = 22  y = 28 } font = "hoi_16mbs" text = "MCKSP_LG_DEMOKRIT" maxWidth = 170 maxHeight = 18 format = left }
+
+			iconType = { name = "lg_dot_stepan"   position = { x = 4   y = 54 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 5 }
+			instantTextboxType = { name = "lg_n_stepan"   position = { x = 22  y = 52 } font = "hoi_16mbs" text = "MCKSP_LG_STEPAN"   maxWidth = 170 maxHeight = 18 format = left }
+
+			iconType = { name = "lg_dot_ilya"     position = { x = 4   y = 78 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 7 }
+			instantTextboxType = { name = "lg_n_ilya"     position = { x = 22  y = 76 } font = "hoi_16mbs" text = "MCKSP_LG_ILYA"     maxWidth = 170 maxHeight = 18 format = left }
+
+			# Колонка 2 (x=210 dot, x=228 text)
+			iconType = { name = "lg_dot_arseny"   position = { x = 210 y = 6  } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 2 }
+			instantTextboxType = { name = "lg_n_arseny"   position = { x = 228 y = 4  } font = "hoi_16mbs" text = "MCKSP_LG_ARSENY"   maxWidth = 170 maxHeight = 18 format = left }
+
+			iconType = { name = "lg_dot_gleb"     position = { x = 210 y = 30 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 4 }
+			instantTextboxType = { name = "lg_n_gleb"     position = { x = 228 y = 28 } font = "hoi_16mbs" text = "MCKSP_LG_GLEB"     maxWidth = 170 maxHeight = 18 format = left }
+
+			iconType = { name = "lg_dot_ivan"     position = { x = 210 y = 54 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 6 }
+			instantTextboxType = { name = "lg_n_ivan"     position = { x = 228 y = 52 } font = "hoi_16mbs" text = "MCKSP_LG_IVAN"     maxWidth = 170 maxHeight = 18 format = left }
+
+			iconType = { name = "lg_dot_evgeny"   position = { x = 210 y = 78 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 8 }
+			instantTextboxType = { name = "lg_n_evgeny"   position = { x = 228 y = 76 } font = "hoi_16mbs" text = "MCKSP_LG_EVGENY"   maxWidth = 170 maxHeight = 18 format = left }
+		}
+	}
+
+	# Шаблон строки легенды.
+	containerWindowType = {
+		name = "MCKSP_compass_legend_entry"
+		size = { width = 200 height = 22 }
+		clipping = no
+
+		iconType = {
+			name = "color"
+			position = { x = 2 y = 4 }
+			quadTextureSprite = "GFX_MCKSP_compass_dot_strip"
+		}
+		instantTextboxType = {
+			name = "name"
+			position = { x = 22 y = 3 }
+			font = "hoi_16mbs"
+			maxWidth = 130
+			maxHeight = 18
+			format = left
+		}
+		instantTextboxType = {
+			name = "coords"
+			position = { x = 150 y = 3 }
+			font = "hoi_16mbs"
+			maxWidth = 48
+			maxHeight = 18
+			format = right
+		}
+	}
+}

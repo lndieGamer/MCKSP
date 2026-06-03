@@ -1,0 +1,84 @@
+###############################################################################
+#  MCKSP — Политический компас: видимость и гейтинг по триггеру
+#  Файл: common/scripted_guis/MCKSP_political_compass.txt
+#
+#  Кнопка-стрелка и окно компаса — самостоятельные .gui-окна (не привязаны к
+#  countrypoliticsview). Видимость и кликабельность задаёт scripted_gui через
+#  блоки `visible` + `effect` + `triggers`.
+###############################################################################
+
+scripted_gui = {
+
+	# ======================================================================
+	# 1) КНОПКА-СТРЕЛКА: тоггл через два блока с разными visible.
+	#    if/else в effects HOI4 нестабильно отрабатывает — поэтому делим логику
+	#    на «открыть» и «закрыть», переключение между блоками идёт через флаг.
+	# ======================================================================
+
+	# Когда компас ЗАКРЫТ — клик открывает.
+	MCKSP_compass_button_open = {
+		context_type       = player_context
+		parent_window_name = "countrypoliticsview"
+		window_name        = "MCKSP_compass_button_window"
+
+		visible = {
+			tag = SOV
+			NOT = { has_country_flag = SOV_compass_open }
+		}
+
+		effects = {
+			MCKSP_open_compass_click = {
+				set_country_flag = SOV_compass_open
+			}
+		}
+	}
+
+	# Когда компас ОТКРЫТ — клик закрывает.
+	MCKSP_compass_button_close = {
+		context_type       = player_context
+		parent_window_name = "countrypoliticsview"
+		window_name        = "MCKSP_compass_button_window"
+
+		visible = {
+			tag = SOV
+			has_country_flag = SOV_compass_open
+		}
+
+		effects = {
+			MCKSP_open_compass_click = {
+				clr_country_flag = SOV_compass_open
+			}
+		}
+	}
+
+	# ======================================================================
+	# 2) ОКНО КОМПАСА: видимо, пока выставлен флаг открытия
+	# ======================================================================
+	MCKSP_compass_window = {
+		context_type = player_context
+		window_name  = "MCKSP_compass_window"
+
+		visible = {
+			has_country_flag = SOV_compass_open
+		}
+
+		# Кнопка закрытия (X / ESC) снимает флаг.
+		effects = {
+			close_button_click = {
+				clr_country_flag = SOV_compass_open
+			}
+		}
+	}
+}
+
+###############################################################################
+#  АЛЬТЕРНАТИВНЫЕ ТРИГГЕРЫ для блока `visible` (подставь, что точнее под сюжет):
+#
+#   has_completed_focus = SOV_the_balance_of_forces      # после нужного фокуса
+#   has_country_flag    = SOV_factional_struggle_active  # ручной флаг старта
+#   check_variable      = { SOV_factionalism_political_power_factor < 0 }
+#   has_power_balance   = { id = SOV_stalin_trust_balance }
+#   power_balance_value = { id = SOV_stalin_trust_balance value < 0.5 }
+#
+#  Условия в `visible` соединяются как И. Нужно ИЛИ — обернуть в OR = { }.
+###############################################################################

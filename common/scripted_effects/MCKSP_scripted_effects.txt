@@ -63,3 +63,14 @@ activate_guests_system = {
 	set_variable = { p_ilya = 3 }
 	set_variable = { p_evgeny = 2 }
 }
+
+# Разблокирует кнопку «Политического компаса» в окне политики (см.
+# interface/MCKSP_political_compass.gui + common/scripted_guis/MCKSP_political_compass.txt).
+# Вызови этот эффект из события/фокуса/решения, которое в твоём сюжете означает
+# «появился баланс доверия Сталина + началась борьба фракций».
+# Когда добавишь power_balance "SOV_stalin_trust_balance" — создавай его здесь же
+# через create_power_balance, чтобы гейт работал корректно.
+MCKSP_unlock_political_compass = {
+	set_country_flag = SOV_factional_struggle_active
+}
+

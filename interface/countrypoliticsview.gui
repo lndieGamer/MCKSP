@@ -7,7 +7,7 @@ guiTypes = {
 		show_animation_type = decelerated
 		hide_animation_type = accelerated
 		animation_time = 300	
-		size = { width=550 height=100%% }
+		size = { width=570 height=100%% }		# MCKSP: +20 на стрелку компаса; дети ванилы не двигаются
 		
 		#hide_sound = menu_close_window
 		show_sound = menu_open_window
@@ -76,7 +76,6 @@ guiTypes = {
 			}
 		}
 
-		
 		containerWindowType = {
 			name = "political_pie_chart"
 			position = { x= 270 y = 304 }
@@ -633,7 +632,7 @@ guiTypes = {
 		
 		buttonType = {
 			name = "close_button"
-			position = { x = -42 y = 9 }
+			position = { x = -62 y = 9 }		# MCKSP: -20 компенсация расширения панели на 20px (UPPER_RIGHT anchor)
 			quadTextureSprite ="GFX_closebutton"
 			buttonFont = "Main_14_black"
 			shortcut = "ESCAPE"
