@@ -1,6 +1,7 @@
 ﻿l_russian:
 # MCKSP Mod - Russian characters localisation file
 
+ SOV_redacted_leader: "§RЗАПРЕЩЕНО§!"
  SOV_nikita_iakushin: "Никита Якушин"
  SOV_arseny_pavlov: "Арсений Павлов"
  SOV_stepan_pavlov: "Степан Павлов"

@@ -1,7 +1,30 @@
-# MCKSP on_actions — пусто.
+# MCKSP on_actions.
 # Рекрут персонажей вынесен в history/countries/SOV - Soviet union.txt
 # (override ванильного файла), чтобы лидеры назначались ДО первого рендера
 # parties_grid — иначе engine успевает создать минорных лидеров.
+#
+# on_startup: для КАЖДОЙ страны переопределяем имена 8 MCKSP-партий
+# на MCKSP_redacted ("ЗАПРЕЩЕНО"). Это маскирует parties_grid и сектора
+# круга популярности до срабатывания сюжета. Локали идеологий статичны
+# (engine не оценивает scripted_localisation в ideology-локалях), поэтому
+# скрытие делается на уровне party_name override.
+#
+# Для СССР этот override снимается в activate_guests_system, которое
+# вызывает set_party_name с реальными названиями партий (СДС/ЛГС/...).
 
 on_actions = {
+	on_startup = {
+		effect = {
+			every_country = {
+				set_party_name = { ideology = mcksp_social_liberalism long_name = MCKSP_redacted name = MCKSP_redacted }
+				set_party_name = { ideology = mcksp_liberal_humanism long_name = MCKSP_redacted name = MCKSP_redacted }
+				set_party_name = { ideology = mcksp_christian_democracy long_name = MCKSP_redacted name = MCKSP_redacted }
+				set_party_name = { ideology = mcksp_market_socialism long_name = MCKSP_redacted name = MCKSP_redacted }
+				set_party_name = { ideology = mcksp_pragmatic_syncretism long_name = MCKSP_redacted name = MCKSP_redacted }
+				set_party_name = { ideology = mcksp_scientific_progressism long_name = MCKSP_redacted name = MCKSP_redacted }
+				set_party_name = { ideology = mcksp_statist_technocratism long_name = MCKSP_redacted name = MCKSP_redacted }
+				set_party_name = { ideology = mcksp_national_conservatism long_name = MCKSP_redacted name = MCKSP_redacted }
+			}
+		}
+	}
 }

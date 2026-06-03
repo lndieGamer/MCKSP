@@ -1,0 +1,25 @@
+characters = {
+
+	# Мок-персонаж "ЗАПРЕЩЕНО" — носитель country_leader role для всех 8
+	# MCKSP-партий до активации сюжета. Рекрутится в SOV через history-file,
+	# ПЕРВЫМ среди MCKSP-персонажей. При срабатывании activate_guests_system
+	# реальные персонажи (SOV_nikita_iakushin и т.д.) промоутятся в свои
+	# партии через promote_character × 8, а мок ретайрится через retire_character.
+	SOV_redacted_leader = {
+		name = SOV_redacted_leader
+		portraits = {
+			civilian = {
+				large = "GFX_portrait_unknown"
+			}
+		}
+		country_leader = { ideology = mcksp_social_liberalism_t expire = "1965.1.1.1" id = -1 }
+		country_leader = { ideology = mcksp_liberal_humanism_t expire = "1965.1.1.1" id = -1 }
+		country_leader = { ideology = mcksp_christian_democracy_t expire = "1965.1.1.1" id = -1 }
+		country_leader = { ideology = mcksp_market_socialism_t expire = "1965.1.1.1" id = -1 }
+		country_leader = { ideology = mcksp_pragmatic_syncretism_t expire = "1965.1.1.1" id = -1 }
+		country_leader = { ideology = mcksp_scientific_progressism_t expire = "1965.1.1.1" id = -1 }
+		country_leader = { ideology = mcksp_statist_technocratism_t expire = "1965.1.1.1" id = -1 }
+		country_leader = { ideology = mcksp_national_conservatism_t expire = "1965.1.1.1" id = -1 }
+	}
+
+}

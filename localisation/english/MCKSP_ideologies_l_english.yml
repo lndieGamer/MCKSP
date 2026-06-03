@@ -1,41 +1,51 @@
 ﻿l_english:
 # MCKSP Mod - English ideologies localisation file
+# Static names + descriptions. Pre-activation hiding for parties_grid + pie chart
+# is done via initial set_party_name = MCKSP_redacted in on_actions/on_startup.
+# Ideology popup (click) uses these locales directly — minor leak pre-trigger.
 
-# 9 MCKSP groups (top-level) + their placeholder types.
+ mcksp_social_liberalism: "Social Liberalism"
+ mcksp_social_liberalism_desc: "Doctrine of progressive democracy. Welfare state, civil liberties, regulated market, and an active role of the state in providing equal opportunity."
+ mcksp_social_liberalism_t: "Social Liberalism"
+ mcksp_social_liberalism_t_desc: "Doctrine of progressive democracy. Welfare state, civil liberties, regulated market, and an active role of the state in providing equal opportunity."
 
- mcksp_social_liberalism: "UDS"
- mcksp_social_liberalism_desc: "Union of Democratic Socialism. Pacifist social liberalism: a combination of bourgeois-democratic principles with egalitarian ones, secular humanism, unconditional rejection of war."
- mcksp_social_liberalism_t: "UDS"
+ mcksp_liberal_humanism: "Liberal Humanism"
+ mcksp_liberal_humanism_desc: "Humanistic liberalism emphasizing human rights, diversity, and tolerance. Minimal state interference in private affairs, protection of vulnerable groups."
+ mcksp_liberal_humanism_t: "Liberal Humanism"
+ mcksp_liberal_humanism_t_desc: "Humanistic liberalism emphasizing human rights, diversity, and tolerance. Minimal state interference in private affairs, protection of vulnerable groups."
 
- mcksp_liberal_humanism: "LCL"
- mcksp_liberal_humanism_desc: "League of Civil Liberties. Liberal humanism with emphasis on culture, art, and individual dignity. Politics as a function of ethics."
- mcksp_liberal_humanism_t: "LCL"
+ mcksp_christian_democracy: "Christian Democracy"
+ mcksp_christian_democracy_desc: "Union of Christian values with social democracy. Family, tradition, solidarity, and social justice through collective responsibility."
+ mcksp_christian_democracy_t: "Christian Democracy"
+ mcksp_christian_democracy_t_desc: "Union of Christian values with social democracy. Family, tradition, solidarity, and social justice through collective responsibility."
 
- mcksp_christian_democracy: "CDU"
- mcksp_christian_democracy_desc: "Christian Democratic Union. A centrist stance grounded in traditional values and social solidarity. Anti-war conservatism."
- mcksp_christian_democracy_t: "CDU"
+ mcksp_market_socialism: "Market Socialism"
+ mcksp_market_socialism_desc: "Socialism with market mechanisms. Public ownership of key sectors, market allocation in consumer goods, workers' self-management."
+ mcksp_market_socialism_t: "Market Socialism"
+ mcksp_market_socialism_t_desc: "Socialism with market mechanisms. Public ownership of key sectors, market allocation in consumer goods, workers' self-management."
 
- mcksp_market_socialism: "NEU"
- mcksp_market_socialism_desc: "New Economic Union. The Bukharinist path — NEP without rollback, cooperation and cost-accounting while preserving public ownership."
- mcksp_market_socialism_t: "NEU"
+ mcksp_pragmatic_syncretism: "Pragmatic Syncretism"
+ mcksp_pragmatic_syncretism_desc: "Synthesis of various ideological traditions. Pragmatic approach to governance, rejection of dogmatism, picking the best from opposed systems."
+ mcksp_pragmatic_syncretism_t: "Pragmatic Syncretism"
+ mcksp_pragmatic_syncretism_t_desc: "Synthesis of various ideological traditions. Pragmatic approach to governance, rejection of dogmatism, picking the best from opposed systems."
 
- mcksp_pragmatic_syncretism: "BoC"
- mcksp_pragmatic_syncretism_desc: "Bloc of Consensus. Pragmatic syncretism without ideological rigidity. Power as the art of compromise between extremes."
- mcksp_pragmatic_syncretism_t: "BoC"
+ mcksp_scientific_progressism: "Scientific Progressivism"
+ mcksp_scientific_progressism_desc: "Ideology of scientific-technical progress. Data-driven governance, investment in science and education, rational planning."
+ mcksp_scientific_progressism_t: "Scientific Progressivism"
+ mcksp_scientific_progressism_t_desc: "Ideology of scientific-technical progress. Data-driven governance, investment in science and education, rational planning."
 
- mcksp_scientific_progressism: "USP"
- mcksp_scientific_progressism_desc: "Union of Scientific Progress. A course of accelerated technological development — aviation, electronics, space exploration."
- mcksp_scientific_progressism_t: "USP"
+ mcksp_statist_technocratism: "Statist Technocracy"
+ mcksp_statist_technocratism_desc: "Strong state run by a technocratic elite. Meritocracy, planned economy, centralized decision-making on a scientific basis."
+ mcksp_statist_technocratism_t: "Statist Technocracy"
+ mcksp_statist_technocratism_t_desc: "Strong state run by a technocratic elite. Meritocracy, planned economy, centralized decision-making on a scientific basis."
 
- mcksp_statist_technocratism: "USO"
- mcksp_statist_technocratism_desc: "Union of State Order. The primacy of the state over the individual, governance through a corps of specialists. Security and order above personal freedoms."
- mcksp_statist_technocratism_t: "USO"
+ mcksp_national_conservatism: "National Conservatism"
+ mcksp_national_conservatism_desc: "Defense of national identity, tradition, and sovereignty. Strong state, traditional values, economic patriotism."
+ mcksp_national_conservatism_t: "National Conservatism"
+ mcksp_national_conservatism_t_desc: "Defense of national identity, tradition, and sovereignty. Strong state, traditional values, economic patriotism."
 
- mcksp_national_conservatism: "RSU"
- mcksp_national_conservatism_desc: "Russian Sovereign Union. Strong sovereign power, tradition, hierarchy. Orthodoxy, army, people — the three pillars of national revival."
- mcksp_national_conservatism_t: "RSU"
+ MCKSP_redacted: "§RFORBIDDEN§!"
+ MCKSP_redacted_desc: "Information about this political group is unavailable in the NKVD registry. Access to materials suspended."
 
-# TO — not a separate group, a dark transformation of RSU via decision.
-# Name kept for use in set_party_name when the transformation activates.
  mcksp_technocratic_order: "TO"
  mcksp_technocratic_order_desc: "Technocratic Order. A degenerated form of sovereigntist national conservatism: a totalitarian dictatorship of an engineering corps, with unconditional supremacy of the 'competent' over the masses."

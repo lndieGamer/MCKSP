@@ -28,7 +28,17 @@ if = {
 }
 
 # MCKSP — гости из будущего. Рекрутятся ДО создания parties_grid engine'ом,
-# поэтому лидеры наших 9 групп показываются как наши персонажи, не миноры.
+# поэтому лидеры наших групп показываются корректно (не миноры).
+#
+# Мок-персонаж SOV_redacted_leader идёт ПЕРВЫМ — он держит country_leader
+# роли для всех 8 MCKSP-групп. Engine должен показать его как лидера всех
+# наших партий до активации сюжета.
+recruit_character = SOV_redacted_leader
+
+# Реальные персонажи — рекрутятся тоже на старте (нужны в роли character role),
+# но их country_leader-роли мок перекрывает по умолчанию. При срабатывании
+# activate_guests_system делается promote_character × 8 + retire SOV_redacted_leader,
+# и реальные персонажи становятся лидерами своих партий.
 recruit_character = SOV_nikita_iakushin
 recruit_character = SOV_arseny_pavlov
 recruit_character = SOV_stepan_pavlov
