@@ -4,9 +4,9 @@
 # is done via initial set_party_name = MCKSP_redacted in on_actions/on_startup.
 # Ideology popup (click) uses these locales directly — minor leak pre-trigger.
 
- mcksp_social_liberalism: "Social Liberalism"
+ mcksp_social_liberalism: "Social-Liberalism"
  mcksp_social_liberalism_desc: "Doctrine of progressive democracy. Welfare state, civil liberties, regulated market, and an active role of the state in providing equal opportunity."
- mcksp_social_liberalism_t: "Social Liberalism"
+ mcksp_social_liberalism_t: "Social-Liberalism"
  mcksp_social_liberalism_t_desc: "Doctrine of progressive democracy. Welfare state, civil liberties, regulated market, and an active role of the state in providing equal opportunity."
 
  mcksp_liberal_humanism: "Liberal Humanism"
@@ -29,9 +29,9 @@
  mcksp_pragmatic_syncretism_t: "Pragmatic Syncretism"
  mcksp_pragmatic_syncretism_t_desc: "Synthesis of various ideological traditions. Pragmatic approach to governance, rejection of dogmatism, picking the best from opposed systems."
 
- mcksp_scientific_progressism: "Scientific Progressivism"
+ mcksp_scientific_progressism: "Technocratic Progressivism"
  mcksp_scientific_progressism_desc: "Ideology of scientific-technical progress. Data-driven governance, investment in science and education, rational planning."
- mcksp_scientific_progressism_t: "Scientific Progressivism"
+ mcksp_scientific_progressism_t: "Technocratic Progressivism"
  mcksp_scientific_progressism_t_desc: "Ideology of scientific-technical progress. Data-driven governance, investment in science and education, rational planning."
 
  mcksp_statist_technocratism: "Statist Technocracy"

@@ -6,7 +6,13 @@
       "Bash(rm -v interface/countrypoliticsview.gui)",
       "Bash(rm -v interface/MCKSP_politics.gui common/scripted_guis/MCKSP_politics_visibility.txt)",
       "Bash(rmdir common/scripted_guis)",
-      "Bash(rm -v interface/MCKSP_politics_overlays.gui common/scripted_guis/MCKSP_politics_visibility.txt)"
+      "Bash(rm -v interface/MCKSP_politics_overlays.gui common/scripted_guis/MCKSP_politics_visibility.txt)",
+      "WebFetch(domain:api.anthropic.com)",
+      "Bash(rm -rf /tmp/design_extract3)",
+      "Bash(mkdir -p /tmp/design_extract3)",
+      "Bash(cp \"C:\\\\Users\\\\nikit\\\\.claude\\\\projects\\\\C--Users-nikit-Documents-Paradox-Interactive-Hearts-of-Iron-IV-mod-MCKSP\\\\20497388-e6b0-4663-b0af-da668967a704\\\\tool-results\\\\webfetch-1780759685965-y2fh8w.bin\" /tmp/design_extract3/d.tar.gz)",
+      "Read(//tmp/**)",
+      "Bash(tar -xzf d.tar.gz)"
     ]
   }
 }

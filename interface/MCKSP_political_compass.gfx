@@ -40,4 +40,46 @@ spriteTypes = {
 		texturefile = "gfx/interface/MCKSP/compass/compass_dot_strip.dds"
 		noOfFrames = 10
 	}
+
+	# Символы идеологий для легенды (strip, кадр = № человека 1..10, рамка запечена).
+	# Размер: 260x26 (10 кадров по 26x26).
+	spriteType = {
+		name = "GFX_MCKSP_ideo_symbols"
+		texturefile = "gfx/interface/MCKSP/compass/compass_ideo_symbols.dds"
+		noOfFrames = 10
+	}
+
+	# Фон/разделитель строки легенды. Кадр 1 — обычный (тонкая нижняя линия),
+	# кадр 2 — подсветка наведения. Размер: 412x38 (2 кадра по 206x38).
+	spriteType = {
+		name = "GFX_MCKSP_legend_row_bg"
+		texturefile = "gfx/interface/MCKSP/compass/legend_row_bg.dds"
+		noOfFrames = 2
+	}
+
+	# Одно-кадровые символы для встраивания в текст тултипа через £GFX_…£.
+	# Размер каждого: 24x24. Рамка запечена.
+	spriteType = { name = "GFX_MCKSP_ideo_sym_nikita"   texturefile = "gfx/interface/MCKSP/compass/ideo_sym_nikita.dds" }
+	spriteType = { name = "GFX_MCKSP_ideo_sym_arseny"   texturefile = "gfx/interface/MCKSP/compass/ideo_sym_arseny.dds" }
+	spriteType = { name = "GFX_MCKSP_ideo_sym_demokrit" texturefile = "gfx/interface/MCKSP/compass/ideo_sym_demokrit.dds" }
+	spriteType = { name = "GFX_MCKSP_ideo_sym_gleb"     texturefile = "gfx/interface/MCKSP/compass/ideo_sym_gleb.dds" }
+	spriteType = { name = "GFX_MCKSP_ideo_sym_stepan"   texturefile = "gfx/interface/MCKSP/compass/ideo_sym_stepan.dds" }
+	spriteType = { name = "GFX_MCKSP_ideo_sym_ivan"     texturefile = "gfx/interface/MCKSP/compass/ideo_sym_ivan.dds" }
+	spriteType = { name = "GFX_MCKSP_ideo_sym_ilya"     texturefile = "gfx/interface/MCKSP/compass/ideo_sym_ilya.dds" }
+	spriteType = { name = "GFX_MCKSP_ideo_sym_evgeny"   texturefile = "gfx/interface/MCKSP/compass/ideo_sym_evgeny.dds" }
+	spriteType = { name = "GFX_MCKSP_ideo_sym_artem"    texturefile = "gfx/interface/MCKSP/compass/ideo_sym_artem.dds" }
+	spriteType = { name = "GFX_MCKSP_ideo_sym_ilgam"    texturefile = "gfx/interface/MCKSP/compass/ideo_sym_ilgam.dds" }
+
+	# Оверлей-кнопка на каждой точке. 4-кадровый стандарт buttonType:
+	#   1 — норма (прозрачно)
+	#   2 — hover (кольцо подсветки)
+	#   3 — pressed (кольцо подсветки)
+	#   4 — disabled (прозрачно)
+	# Hover автоматически переключает кадр 1→2 движком, без scripted_gui.
+	# Размер кадра 26x26, всего .dds: 104x26.
+	spriteType = {
+		name = "GFX_MCKSP_dot_hover_btn"
+		texturefile = "gfx/interface/MCKSP/compass/dot_hover_btn.dds"
+		noOfFrames = 4
+	}
 }
