@@ -39,12 +39,29 @@ guiTypes = {
 	}
 
 	# --------------------------------------------------------------------------
-	# ОКНО КОМПАСА. Самостоятельное. Выезжает вправо из-за countrypoliticsview.
+	# VIEWPORT-КОНТЕЙНЕР. Пустой top-level контейнер с clipping=yes у правой
+	# грани countrypoliticsview. Окно компаса прикрепляется к нему через
+	# scripted_gui (parent_window_name) — тогда engine применяет клипинг,
+	# и видимость компаса гейтится флагом независимо от viewport.
+	# --------------------------------------------------------------------------
+	containerWindowType = {
+		name = "MCKSP_compass_viewport"
+		position = { x = 564 y = 80 }		# абсолютные коорд: вплотную справа от countrypoliticsview
+		size = { width = 460 height = 700 }
+		clipping = yes
+	}
+
+	# --------------------------------------------------------------------------
+	# ОКНО КОМПАСА. Top-level в .gui, но scripted_gui привязывает его как
+	# дочернее к viewport (parent_window_name="MCKSP_compass_viewport").
+	# Координаты тогда относительные к viewport:
+	#   position (-460,0) — полностью обрезано viewport-ом слева
+	#   show_position (0,0) — полностью видно, совпадает с viewport
 	# --------------------------------------------------------------------------
 	containerWindowType = {
 		name = "MCKSP_compass_window"
-		position      = { x = -470 y = 80 }      # спрятано слева за экраном
-		show_position = { x = 575  y = 80 }      # выехало вправо от панели и стрелки
+		position      = { x = -460 y = 0 }
+		show_position = { x = 0    y = 0 }
 		show_animation_type = decelerated
 		hide_animation_type = accelerated
 		animation_time = 300
@@ -145,7 +162,7 @@ guiTypes = {
 			iconType = { name = "lg_dot_evgeny"   position = { x = 210 y = 78 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 8 }
 			instantTextboxType = { name = "lg_n_evgeny"   position = { x = 228 y = 76 } font = "hoi_16mbs" text = "MCKSP_LG_EVGENY"   maxWidth = 170 maxHeight = 18 format = left }
 		}
-	}
+	}	# конец MCKSP_compass_window
 
 	# Шаблон строки легенды.
 	containerWindowType = {

@@ -52,11 +52,25 @@ scripted_gui = {
 	}
 
 	# ======================================================================
-	# 2) ОКНО КОМПАСА: видимо, пока выставлен флаг открытия
+	# 2) VIEWPORT компаса: всегда виден за СССР, clipping=yes отрезает
+	#    выезжающее окно слева — иллюзия "из-под панели политики".
+	# ======================================================================
+	MCKSP_compass_viewport = {
+		context_type = player_context
+		window_name  = "MCKSP_compass_viewport"
+
+		visible = {
+			tag = SOV
+		}
+	}
+
+	# ======================================================================
+	# 3) ОКНО КОМПАСА: внутри viewport, видимо пока флаг открытия выставлен.
 	# ======================================================================
 	MCKSP_compass_window = {
-		context_type = player_context
-		window_name  = "MCKSP_compass_window"
+		context_type       = player_context
+		parent_window_name = "MCKSP_compass_viewport"
+		window_name        = "MCKSP_compass_window"
 
 		visible = {
 			has_country_flag = SOV_compass_open
