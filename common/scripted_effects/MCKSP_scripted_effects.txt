@@ -26,9 +26,11 @@ activate_guests_system = {
 	set_party_name = { ideology = mcksp_scientific_progressism long_name = mcksp_usp_party_long name = mcksp_usp_party }
 	set_party_name = { ideology = mcksp_statist_technocratism long_name = mcksp_uso_party_long name = mcksp_uso_party }
 	set_party_name = { ideology = mcksp_national_conservatism long_name = mcksp_rsu_party_long name = mcksp_rsu_party }
+	set_party_name = { ideology = mcksp_placeholder_artem long_name = mcksp_pa_party_long name = mcksp_pa_party }
+	set_party_name = { ideology = mcksp_placeholder_ilgam long_name = mcksp_pf_party_long name = mcksp_pf_party }
 
 	# Перераспределение лидерства партий: мок SOV_redacted_leader сдаёт лидерство
-	# 8 реальным персонажам через promote_character. После всех промоушенов
+	# 10 реальным персонажам через promote_character. После всех промоушенов
 	# мок ретайрится (исчезает из country roster и из всех ролей).
 	promote_character = SOV_nikita_iakushin
 	promote_character = SOV_arseny_pavlov
@@ -38,19 +40,23 @@ activate_guests_system = {
 	promote_character = SOV_ivan_danchenko
 	promote_character = SOV_ilya_popov
 	promote_character = SOV_evgeny_okeanov
+	promote_character = SOV_artem_ayusheev
+	promote_character = SOV_ilgam_fagamanov
 	retire_character = SOV_redacted_leader
 
-	# Перераспределение популярности. 
+	# Перераспределение популярности. 10 партий по 2% = 20, ВКП(б) = 80.
 	set_popularities = {
 		communism = 80
-		mcksp_social_liberalism = 1    # СДС — Никита
-		mcksp_liberal_humanism = 1     # ЛГС — Арсений
-		mcksp_christian_democracy = 1  # ХДС — Степан
-		mcksp_market_socialism = 1     # НЭС — Демокрит
-		mcksp_pragmatic_syncretism = 1 # БС — Глеб
-		mcksp_scientific_progressism = 1 # СНП — Иван
-		mcksp_statist_technocratism = 1 # СГП — Илья
-		mcksp_national_conservatism = 1 # РДС — Евгений
+		mcksp_social_liberalism = 2     # СДС — Никита
+		mcksp_liberal_humanism = 2      # ЛГС — Арсений
+		mcksp_christian_democracy = 2   # ХДС — Степан
+		mcksp_market_socialism = 2      # НЭС — Демокрит
+		mcksp_pragmatic_syncretism = 2  # БС — Глеб
+		mcksp_scientific_progressism = 2 # АТ «УМА» — Иван
+		mcksp_statist_technocratism = 2 # СГП — Илья
+		mcksp_national_conservatism = 2 # РДС — Евгений
+		mcksp_placeholder_artem = 2     # ПА — Артём
+		mcksp_placeholder_ilgam = 2     # ПФ — Ильгам
 	}
 
 	# Параллельные переменные — для будущей логики коалиций (шаг 5).
@@ -62,6 +68,8 @@ activate_guests_system = {
 	set_variable = { p_ivan = 3 }
 	set_variable = { p_ilya = 3 }
 	set_variable = { p_evgeny = 2 }
+	set_variable = { p_artem = 2 }
+	set_variable = { p_ilgam = 2 }
 }
 
 # Разблокирует кнопку «Политического компаса» в окне политики (см.

@@ -116,19 +116,21 @@ guiTypes = {
 		# frame: 1=СДС 2=ЛГС 3=НЭС 4=БС 5=ХДС 6=СНП 7=СГП 8=РДС
 		iconType = { name = "dot_nikita"   position = { x = 177 y = 333 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 1 pdx_tooltip = "MCKSP_PT_NIKITA" }
 		iconType = { name = "dot_arseny"   position = { x = 195 y = 315 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 2 pdx_tooltip = "MCKSP_PT_ARSENY" }
-		iconType = { name = "dot_demokrit" position = { x = 141 y = 225 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 3 pdx_tooltip = "MCKSP_PT_DEMOKRIT" }
+		iconType = { name = "dot_demokrit" position = { x = 123 y = 225 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 3 pdx_tooltip = "MCKSP_PT_DEMOKRIT" }
 		iconType = { name = "dot_gleb"     position = { x = 231 y = 225 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 4 pdx_tooltip = "MCKSP_PT_GLEB" }
 		iconType = { name = "dot_stepan"   position = { x = 249 y = 207 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 5 pdx_tooltip = "MCKSP_PT_STEPAN" }
 		iconType = { name = "dot_ivan"     position = { x = 231 y = 171 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 6 pdx_tooltip = "MCKSP_PT_IVAN" }
 		iconType = { name = "dot_ilya"     position = { x = 249 y = 135 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 7 pdx_tooltip = "MCKSP_PT_ILYA" }
 		iconType = { name = "dot_evgeny"   position = { x = 285 y = 99  } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 8 pdx_tooltip = "MCKSP_PT_EVGENY" }
+		iconType = { name = "dot_artem"    position = { x = 141 y = 279 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 9  pdx_tooltip = "MCKSP_PT_ARTEM" }   # (-4,-2) Артём Аюшеев
+		iconType = { name = "dot_ilgam"    position = { x = 213 y = 243 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 10 pdx_tooltip = "MCKSP_PT_ILGAM" }   # (0,0) Ильгам Фагаманов (временно)
 
-		# --- легенда (имена) под полем: 8 статичных строк, 4 ряда × 2 колонки.
+		# --- легенда (имена) под полем: 10 статичных строк, 5 рядов × 2 колонки.
 		# Цвет точки = кадр идеологии (тот же strip что и на компасе).
 		containerWindowType = {
 			name = "compass_legend"
 			position = { x = 20 y = 470 }
-			size = { width = 420 height = 110 }
+			size = { width = 420 height = 134 }
 			clipping = no
 
 			background = {
@@ -137,30 +139,36 @@ guiTypes = {
 			}
 
 			# Колонка 1 (x=4 dot, x=22 text)
-			iconType = { name = "lg_dot_nikita"   position = { x = 4   y = 6  } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 1 }
-			instantTextboxType = { name = "lg_n_nikita"   position = { x = 22  y = 4  } font = "hoi_16mbs" text = "MCKSP_LG_NIKITA"   maxWidth = 170 maxHeight = 18 format = left }
+			iconType = { name = "lg_dot_nikita"   position = { x = 4   y = 6   } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 1 }
+			instantTextboxType = { name = "lg_n_nikita"   position = { x = 22  y = 4   } font = "hoi_16mbs" text = "MCKSP_LG_NIKITA"   maxWidth = 170 maxHeight = 18 format = left }
 
-			iconType = { name = "lg_dot_demokrit" position = { x = 4   y = 30 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 3 }
-			instantTextboxType = { name = "lg_n_demokrit" position = { x = 22  y = 28 } font = "hoi_16mbs" text = "MCKSP_LG_DEMOKRIT" maxWidth = 170 maxHeight = 18 format = left }
+			iconType = { name = "lg_dot_demokrit" position = { x = 4   y = 30  } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 3 }
+			instantTextboxType = { name = "lg_n_demokrit" position = { x = 22  y = 28  } font = "hoi_16mbs" text = "MCKSP_LG_DEMOKRIT" maxWidth = 170 maxHeight = 18 format = left }
 
-			iconType = { name = "lg_dot_stepan"   position = { x = 4   y = 54 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 5 }
-			instantTextboxType = { name = "lg_n_stepan"   position = { x = 22  y = 52 } font = "hoi_16mbs" text = "MCKSP_LG_STEPAN"   maxWidth = 170 maxHeight = 18 format = left }
+			iconType = { name = "lg_dot_stepan"   position = { x = 4   y = 54  } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 5 }
+			instantTextboxType = { name = "lg_n_stepan"   position = { x = 22  y = 52  } font = "hoi_16mbs" text = "MCKSP_LG_STEPAN"   maxWidth = 170 maxHeight = 18 format = left }
 
-			iconType = { name = "lg_dot_ilya"     position = { x = 4   y = 78 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 7 }
-			instantTextboxType = { name = "lg_n_ilya"     position = { x = 22  y = 76 } font = "hoi_16mbs" text = "MCKSP_LG_ILYA"     maxWidth = 170 maxHeight = 18 format = left }
+			iconType = { name = "lg_dot_ilya"     position = { x = 4   y = 78  } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 7 }
+			instantTextboxType = { name = "lg_n_ilya"     position = { x = 22  y = 76  } font = "hoi_16mbs" text = "MCKSP_LG_ILYA"     maxWidth = 170 maxHeight = 18 format = left }
+
+			iconType = { name = "lg_dot_artem"    position = { x = 4   y = 102 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 9 }
+			instantTextboxType = { name = "lg_n_artem"    position = { x = 22  y = 100 } font = "hoi_16mbs" text = "MCKSP_LG_ARTEM"    maxWidth = 170 maxHeight = 18 format = left }
 
 			# Колонка 2 (x=210 dot, x=228 text)
-			iconType = { name = "lg_dot_arseny"   position = { x = 210 y = 6  } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 2 }
-			instantTextboxType = { name = "lg_n_arseny"   position = { x = 228 y = 4  } font = "hoi_16mbs" text = "MCKSP_LG_ARSENY"   maxWidth = 170 maxHeight = 18 format = left }
+			iconType = { name = "lg_dot_arseny"   position = { x = 210 y = 6   } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 2 }
+			instantTextboxType = { name = "lg_n_arseny"   position = { x = 228 y = 4   } font = "hoi_16mbs" text = "MCKSP_LG_ARSENY"   maxWidth = 170 maxHeight = 18 format = left }
 
-			iconType = { name = "lg_dot_gleb"     position = { x = 210 y = 30 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 4 }
-			instantTextboxType = { name = "lg_n_gleb"     position = { x = 228 y = 28 } font = "hoi_16mbs" text = "MCKSP_LG_GLEB"     maxWidth = 170 maxHeight = 18 format = left }
+			iconType = { name = "lg_dot_gleb"     position = { x = 210 y = 30  } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 4 }
+			instantTextboxType = { name = "lg_n_gleb"     position = { x = 228 y = 28  } font = "hoi_16mbs" text = "MCKSP_LG_GLEB"     maxWidth = 170 maxHeight = 18 format = left }
 
-			iconType = { name = "lg_dot_ivan"     position = { x = 210 y = 54 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 6 }
-			instantTextboxType = { name = "lg_n_ivan"     position = { x = 228 y = 52 } font = "hoi_16mbs" text = "MCKSP_LG_IVAN"     maxWidth = 170 maxHeight = 18 format = left }
+			iconType = { name = "lg_dot_ivan"     position = { x = 210 y = 54  } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 6 }
+			instantTextboxType = { name = "lg_n_ivan"     position = { x = 228 y = 52  } font = "hoi_16mbs" text = "MCKSP_LG_IVAN"     maxWidth = 170 maxHeight = 18 format = left }
 
-			iconType = { name = "lg_dot_evgeny"   position = { x = 210 y = 78 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 8 }
-			instantTextboxType = { name = "lg_n_evgeny"   position = { x = 228 y = 76 } font = "hoi_16mbs" text = "MCKSP_LG_EVGENY"   maxWidth = 170 maxHeight = 18 format = left }
+			iconType = { name = "lg_dot_evgeny"   position = { x = 210 y = 78  } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 8 }
+			instantTextboxType = { name = "lg_n_evgeny"   position = { x = 228 y = 76  } font = "hoi_16mbs" text = "MCKSP_LG_EVGENY"   maxWidth = 170 maxHeight = 18 format = left }
+
+			iconType = { name = "lg_dot_ilgam"    position = { x = 210 y = 102 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 10 }
+			instantTextboxType = { name = "lg_n_ilgam"    position = { x = 228 y = 100 } font = "hoi_16mbs" text = "MCKSP_LG_ILGAM"    maxWidth = 170 maxHeight = 18 format = left }
 		}
 	}	# конец MCKSP_compass_window
 

@@ -47,6 +47,8 @@ recruit_character = SOV_gleb_rychkov
 recruit_character = SOV_ivan_danchenko
 recruit_character = SOV_ilya_popov
 recruit_character = SOV_evgeny_okeanov
+recruit_character = SOV_artem_ayusheev
+recruit_character = SOV_ilgam_fagamanov
 
 #POLITICAL ADVISORS
 recruit_character = SOV_mikhail_kalinin

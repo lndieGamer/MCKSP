@@ -62,3 +62,14 @@
 # ТО — не отдельная группа, а тёмная трансформация РДС через decision.
  mcksp_technocratic_order: "ТО"
  mcksp_technocratic_order_desc: "Технократический орден. Вырожденная форма державного национал-консерватизма: тоталитарная диктатура корпуса инженеров, безусловное превосходство «компетентных» над массами."
+
+# PLACEHOLDER идеологии для Артёма и Ильгама — переименовать когда определится концепция.
+ mcksp_placeholder_artem: "Партия Аюшеева"
+ mcksp_placeholder_artem_desc: "PLACEHOLDER. Идеология партии Артёма Аюшеева — пока без определённой концепции."
+ mcksp_placeholder_artem_t: "Партия Аюшеева"
+ mcksp_placeholder_artem_t_desc: "PLACEHOLDER. Идеология партии Артёма Аюшеева — пока без определённой концепции."
+
+ mcksp_placeholder_ilgam: "Партия Фагаманова"
+ mcksp_placeholder_ilgam_desc: "PLACEHOLDER. Идеология партии Ильгама Фагаманова — пока без определённой концепции."
+ mcksp_placeholder_ilgam_t: "Партия Фагаманова"
+ mcksp_placeholder_ilgam_t_desc: "PLACEHOLDER. Идеология партии Ильгама Фагаманова — пока без определённой концепции."

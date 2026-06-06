@@ -27,3 +27,9 @@
 
  mcksp_to_party: "TO"
  mcksp_to_party_long: "Technocratic Order"
+
+ mcksp_pa_party: "AP"
+ mcksp_pa_party_long: "Ayusheev's Party"
+
+ mcksp_pf_party: "FP"
+ mcksp_pf_party_long: "Fagamanov's Party"

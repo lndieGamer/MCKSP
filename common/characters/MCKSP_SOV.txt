@@ -120,4 +120,34 @@ characters = {
 		}
 	}
 
+	# ПА — Партия Аюшеева (placeholder)
+	SOV_artem_ayusheev = {
+		name = SOV_artem_ayusheev
+		portraits = {
+			civilian = {
+				large = "GFX_portrait_unknown"
+			}
+		}
+		country_leader = {
+			ideology = mcksp_placeholder_artem_t
+			expire = "1965.1.1.1"
+			id = -1
+		}
+	}
+
+	# ПФ — Партия Фагаманова (placeholder)
+	SOV_ilgam_fagamanov = {
+		name = SOV_ilgam_fagamanov
+		portraits = {
+			civilian = {
+				large = "GFX_portrait_unknown"
+			}
+		}
+		country_leader = {
+			ideology = mcksp_placeholder_ilgam_t
+			expire = "1965.1.1.1"
+			id = -1
+		}
+	}
+
 }

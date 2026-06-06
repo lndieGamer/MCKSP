@@ -485,4 +485,59 @@ ideologies = {
 	# через сюжетное решение. Локализационные ключи mcksp_technocratic_order / _desc
 	# и mcksp_to_party / _long в локалях сохранены для использования в decision'е,
 	# который через set_party_name переименует mcksp_national_conservatism в ТО.
+
+	# PLACEHOLDER: партия Артёма Аюшеева (-4, -2 на компасе). Идеология и цвет
+	# временные — переименовать через set_party_name когда определится концепция.
+	mcksp_placeholder_artem = {
+		types = {
+			mcksp_placeholder_artem_t = { can_be_randomly_selected = no }
+		}
+		color = { 90 90 90 }
+		war_impact_on_world_tension = 0.25
+		faction_impact_on_world_tension = 0.1
+		rules = {
+			can_force_government = yes
+			can_puppet = yes
+			can_send_volunteers = no
+		}
+		modifiers = {
+			generate_wargoal_tension = 0.5
+			join_faction_tension = 0.4
+			lend_lease_tension = 0.6
+			send_volunteers_tension = 0.4
+			guarantee_tension = 0.4
+			drift_defence_factor = -0.3
+		}
+		faction_modifiers = {}
+		ai_neutral = yes
+		ai_ideology_wanted_units_factor = 1.15
+		ai_give_core_state_control_threshold = 10000
+	}
+
+	# PLACEHOLDER: партия Ильгама Фагаманова (0, 0 на компасе, временно).
+	mcksp_placeholder_ilgam = {
+		types = {
+			mcksp_placeholder_ilgam_t = { can_be_randomly_selected = no }
+		}
+		color = { 170 170 170 }
+		war_impact_on_world_tension = 0.25
+		faction_impact_on_world_tension = 0.1
+		rules = {
+			can_force_government = yes
+			can_puppet = yes
+			can_send_volunteers = no
+		}
+		modifiers = {
+			generate_wargoal_tension = 0.5
+			join_faction_tension = 0.4
+			lend_lease_tension = 0.6
+			send_volunteers_tension = 0.4
+			guarantee_tension = 0.4
+			drift_defence_factor = -0.3
+		}
+		faction_modifiers = {}
+		ai_neutral = yes
+		ai_ideology_wanted_units_factor = 1.15
+		ai_give_core_state_control_threshold = 10000
+	}
 }

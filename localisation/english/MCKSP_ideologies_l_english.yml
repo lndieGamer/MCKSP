@@ -49,3 +49,14 @@
 
  mcksp_technocratic_order: "TO"
  mcksp_technocratic_order_desc: "Technocratic Order. A degenerated form of sovereigntist national conservatism: a totalitarian dictatorship of an engineering corps, with unconditional supremacy of the 'competent' over the masses."
+
+# PLACEHOLDER ideologies for Artem and Ilgam — rename via set_party_name once concept is defined.
+ mcksp_placeholder_artem: "Ayusheev's Party"
+ mcksp_placeholder_artem_desc: "PLACEHOLDER. Ideology of Artem Ayusheev's party — concept TBD."
+ mcksp_placeholder_artem_t: "Ayusheev's Party"
+ mcksp_placeholder_artem_t_desc: "PLACEHOLDER. Ideology of Artem Ayusheev's party — concept TBD."
+
+ mcksp_placeholder_ilgam: "Fagamanov's Party"
+ mcksp_placeholder_ilgam_desc: "PLACEHOLDER. Ideology of Ilgam Fagamanov's party — concept TBD."
+ mcksp_placeholder_ilgam_t: "Fagamanov's Party"
+ mcksp_placeholder_ilgam_t_desc: "PLACEHOLDER. Ideology of Ilgam Fagamanov's party — concept TBD."
