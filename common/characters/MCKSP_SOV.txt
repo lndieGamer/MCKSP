@@ -120,7 +120,7 @@ characters = {
 		}
 	}
 
-	# ПА — Партия Аюшеева (placeholder)
+	# Прогресс — партия Артёма Аюшеева (демократический социализм)
 	SOV_artem_ayusheev = {
 		name = SOV_artem_ayusheev
 		portraits = {
@@ -129,7 +129,7 @@ characters = {
 			}
 		}
 		country_leader = {
-			ideology = mcksp_placeholder_artem_t
+			ideology = mcksp_democratic_socialism_t
 			expire = "1965.1.1.1"
 			id = -1
 		}

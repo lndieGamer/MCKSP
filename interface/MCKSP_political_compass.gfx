@@ -70,6 +70,12 @@ spriteTypes = {
 	spriteType = { name = "GFX_MCKSP_ideo_sym_artem"    texturefile = "gfx/interface/MCKSP/compass/ideo_sym_artem.dds" }
 	spriteType = { name = "GFX_MCKSP_ideo_sym_ilgam"    texturefile = "gfx/interface/MCKSP/compass/ideo_sym_ilgam.dds" }
 
+	# Шапка окна компаса. Перерисована под ширину 602 (капы из ваниллы, середина растянута).
+	spriteType = {
+		name = "GFX_MCKSP_compass_header_bg"
+		texturefile = "gfx/interface/MCKSP/compass/compass_header_bg.dds"
+	}
+
 	# Оверлей-кнопка на каждой точке. 4-кадровый стандарт buttonType:
 	#   1 — норма (прозрачно)
 	#   2 — hover (кольцо подсветки)

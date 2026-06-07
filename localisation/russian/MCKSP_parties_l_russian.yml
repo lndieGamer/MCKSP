@@ -28,8 +28,8 @@
  mcksp_to_party: "ТО"
  mcksp_to_party_long: "Технократический орден"
 
- mcksp_pa_party: "ПА"
- mcksp_pa_party_long: "Партия Аюшеева"
+ mcksp_progress_party: "Прг"
+ mcksp_progress_party_long: "Прогресс"
 
  mcksp_pf_party: "ПФ"
  mcksp_pf_party_long: "Партия Фагаманова"

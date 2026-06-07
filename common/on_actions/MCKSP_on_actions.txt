@@ -24,6 +24,7 @@ on_actions = {
 				set_party_name = { ideology = mcksp_scientific_progressism long_name = MCKSP_redacted name = MCKSP_redacted }
 				set_party_name = { ideology = mcksp_statist_technocratism long_name = MCKSP_redacted name = MCKSP_redacted }
 				set_party_name = { ideology = mcksp_national_conservatism long_name = MCKSP_redacted name = MCKSP_redacted }
+				set_party_name = { ideology = mcksp_democratic_socialism long_name = MCKSP_redacted name = MCKSP_redacted }
 			}
 		}
 	}

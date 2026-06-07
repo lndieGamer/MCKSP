@@ -7,7 +7,7 @@ guiTypes = {
 		show_animation_type = decelerated
 		hide_animation_type = accelerated
 		animation_time = 300	
-		size = { width=570 height=100%% }		# MCKSP: +20 на стрелку компаса; дети ванилы не двигаются
+		size = { width=570 height=100%% }	
 		
 		#hide_sound = menu_close_window
 		show_sound = menu_open_window
@@ -53,7 +53,7 @@ guiTypes = {
 
 		containerWindowType = {
 			name = "chart_explanation"
-			# MCKSP: прокручиваемый список партий (вмещает 13 идеологий через ползунок).
+			# MCKSP: прокручиваемый список партий
 			position = { x = 326 y = 300 }
 			size = { width = 214 height = 74 }
 			clipping = yes

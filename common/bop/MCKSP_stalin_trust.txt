@@ -1,0 +1,133 @@
+# Баланс сил «Доверие Сталина».
+#
+# Активируется в activate_guests_system (после interrogation_event.1.b),
+# initial = 0 (нейтральное доверие).
+# Левая сторона — недоверие: при достижении -1 запускается trust_event.2
+#   (расстрел путешественников, терминал — гости удаляются из игры).
+# Правая сторона — доверие: при достижении +1 запускается trust_event.1
+#   (новые члены ВКП(б), пока только сюжетный флаг для будущих веток).
+#
+# Иконки сторон — заглушки vanilla ETH (gfx/leaders/SOV/собственные ещё не нарисованы).
+# decision_category цепляет существующую категорию SOV_MCKSP_decisions_cat —
+# нажатие на bop откроет панель решений по гостям.
+
+SOV_stalin_trust_balance = {
+	initial_value = 0
+	left_side = SOV_stalin_distrust_side
+	right_side = SOV_stalin_trust_side
+	# decision_category намеренно не задана: SOV_MCKSP_decisions_cat — это решения
+	# про инцидент «Б», они принадлежат обычной панели решений, не bop-у.
+	# Когда появятся свои bop-решения (двигают доверие) — завести отдельную категорию.
+
+	# Нейтральная зона — без модификаторов.
+	range = {
+		id = SOV_stalin_neutral_range
+		min = -0.2
+		max = 0.2
+		modifier = {
+			political_power_factor = 0
+		}
+	}
+
+	# Сторона недоверия (расстрел при крайней позиции).
+	side = {
+		id = SOV_stalin_distrust_side
+		icon = GFX_bop_ETH_decentralisation_side
+
+		range = {
+			id = SOV_stalin_distrust_mild_range
+			min = -0.7
+			max = -0.2
+			modifier = {
+				political_power_factor = -0.05
+				stability_factor = -0.05
+			}
+		}
+
+		range = {
+			id = SOV_stalin_distrust_strong_range
+			min = -0.95
+			max = -0.7
+			modifier = {
+				political_power_factor = -0.1
+				stability_factor = -0.1
+				research_speed_factor = -0.05
+			}
+		}
+
+		range = {
+			id = SOV_stalin_distrust_terminal_range
+			min = -1
+			max = -0.95
+			modifier = {
+				political_power_factor = -0.15
+				stability_factor = -0.15
+				research_speed_factor = -0.1
+			}
+			on_activate = {
+				hidden_effect = {
+					IF = {
+						limit = { NOT = { has_country_flag = SOV_guests_purged_flag } }
+						country_event = {
+							id = trust_event.2
+							hours = 4
+							random_hours = 8
+						}
+						set_country_flag = SOV_guests_purged_flag
+					}
+				}
+			}
+		}
+	}
+
+	# Сторона доверия (новые члены ВКП(б) при крайней позиции).
+	side = {
+		id = SOV_stalin_trust_side
+		icon = GFX_bop_ETH_communist_side
+
+		range = {
+			id = SOV_stalin_trust_mild_range
+			min = 0.2
+			max = 0.7
+			modifier = {
+				political_power_factor = 0.05
+				research_speed_factor = 0.02
+			}
+		}
+
+		range = {
+			id = SOV_stalin_trust_strong_range
+			min = 0.7
+			max = 0.95
+			modifier = {
+				political_power_factor = 0.1
+				research_speed_factor = 0.05
+				stability_factor = 0.05
+			}
+		}
+
+		range = {
+			id = SOV_stalin_trust_terminal_range
+			min = 0.95
+			max = 1
+			modifier = {
+				political_power_factor = 0.15
+				research_speed_factor = 0.1
+				stability_factor = 0.1
+			}
+			on_activate = {
+				hidden_effect = {
+					IF = {
+						limit = { NOT = { has_country_flag = SOV_guests_joined_vkpb_flag } }
+						country_event = {
+							id = trust_event.1
+							hours = 4
+							random_hours = 8
+						}
+						set_country_flag = SOV_guests_joined_vkpb_flag
+					}
+				}
+			}
+		}
+	}
+}

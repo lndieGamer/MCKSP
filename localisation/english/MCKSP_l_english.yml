@@ -93,3 +93,28 @@
  campaign_event.6.t: "Unrest is growing"
  campaign_event.6.d: "The party's passivity and indecision have turned into a disaster. Rumors and discontent are spreading, and the situation is getting out of control. People are starting to openly express their dissatisfaction and demand the truth, and the government is facing growing difficulties in trying to maintain order. The 'B Incident' is becoming a central topic of public discussion, and further dissemination of information is becoming inevitable."
  campaign_event.6.a: "Someone should be executed for this"
+
+# Stalin's Trust balance of power (common/bop/MCKSP_stalin_trust.txt)
+# MCKSP_BOP_TITLE — override hardcoded "Balance of Power" from interface/powerbalanceview.gui.
+ MCKSP_BOP_TITLE:0 "Balance of Power"
+ SOV_stalin_trust_balance:0 "Stalin's Trust"
+ SOV_stalin_trust_balance_desc:0 "Joseph Stalin's attitude toward the guests from the future. The higher the bar, the more freedom and state support they receive. The lower it goes, the closer they are to the firing squad."
+ SOV_stalin_distrust_side:0 "Distrust"
+ SOV_stalin_trust_side:0 "Trust"
+ SOV_stalin_neutral_range:0 "Cautious observation"
+ SOV_stalin_distrust_mild_range:0 "Slight distrust"
+ SOV_stalin_distrust_strong_range:0 "Serious suspicions"
+ SOV_stalin_distrust_terminal_range:0 "Enemies of the people"
+ SOV_stalin_trust_mild_range:0 "Restrained trust"
+ SOV_stalin_trust_strong_range:0 "High trust"
+ SOV_stalin_trust_terminal_range:0 "Full confidence of the Leader"
+
+# Stalin's Trust events
+ trust_event.1.t:0 "New members of the AUCP(b)"
+ trust_event.1.d:0 "Comrade Stalin has personally reviewed the results of the guests' years of work. No doubt remains: these people have proved their loyalty to the cause of socialism not in words but in deeds. Today, in a solemn ceremony, all ten were handed Party cards of the All-Union Communist Party (Bolsheviks). From now on they are no longer suspects nor wards of the NKVD, but full members of the Party, entrusted with key posts in science, the army, and the state apparatus. Their voice will now be heard at the Central Committee plenums."
+ trust_event.1.a: "They earned it."
+
+ trust_event.2.t:0 "The decision is made"
+ trust_event.2.d:0 "The Leader's patience has run out. NKVD reports lie in a stack on his desk — each more terrible than the last. Conspiracies, leaks, alien ideologies, suspicious ties. Tonight all ten guests from the future were arrested on warrants signed personally by Comrade Stalin. Three days later a closed troika handed down its verdict: the supreme measure of social defence. The bodies were buried namelessly. From now on no mention of the guests from the future is to appear in the Soviet press — ever."
+ trust_event.2.a:0 "The mistake has been corrected."
+

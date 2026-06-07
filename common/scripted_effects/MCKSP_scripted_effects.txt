@@ -26,7 +26,7 @@ activate_guests_system = {
 	set_party_name = { ideology = mcksp_scientific_progressism long_name = mcksp_usp_party_long name = mcksp_usp_party }
 	set_party_name = { ideology = mcksp_statist_technocratism long_name = mcksp_uso_party_long name = mcksp_uso_party }
 	set_party_name = { ideology = mcksp_national_conservatism long_name = mcksp_rsu_party_long name = mcksp_rsu_party }
-	set_party_name = { ideology = mcksp_placeholder_artem long_name = mcksp_pa_party_long name = mcksp_pa_party }
+	set_party_name = { ideology = mcksp_democratic_socialism long_name = mcksp_progress_party_long name = mcksp_progress_party }
 	set_party_name = { ideology = mcksp_placeholder_ilgam long_name = mcksp_pf_party_long name = mcksp_pf_party }
 
 	# Перераспределение лидерства партий: мок SOV_redacted_leader сдаёт лидерство
@@ -55,7 +55,7 @@ activate_guests_system = {
 		mcksp_scientific_progressism = 2 # АТ «УМА» — Иван
 		mcksp_statist_technocratism = 2 # СГП — Илья
 		mcksp_national_conservatism = 2 # РДС — Евгений
-		mcksp_placeholder_artem = 2     # ПА — Артём
+		mcksp_democratic_socialism = 2  # Прогресс — Артём
 		mcksp_placeholder_ilgam = 2     # ПФ — Ильгам
 	}
 
@@ -70,6 +70,50 @@ activate_guests_system = {
 	set_variable = { p_evgeny = 2 }
 	set_variable = { p_artem = 2 }
 	set_variable = { p_ilgam = 2 }
+
+	# Баланс сил «Доверие Сталина» — common/bop/MCKSP_stalin_trust.txt.
+	# initial_value = 0 (нейтрально). Двигается через события/решения.
+	# Крайние диапазоны триггерят trust_event.1 (новые члены ВКП(б))
+	# и trust_event.2 (расстрел путешественников).
+	set_power_balance = {
+		id = SOV_stalin_trust_balance
+		set_default = yes
+	}
+}
+
+# Терминальный эффект «расстрел путешественников» (trust_event.2.a).
+# Удаляет всех 10 гостей из ростера, сбрасывает popularity полностью на ВКП(б),
+# снимает идею-исследовательский баф. Партии-идеологии остаются в common/ideologies/,
+# но через popularity 0 и retire всех лидеров — теряют политическое значение.
+MCKSP_purge_guests_effect = {
+	retire_character = SOV_nikita_iakushin
+	retire_character = SOV_arseny_pavlov
+	retire_character = SOV_stepan_pavlov
+	retire_character = SOV_demokrit_ikonomidi
+	retire_character = SOV_gleb_rychkov
+	retire_character = SOV_ivan_danchenko
+	retire_character = SOV_ilya_popov
+	retire_character = SOV_evgeny_okeanov
+	retire_character = SOV_artem_ayusheev
+	retire_character = SOV_ilgam_fagamanov
+
+	remove_ideas = guests_from_future_idea
+
+	set_popularities = {
+		communism = 100
+		mcksp_social_liberalism = 0
+		mcksp_liberal_humanism = 0
+		mcksp_christian_democracy = 0
+		mcksp_market_socialism = 0
+		mcksp_pragmatic_syncretism = 0
+		mcksp_scientific_progressism = 0
+		mcksp_statist_technocratism = 0
+		mcksp_national_conservatism = 0
+		mcksp_democratic_socialism = 0
+		mcksp_placeholder_ilgam = 0
+	}
+
+	clr_country_flag = guests_active
 }
 
 # Разблокирует кнопку «Политического компаса» в окне политики (см.

@@ -486,13 +486,15 @@ ideologies = {
 	# и mcksp_to_party / _long в локалях сохранены для использования в decision'е,
 	# который через set_party_name переименует mcksp_national_conservatism в ТО.
 
-	# PLACEHOLDER: партия Артёма Аюшеева (-4, -2 на компасе). Идеология и цвет
-	# временные — переименовать через set_party_name когда определится концепция.
-	mcksp_placeholder_artem = {
+	# Партия «Прогресс» Артёма Аюшеева (-4, -2 на компасе). Демократический
+	# социализм образца Горбачёва/Дэн Сяопина: перестройка, гласность,
+	# частичный переход на рыночные рельсы при сохранении социалистических
+	# основ. Цвет — чартрёз («перестроечная свежесть»).
+	mcksp_democratic_socialism = {
 		types = {
-			mcksp_placeholder_artem_t = { can_be_randomly_selected = no }
+			mcksp_democratic_socialism_t = { can_be_randomly_selected = no }
 		}
-		color = { 90 90 90 }
+		color = { 180 200 60 }
 		war_impact_on_world_tension = 0.25
 		faction_impact_on_world_tension = 0.1
 		rules = {

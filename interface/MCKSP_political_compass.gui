@@ -76,8 +76,8 @@ guiTypes = {
 		# --- шапка ---
 		iconType = {
 			name = "header_bg"
-			spriteType = "GFX_header_bg"
-			position = { x = 7 y = 5 }
+			spriteType = "GFX_MCKSP_compass_header_bg"
+			position = { x = 1 y = 5 }
 			Orientation = "UPPER_LEFT"
 		}
 		instantTextboxType = {
@@ -193,7 +193,7 @@ guiTypes = {
 				buttonType = { name = "row_btn_artem" position = { x = 0 y = 0 } quadTextureSprite = "GFX_MCKSP_legend_row_bg" pdx_tooltip = "MCKSP_PT_ARTEM" }
 				iconType = { name = "sym" position = { x = 5 y = 7 } quadTextureSprite = "GFX_MCKSP_ideo_symbols" frame = 9 pdx_tooltip = "MCKSP_PT_ARTEM" }
 				instantTextboxType = { name = "nm"   position = { x = 37  y = 3  } font = "hoi_16mbs" text = "Артём Аюшеев" maxWidth = 255 maxHeight = 16 format = left pdx_tooltip = "MCKSP_PT_ARTEM" }
-				instantTextboxType = { name = "ideo" position = { x = 37  y = 20 } font = "hoi_16mbs" text = "mcksp_placeholder_artem" maxWidth = 255 maxHeight = 26 format = left pdx_tooltip = "MCKSP_PT_ARTEM" }
+				instantTextboxType = { name = "ideo" position = { x = 37  y = 20 } font = "hoi_16mbs" text = "mcksp_democratic_socialism" maxWidth = 255 maxHeight = 26 format = left pdx_tooltip = "MCKSP_PT_ARTEM" }
 			}
 
 			# Колонка 2 -----------------------------------------------------

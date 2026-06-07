@@ -2,6 +2,7 @@ add_namespace = start_event
 add_namespace = interrogation_event
 add_namespace = introduction_event
 add_namespace = campaign_event
+add_namespace = trust_event
 
 #Группа стартовых ивентов _____________________________________________________
 
@@ -436,5 +437,43 @@ country_event = {
 		else = {
 			add_stability = -0.05
 		}
+	}
+}
+
+#Группа ивентов баланса «Доверие Сталина» _____________________________________________________
+
+#Доверие на максимуме — гости принимаются в ВКП(б).
+#Триггерится из common/bop/MCKSP_stalin_trust.txt → SOV_stalin_trust_terminal_range.
+#Пока сюжетный флавор + флаг (баффы и ветки добавим позже).
+country_event = {
+	id = trust_event.1
+	title = trust_event.1.t
+	desc = trust_event.1.d
+	picture = GFX_report_event_stalin_01
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = trust_event.1.a
+		set_country_flag = SOV_guests_in_vkpb
+	}
+}
+
+#Доверие на минимуме — расстрел всех путешественников. Терминальный исход.
+#Триггерится из common/bop/MCKSP_stalin_trust.txt → SOV_stalin_distrust_terminal_range.
+country_event = {
+	id = trust_event.2
+	title = trust_event.2.t
+	desc = trust_event.2.d
+	picture = GFX_report_event_soviet_purge_officers_02
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = trust_event.2.a
+		MCKSP_purge_guests_effect = yes
+		set_country_flag = SOV_guests_purged
 	}
 }
