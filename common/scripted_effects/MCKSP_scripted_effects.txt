@@ -1,23 +1,8 @@
-# Scripted effects for MCKSP political arc.
-#
-# Вызывается из interrogation_event.1.b (опция "Использовать их знания").
-#  - Раскрывает реальные имена 8 партий для СССР через set_party_name
-#    (до этого партии видны как "ЗАПРЕЩЕНО" для всех, включая СССР).
-#  - Промоутит 8 реальных персонажей в country_leader их MCKSP-групп,
-#    отбирая лидерство у мока SOV_redacted_leader. Затем ретайрит мока
-#    через retire_character — он исчезает из ростера.
-#  - Перераспределяет popularity: ВКП(б) -> 80%, 8 партий по 2-3% (сумма 100).
-#    Ванильный pieChartType и parties_grid автоматически рисуют 9 секторов/строк
-#    с цветами из common/ideologies/00_ideologies.txt.
-#  - Засевает параллельные переменные p_<name> для логики коалиций (шаг 5).
-#
-# Рекрут персонажей (и мока) в страну — в history/countries/SOV - Soviet union.txt
-# (engine требует чтобы это было в history file).
-
+# Вызывается из interrogation_event.1.b. Promote_character × 10 + retire мока
+# (мок SOV_redacted_leader даёт лидерство 10 группам до активации; рекрут — в
+# history/countries/SOV - Soviet union.txt, engine требует там).
 activate_guests_system = {
 
-	# Раскрытие имён партий для СССР. Локали mcksp_<short>_party / _long
-	# определены в localisation/.../MCKSP_parties_l_*.yml.
 	set_party_name = { ideology = mcksp_social_liberalism long_name = mcksp_uds_party_long name = mcksp_uds_party }
 	set_party_name = { ideology = mcksp_liberal_humanism long_name = mcksp_lcl_party_long name = mcksp_lcl_party }
 	set_party_name = { ideology = mcksp_christian_democracy long_name = mcksp_cdu_party_long name = mcksp_cdu_party }
@@ -29,9 +14,6 @@ activate_guests_system = {
 	set_party_name = { ideology = mcksp_democratic_socialism long_name = mcksp_progress_party_long name = mcksp_progress_party }
 	set_party_name = { ideology = mcksp_placeholder_ilgam long_name = mcksp_pf_party_long name = mcksp_pf_party }
 
-	# Перераспределение лидерства партий: мок SOV_redacted_leader сдаёт лидерство
-	# 10 реальным персонажам через promote_character. После всех промоушенов
-	# мок ретайрится (исчезает из country roster и из всех ролей).
 	promote_character = SOV_nikita_iakushin
 	promote_character = SOV_arseny_pavlov
 	promote_character = SOV_stepan_pavlov
@@ -44,22 +26,21 @@ activate_guests_system = {
 	promote_character = SOV_ilgam_fagamanov
 	retire_character = SOV_redacted_leader
 
-	# Перераспределение популярности. 10 партий по 2% = 20, ВКП(б) = 80.
 	set_popularities = {
 		communism = 80
-		mcksp_social_liberalism = 2     # СДС — Никита
-		mcksp_liberal_humanism = 2      # ЛГС — Арсений
-		mcksp_christian_democracy = 2   # ХДС — Степан
-		mcksp_market_socialism = 2      # НЭС — Демокрит
-		mcksp_pragmatic_syncretism = 2  # БС — Глеб
-		mcksp_scientific_progressism = 2 # АТ «УМА» — Иван
-		mcksp_statist_technocratism = 2 # СГП — Илья
-		mcksp_national_conservatism = 2 # РДС — Евгений
-		mcksp_democratic_socialism = 2  # Прогресс — Артём
-		mcksp_placeholder_ilgam = 2     # ПФ — Ильгам
+		mcksp_social_liberalism = 2
+		mcksp_liberal_humanism = 2
+		mcksp_christian_democracy = 2
+		mcksp_market_socialism = 2
+		mcksp_pragmatic_syncretism = 2
+		mcksp_scientific_progressism = 2
+		mcksp_statist_technocratism = 2
+		mcksp_national_conservatism = 2
+		mcksp_democratic_socialism = 2
+		mcksp_placeholder_ilgam = 2
 	}
 
-	# Параллельные переменные — для будущей логики коалиций (шаг 5).
+	# p_<name> — параллельная popularity на человека (vanilla считает на группу).
 	set_variable = { p_nikita = 3 }
 	set_variable = { p_arseny = 2 }
 	set_variable = { p_stepan = 2 }
@@ -71,20 +52,13 @@ activate_guests_system = {
 	set_variable = { p_artem = 2 }
 	set_variable = { p_ilgam = 2 }
 
-	# Баланс сил «Доверие Сталина» — common/bop/MCKSP_stalin_trust.txt.
-	# initial_value = 0 (нейтрально). Двигается через события/решения.
-	# Крайние диапазоны триггерят trust_event.1 (новые члены ВКП(б))
-	# и trust_event.2 (расстрел путешественников).
 	set_power_balance = {
 		id = SOV_stalin_trust_balance
 		set_default = yes
 	}
 }
 
-# Терминальный эффект «расстрел путешественников» (trust_event.2.a).
-# Удаляет всех 10 гостей из ростера, сбрасывает popularity полностью на ВКП(б),
-# снимает идею-исследовательский баф. Партии-идеологии остаются в common/ideologies/,
-# но через popularity 0 и retire всех лидеров — теряют политическое значение.
+# Терминал — расстрел гостей (trust_event.2.a).
 MCKSP_purge_guests_effect = {
 	retire_character = SOV_nikita_iakushin
 	retire_character = SOV_arseny_pavlov
@@ -113,8 +87,6 @@ MCKSP_purge_guests_effect = {
 		mcksp_placeholder_ilgam = 0
 	}
 
-	# Возврат имён партий к "ЗАПРЕЩЕНО" (откат активации из activate_guests_system).
-	# Локаль MCKSP_redacted определена в MCKSP_ideologies_l_*.yml.
 	set_party_name = { ideology = mcksp_social_liberalism long_name = MCKSP_redacted name = MCKSP_redacted }
 	set_party_name = { ideology = mcksp_liberal_humanism long_name = MCKSP_redacted name = MCKSP_redacted }
 	set_party_name = { ideology = mcksp_christian_democracy long_name = MCKSP_redacted name = MCKSP_redacted }
@@ -128,14 +100,3 @@ MCKSP_purge_guests_effect = {
 
 	clr_country_flag = guests_active
 }
-
-# Разблокирует кнопку «Политического компаса» в окне политики (см.
-# interface/MCKSP_political_compass.gui + common/scripted_guis/MCKSP_political_compass.txt).
-# Вызови этот эффект из события/фокуса/решения, которое в твоём сюжете означает
-# «появился баланс доверия Сталина + началась борьба фракций».
-# Когда добавишь power_balance "SOV_stalin_trust_balance" — создавай его здесь же
-# через create_power_balance, чтобы гейт работал корректно.
-MCKSP_unlock_political_compass = {
-	set_country_flag = SOV_factional_struggle_active
-}
-

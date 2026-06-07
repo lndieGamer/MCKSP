@@ -6,7 +6,6 @@ add_namespace = trust_event
 
 #Группа стартовых ивентов _____________________________________________________
 
-#Первый стартовый ивент
 country_event = {
 	id = start_event.1
 	title = start_event.1.t
@@ -29,7 +28,6 @@ country_event = {
 	}
 }
 
-#Второй стартовый ивент
 country_event = {
 	id = start_event.2
 	title = start_event.2.t
@@ -46,7 +44,6 @@ country_event = {
 	}
 }
 
-#Третий стартовый ивент
 country_event = {
 	id = start_event.3
 	title = start_event.3.t
@@ -84,9 +81,8 @@ country_event = {
 	option = {
 		name = interrogation_event.1.b
 		add_ideas = guests_from_future_idea
-		# activate_guests_system делает set_party_name × 10, promote_character × 10,
-		# retire мока, set_popularities + set_variable. Без hidden_effect это
-		# показывается в tooltip-е опции и засоряет UI. Свёртываем под кат.
+		# hidden_effect — иначе огромный пакет set_party_name × 10 / promote × 10
+		# светится в tooltip опции.
 		hidden_effect = {
 			set_country_flag = guests_active
 			activate_guests_system = yes
@@ -444,10 +440,9 @@ country_event = {
 }
 
 #Группа ивентов баланса «Доверие Сталина» _____________________________________________________
+# Триггеры — common/bop/MCKSP_stalin_trust.txt edge ranges.
 
-#Доверие на максимуме — гости принимаются в ВКП(б).
-#Триггерится из common/bop/MCKSP_stalin_trust.txt → SOV_stalin_trust_terminal_range.
-#Пока сюжетный флавор + флаг (баффы и ветки добавим позже).
+#Доверие на максимуме — гости в ВКП(б).
 country_event = {
 	id = trust_event.1
 	title = trust_event.1.t
@@ -463,8 +458,7 @@ country_event = {
 	}
 }
 
-#Доверие на минимуме — расстрел всех путешественников. Терминальный исход.
-#Триггерится из common/bop/MCKSP_stalin_trust.txt → SOV_stalin_distrust_terminal_range.
+#Доверие на минимуме — терминал, расстрел гостей.
 country_event = {
 	id = trust_event.2
 	title = trust_event.2.t

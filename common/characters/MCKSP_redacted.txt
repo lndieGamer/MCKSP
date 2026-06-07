@@ -1,10 +1,8 @@
 characters = {
 
-	# Мок-персонаж "ЗАПРЕЩЕНО" — носитель country_leader role для всех 8
-	# MCKSP-партий до активации сюжета. Рекрутится в SOV через history-file,
-	# ПЕРВЫМ среди MCKSP-персонажей. При срабатывании activate_guests_system
-	# реальные персонажи (SOV_nikita_iakushin и т.д.) промоутятся в свои
-	# партии через promote_character × 8, а мок ретайрится через retire_character.
+	# Мок-лидер для всех MCKSP-групп до активации. Рекрут — в SOV history,
+	# ПЕРВЫМ среди MCKSP-персонажей. activate_guests_system промоутит реальных
+	# и ретайрит мок.
 	SOV_redacted_leader = {
 		name = SOV_redacted_leader
 		portraits = {

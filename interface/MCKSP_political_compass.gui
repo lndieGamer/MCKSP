@@ -2,31 +2,21 @@
 #  MCKSP — Политический компас (политические координаты)
 #  Файл: interface/MCKSP_political_compass.gui
 #
-#  Самостоятельные окна, не привязаны к countrypoliticsview. Видимостью
-#  управляет scripted_gui (см. одноимённый .txt).
+#  Все компас-окна объявлены TOP-LEVEL — engine не находит nested-контейнеры
+#  для scripted_gui через window_name (проверено: "Window MCKSP_compass_viewport
+#  not found" при попытке вложить в countrypoliticsview override).
 #
-#  Координаты позиций — абсолютные экранные.
-#  countrypoliticsview сидит на абсолюте (-6, 78), ширина 550 → правый край ~544.
-#
-#  Координаты восьмёрки на компасе ЗАФИКСИРОВАНЫ. Формула пикселя
-#  (шаг сетки 18px при поле 360px на ось −10..+10):
-#       x = PLOT_CX + econ*18 - 7          (PLOT_CX = 220)
-#       y = PLOT_CY - soc *18 - 7          (PLOT_CY = 250, +соц вверх)
+#  Кнопки-стрелки ►/◄ парентятся к countrypoliticsview через parent_window_name
+#  в scripted_gui — появляются/исчезают вместе с panel политики. viewport и
+#  compass_window top-level: остаются видимы пока флаг SOV_compass_open стоит,
+#  даже после закрытия panel политики (мелкий косметический баг — listener на
+#  close_button vanilla окна ре-инстансит окно как дубль, поэтому не используем).
 ###############################################################################
 
 guiTypes = {
 
-	# --------------------------------------------------------------------------
-	# КНОПКА-СТРЕЛКА. Прикрепляется к countrypoliticsview через scripted_gui
-	# (parent_window_name) — поэтому появляется/исчезает вместе с панелью политики.
-	# Координаты ОТНОСИТЕЛЬНЫЕ к origin панели политики:
-	#   x=540 — правый край списка партий (326+214=540)
-	#   y=312 — на одной линии со списком
-	# --------------------------------------------------------------------------
-	# Два отдельных контейнера для кнопок-стрелок ►/◄, потому что scripted_gui
-	# гейтит видимость целого окна (window_name), а не buttonType внутри него.
-	# Оба окна позиционируются одинаково — визуально кнопка одна, переключаются
-	# взаимно через scripted_gui visible.
+	# Две стрелки ►/◄ — взаимоисключающие через scripted_gui visible / флаг
+	# SOV_compass_open. Координаты relative к politicsview (parent_window_name).
 	containerWindowType = {
 		name = "MCKSP_compass_button_window_open"
 		position = { x = 540 y = 312 }
@@ -57,26 +47,16 @@ guiTypes = {
 		}
 	}
 
-	# --------------------------------------------------------------------------
-	# VIEWPORT-КОНТЕЙНЕР. Пустой top-level контейнер с clipping=yes у правой
-	# грани countrypoliticsview. Окно компаса прикрепляется к нему через
-	# scripted_gui (parent_window_name) — тогда engine применяет клипинг,
-	# и видимость компаса гейтится флагом независимо от viewport.
-	# --------------------------------------------------------------------------
+	# Viewport top-level (абсолютные коорд). clipping=yes отрезает выезжающее окно.
 	containerWindowType = {
 		name = "MCKSP_compass_viewport"
-		position = { x = 564 y = 80 }		# абсолютные коорд: вплотную справа от countrypoliticsview
-		size = { width = 602 height = 700 }	# +30% к ширине; вмещает длинные названия идеологий
+		position = { x = 564 y = 80 }
+		size = { width = 602 height = 700 }
 		clipping = yes
 	}
 
-	# --------------------------------------------------------------------------
-	# ОКНО КОМПАСА. Top-level в .gui, но scripted_gui привязывает его как
-	# дочернее к viewport (parent_window_name="MCKSP_compass_viewport").
-	# Координаты тогда относительные к viewport:
-	#   position (-460,0) — полностью обрезано viewport-ом слева
-	#   show_position (0,0) — полностью видно, совпадает с viewport
-	# --------------------------------------------------------------------------
+	# Окно компаса парентится к viewport через scripted_gui. position/show_position
+	# relative к viewport: (-602,0) скрыто слева, (0,0) видно.
 	containerWindowType = {
 		name = "MCKSP_compass_window"
 		position      = { x = -602 y = 0 }
@@ -92,7 +72,6 @@ guiTypes = {
 			quadTextureSprite = "GFX_tiled_plain_bg"
 		}
 
-		# --- шапка ---
 		iconType = {
 			name = "header_bg"
 			spriteType = "GFX_MCKSP_compass_header_bg"
@@ -118,21 +97,17 @@ guiTypes = {
 			pdx_tooltip = "CLOSE"
 		}
 
-		# --- поле компаса (сетка центрирована в ширине 602; центр x=301) ---
 		iconType = {
 			name = "compass_grid"
 			position = { x = 121 y = 70 }
 			quadTextureSprite = "GFX_MCKSP_compass_grid_360"
 		}
 
-		# Подписи осей. AUTH/LIB сверху/снизу по центру сетки. LEFT/RIGHT
-		# вынесены ЗА поле координат (слева/справа от сетки).
 		instantTextboxType = { name = "ax_top"    position = { x = 231 y = 54  } font = "hoi_16mbs" text = "MCKSP_AXIS_AUTH"  maxWidth = 140 format = center alwaystransparent = yes }
 		instantTextboxType = { name = "ax_bottom" position = { x = 231 y = 432 } font = "hoi_16mbs" text = "MCKSP_AXIS_LIB"   maxWidth = 140 format = center alwaystransparent = yes }
 		instantTextboxType = { name = "ax_left"   position = { x = 41  y = 250 } font = "hoi_16mbs" text = "MCKSP_AXIS_LEFT"  maxWidth = 76  format = right  alwaystransparent = yes }
 		instantTextboxType = { name = "ax_right"  position = { x = 485 y = 250 } font = "hoi_16mbs" text = "MCKSP_AXIS_RIGHT" maxWidth = 76  format = left   alwaystransparent = yes }
 
-		# --- 10 точек (формула: x = 301 + эко*18 - 7, y = 250 - соц*18 - 7) ---
 		iconType = { name = "dot_nikita"   position = { x = 258 y = 333 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 1  pdx_tooltip = "MCKSP_PT_NIKITA" }
 		iconType = { name = "dot_arseny"   position = { x = 276 y = 315 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 2  pdx_tooltip = "MCKSP_PT_ARSENY" }
 		iconType = { name = "dot_demokrit" position = { x = 204 y = 225 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 3  pdx_tooltip = "MCKSP_PT_DEMOKRIT" }
@@ -144,9 +119,6 @@ guiTypes = {
 		iconType = { name = "dot_artem"    position = { x = 222 y = 279 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 9  pdx_tooltip = "MCKSP_PT_ARTEM" }
 		iconType = { name = "dot_ilgam"    position = { x = 240 y = 153 } quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 10 pdx_tooltip = "MCKSP_PT_ILGAM" }
 
-		# Оверлей-кнопки на каждой точке. Hover на оверлей -> кадр 2 спрайта
-		# (кольцо), pure GUI без scripted_gui. Также перехватывают tooltip.
-		# Позиция = (точка.x - 6, точка.y - 6) для центрирования 26x26 вокруг 14x14.
 		buttonType = { name = "hov_nikita"   position = { x = 252 y = 327 } quadTextureSprite = "GFX_MCKSP_dot_hover_btn" pdx_tooltip = "MCKSP_PT_NIKITA" }
 		buttonType = { name = "hov_arseny"   position = { x = 270 y = 309 } quadTextureSprite = "GFX_MCKSP_dot_hover_btn" pdx_tooltip = "MCKSP_PT_ARSENY" }
 		buttonType = { name = "hov_demokrit" position = { x = 198 y = 219 } quadTextureSprite = "GFX_MCKSP_dot_hover_btn" pdx_tooltip = "MCKSP_PT_DEMOKRIT" }
@@ -158,10 +130,6 @@ guiTypes = {
 		buttonType = { name = "hov_artem"    position = { x = 216 y = 273 } quadTextureSprite = "GFX_MCKSP_dot_hover_btn" pdx_tooltip = "MCKSP_PT_ARTEM" }
 		buttonType = { name = "hov_ilgam"    position = { x = 234 y = 147 } quadTextureSprite = "GFX_MCKSP_dot_hover_btn" pdx_tooltip = "MCKSP_PT_ILGAM" }
 
-		# --- легенда (таблица 2 колонки × 5 рядов).
-		# Каждая строка: рамка-символ слева, имя+координаты в первой строке,
-		# название идеологии второй строкой (своя textbox, переносится).
-		# Hover на любую часть строки -> богатый тултип MCKSP_PT_* с описанием.
 		containerWindowType = {
 			name = "compass_legend"
 			position = { x = 20 y = 458 }
@@ -169,7 +137,6 @@ guiTypes = {
 			clipping = no
 			background = { name = "Background" quadTextureSprite = "GFX_tiled_window_transparent" }
 
-			# Колонка 1 -----------------------------------------------------
 			containerWindowType = {
 				name = "lg_nikita"
 				position = { x = 0 y = 4 } size = { width = 296 height = 40 } clipping = no
@@ -215,7 +182,6 @@ guiTypes = {
 				instantTextboxType = { name = "ideo" position = { x = 37  y = 20 } font = "hoi_16mbs" text = "mcksp_democratic_socialism" maxWidth = 255 maxHeight = 26 format = left pdx_tooltip = "MCKSP_PT_ARTEM" }
 			}
 
-			# Колонка 2 -----------------------------------------------------
 			containerWindowType = {
 				name = "lg_arseny"
 				position = { x = 316 y = 4 } size = { width = 296 height = 40 } clipping = no
@@ -261,34 +227,6 @@ guiTypes = {
 				instantTextboxType = { name = "ideo" position = { x = 37  y = 20 } font = "hoi_16mbs" text = "mcksp_placeholder_ilgam" maxWidth = 255 maxHeight = 26 format = left pdx_tooltip = "MCKSP_PT_ILGAM" }
 			}
 		}
-	}	# конец MCKSP_compass_window
-
-	# Шаблон строки легенды.
-	containerWindowType = {
-		name = "MCKSP_compass_legend_entry"
-		size = { width = 200 height = 22 }
-		clipping = no
-
-		iconType = {
-			name = "color"
-			position = { x = 2 y = 4 }
-			quadTextureSprite = "GFX_MCKSP_compass_dot_strip"
-		}
-		instantTextboxType = {
-			name = "name"
-			position = { x = 22 y = 3 }
-			font = "hoi_16mbs"
-			maxWidth = 130
-			maxHeight = 18
-			format = left
-		}
-		instantTextboxType = {
-			name = "coords"
-			position = { x = 150 y = 3 }
-			font = "hoi_16mbs"
-			maxWidth = 48
-			maxHeight = 18
-			format = right
-		}
 	}
+
 }

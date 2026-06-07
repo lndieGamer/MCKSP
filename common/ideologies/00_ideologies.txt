@@ -266,12 +266,8 @@ ideologies = {
 		ai_give_core_state_control_threshold = 10000
 	}
 
-	# ===================================================================
-	# MCKSP — гости из будущего. 9 отдельных групп верхнего уровня.
-	# Каждая = одна партия. Внутри placeholder-type <name>_t — для
-	# country_leader role. Цвета и rules — по образцу neutrality (нейтральный
-	# тип для AI; играть будет только игрок-СССР).
-	# ===================================================================
+	# MCKSP — гости из будущего. Каждая группа = одна партия (pieChartType /
+	# parties_grid работают по группам, не types). Rules скопированы с neutrality.
 
 	mcksp_social_liberalism = {
 		types = {
@@ -481,15 +477,10 @@ ideologies = {
 		ai_give_core_state_control_threshold = 10000
 	}
 
-	# Технократический орден (ТО) — не отдельная группа, а тёмная трансформация РДС
-	# через сюжетное решение. Локализационные ключи mcksp_technocratic_order / _desc
-	# и mcksp_to_party / _long в локалях сохранены для использования в decision'е,
-	# который через set_party_name переименует mcksp_national_conservatism в ТО.
+	# Технократический орден (ТО) — будущая dark-трансформация РДС через decision
+	# (set_party_name → ключи mcksp_technocratic_order / mcksp_to_party в локалях).
 
-	# Партия «Прогресс» Артёма Аюшеева (-4, -2 на компасе). Демократический
-	# социализм образца Горбачёва/Дэн Сяопина: перестройка, гласность,
-	# частичный переход на рыночные рельсы при сохранении социалистических
-	# основ. Цвет — чартрёз («перестроечная свежесть»).
+	# Прогресс — Артём, демократический социализм (-4, -2).
 	mcksp_democratic_socialism = {
 		types = {
 			mcksp_democratic_socialism_t = { can_be_randomly_selected = no }

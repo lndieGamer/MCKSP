@@ -2,20 +2,20 @@
 #  MCKSP — Политический компас: видимость и гейтинг по триггеру
 #  Файл: common/scripted_guis/MCKSP_political_compass.txt
 #
-#  Кнопка-стрелка и окно компаса — самостоятельные .gui-окна (не привязаны к
-#  countrypoliticsview). Видимость и кликабельность задаёт scripted_gui через
-#  блоки `visible` + `effect` + `triggers`.
+#  Кнопка-стрелка ►/◄ привязана к countrypoliticsview через parent_window_name —
+#  появляется/исчезает вместе с панелью политики. viewport и compass_window
+#  top-level, гейтятся по флагу SOV_compass_open.
 ###############################################################################
 
 scripted_gui = {
 
 	# ======================================================================
-	# 1) КНОПКА-СТРЕЛКА: тоггл через два блока с разными visible.
-	#    if/else в effects HOI4 нестабильно отрабатывает — поэтому делим логику
-	#    на «открыть» и «закрыть», переключение между блоками идёт через флаг.
+	# КНОПКА-СТРЕЛКА: тоггл через два блока с разными visible.
+	# if/else в effects HOI4 нестабильно отрабатывает — поэтому делим логику
+	# на «открыть» и «закрыть», переключение между блоками идёт через флаг.
 	# ======================================================================
 
-	# Когда компас ЗАКРЫТ — видно окно с кнопкой ► (MCKSP_open_compass). Клик открывает.
+	# Компас ЗАКРЫТ — видно окно с кнопкой ► (MCKSP_open_compass). Клик открывает.
 	MCKSP_compass_button_open = {
 		context_type       = player_context
 		parent_window_name = "countrypoliticsview"
@@ -34,7 +34,7 @@ scripted_gui = {
 		}
 	}
 
-	# Когда компас ОТКРЫТ — видно окно с кнопкой ◄ (MCKSP_close_compass). Клик закрывает.
+	# Компас ОТКРЫТ — видно окно с кнопкой ◄ (MCKSP_close_compass). Клик закрывает.
 	MCKSP_compass_button_close = {
 		context_type       = player_context
 		parent_window_name = "countrypoliticsview"
@@ -53,10 +53,7 @@ scripted_gui = {
 		}
 	}
 
-	# ======================================================================
-	# 2) VIEWPORT компаса: всегда виден за СССР, clipping=yes отрезает
-	#    выезжающее окно слева — иллюзия "из-под панели политики".
-	# ======================================================================
+	# VIEWPORT компаса top-level. clipping=yes (в .gui) отрезает выезжающее окно слева.
 	MCKSP_compass_viewport = {
 		context_type = player_context
 		window_name  = "MCKSP_compass_viewport"
@@ -67,9 +64,8 @@ scripted_gui = {
 		}
 	}
 
-	# ======================================================================
-	# 3) ОКНО КОМПАСА: внутри viewport, видимо пока флаг открытия выставлен.
-	# ======================================================================
+	# Окно компаса top-level, парентится к viewport через parent_window_name.
+	# Видимо пока флаг SOV_compass_open выставлен.
 	MCKSP_compass_window = {
 		context_type       = player_context
 		parent_window_name = "MCKSP_compass_viewport"
@@ -86,17 +82,4 @@ scripted_gui = {
 			}
 		}
 	}
-
 }
-
-###############################################################################
-#  АЛЬТЕРНАТИВНЫЕ ТРИГГЕРЫ для блока `visible` (подставь, что точнее под сюжет):
-#
-#   has_completed_focus = SOV_the_balance_of_forces      # после нужного фокуса
-#   has_country_flag    = SOV_factional_struggle_active  # ручной флаг старта
-#   check_variable      = { SOV_factionalism_political_power_factor < 0 }
-#   has_power_balance   = { id = SOV_stalin_trust_balance }
-#   power_balance_value = { id = SOV_stalin_trust_balance value < 0.5 }
-#
-#  Условия в `visible` соединяются как И. Нужно ИЛИ — обернуть в OR = { }.
-###############################################################################

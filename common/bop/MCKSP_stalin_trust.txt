@@ -1,25 +1,12 @@
-# Баланс сил «Доверие Сталина».
-#
-# Активируется в activate_guests_system (после interrogation_event.1.b),
-# initial = 0 (нейтральное доверие).
-# Левая сторона — недоверие: при достижении -1 запускается trust_event.2
-#   (расстрел путешественников, терминал — гости удаляются из игры).
-# Правая сторона — доверие: при достижении +1 запускается trust_event.1
-#   (новые члены ВКП(б), пока только сюжетный флаг для будущих веток).
-#
-# Иконки сторон — заглушки vanilla ETH (gfx/leaders/SOV/собственные ещё не нарисованы).
-# decision_category цепляет существующую категорию SOV_MCKSP_decisions_cat —
-# нажатие на bop откроет панель решений по гостям.
+# Активируется в activate_guests_system. Edge ranges (±0.95..±1) триггерят
+# trust_event.1 (ВКП(б)) и trust_event.2 (расстрел). Иконки сторон — vanilla ETH
+# заглушки до своих gfx.
 
 SOV_stalin_trust_balance = {
 	initial_value = 0
 	left_side = SOV_stalin_distrust_side
 	right_side = SOV_stalin_trust_side
-	# decision_category намеренно не задана: SOV_MCKSP_decisions_cat — это решения
-	# про инцидент «Б», они принадлежат обычной панели решений, не bop-у.
-	# Когда появятся свои bop-решения (двигают доверие) — завести отдельную категорию.
 
-	# Нейтральная зона — без модификаторов.
 	range = {
 		id = SOV_stalin_neutral_range
 		min = -0.2
@@ -29,7 +16,6 @@ SOV_stalin_trust_balance = {
 		}
 	}
 
-	# Сторона недоверия (расстрел при крайней позиции).
 	side = {
 		id = SOV_stalin_distrust_side
 		icon = GFX_bop_ETH_decentralisation_side
@@ -80,7 +66,6 @@ SOV_stalin_trust_balance = {
 		}
 	}
 
-	# Сторона доверия (новые члены ВКП(б) при крайней позиции).
 	side = {
 		id = SOV_stalin_trust_side
 		icon = GFX_bop_ETH_communist_side

@@ -1,17 +1,6 @@
-# MCKSP on_actions.
-# Рекрут персонажей вынесен в history/countries/SOV - Soviet union.txt
-# (override ванильного файла), чтобы лидеры назначались ДО первого рендера
-# parties_grid — иначе engine успевает создать минорных лидеров.
-#
-# on_startup: для КАЖДОЙ страны переопределяем имена 8 MCKSP-партий
-# на MCKSP_redacted ("ЗАПРЕЩЕНО"). Это маскирует parties_grid и сектора
-# круга популярности до срабатывания сюжета. Локали идеологий статичны
-# (engine не оценивает scripted_localisation в ideology-локалях), поэтому
-# скрытие делается на уровне party_name override.
-#
-# Для СССР этот override снимается в activate_guests_system, которое
-# вызывает set_party_name с реальными названиями партий (СДС/ЛГС/...).
-
+# on_startup маскирует имена MCKSP-партий как MCKSP_redacted для ВСЕХ стран —
+# scripted_localisation не работает в ideology-локалях, поэтому скрытие через
+# party_name override. activate_guests_system снимает маскировку для SOV.
 on_actions = {
 	on_startup = {
 		effect = {

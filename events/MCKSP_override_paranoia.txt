@@ -1,18 +1,9 @@
-# Override vanilla NSB_soviet_paranoia_system_events.24 "Generals accuse each other".
-# Базовый файл: events/NSB_Soviet.txt:690-878.
-#
-# Цель — добавить 2 новые опции (.d, .e), доступные только когда гости активны
-# (has_country_flag = guests_active). Опции двигают баланс «Доверие Сталина»:
-#   .d — гости убеждают Сталина расстрелять ОБОИХ генералов → +0.1 доверия.
-#   .e — гости убеждают Сталина отказаться от репрессий → −0.1 доверия.
-#
-# Остальные 3 опции (.a, .b, .c) скопированы 1:1 с vanilla — engine берёт
-# последний загруженный вариант событий с таким id, поэтому копируем целиком.
-# При обновлении NSB этот файл нужно сверить с актуальной .24 в vanilla.
+# Override NSB_soviet_paranoia_system_events.24 — vanilla 1:1 + 2 MCKSP-опции
+# (.d, .e) с триггером has_country_flag = guests_active. При обновлении NSB
+# сверить vanilla events/NSB_Soviet.txt:690-878.
 
 add_namespace = NSB_soviet_paranoia_system_events
 
-### GENERAL ACCUSES GENERAL - ARMY (MCKSP-extended) ###
 unit_leader_event = {
 	id = NSB_soviet_paranoia_system_events.24
 	title = NSB_soviet_paranoia_system_events.24.t
@@ -24,10 +15,7 @@ unit_leader_event = {
 	immediate = {
 		hidden_effect = {
 			SOV_paranoia_increase_purge_counter_regular = yes
-			# MCKSP: предвычисленная "капнутая" версия суммы уровней для опции .e.
-			# Vanilla SOV_combined_unit_leader_level выставлен в trigger scripted effect
-			# и используется в .c через NSB_..._both_increase_tt. Для нашей .e (кап 25)
-			# нужна отдельная переменная, иначе preview-тултип покажет некапнутое число.
+			# Кап 25 для .e — отдельная переменная нужна для preview-тултипа.
 			set_variable = { mcksp_paranoia_capped_e = SOV_combined_unit_leader_level }
 			clamp_variable = {
 				var = mcksp_paranoia_capped_e
@@ -37,7 +25,6 @@ unit_leader_event = {
 		}
 	}
 
-	# ============= VANILLA OPTIONS (1:1 copy) =============
 
 	option = { #PURGE ACCUSED
 		name = NSB_soviet_paranoia_system_events.24.a
@@ -146,9 +133,7 @@ unit_leader_event = {
 	}
 
 	option = { #NO WAIT! Let's Think about it
-		# Vanilla опция «завершение следствия без заключения». При активных гостях
-		# (has_country_flag = guests_active) скрываем — её заменяет MCKSP-опция .e
-		# («отказ от репрессий»), у которой нет PP-гейта и есть −0.1 доверия Сталина.
+		# Скрыта при guests_active — заменяется на .e (без PP-гейта, −0.15 доверия).
 		name = NSB_soviet_paranoia_system_events.24.c
 		ai_chance = {
 			base = 2
@@ -204,10 +189,9 @@ unit_leader_event = {
 		}
 	}
 
-	# ============= MCKSP-DOPOLNITELNYE OPTIONS =============
-	# Видны только когда гости активны (has_country_flag = guests_active).
+	# MCKSP опции — только при guests_active.
 
-	option = { #MCKSP: PURGE BOTH (гости подталкивают к расстрелу обоих)
+	option = { #MCKSP: PURGE BOTH
 		name = NSB_soviet_paranoia_system_events.24.d
 
 		trigger = {
@@ -218,7 +202,6 @@ unit_leader_event = {
 			base = 1
 		}
 
-		# Расстрел обоих — обвинитель и обвиняемый.
 		hidden_effect = {
 			every_army_leader = {
 				limit = {
@@ -246,13 +229,11 @@ unit_leader_event = {
 
 		SOV_paranoia_daunt_generals_minor_effect = yes
 
-		# Паранойя падает суммарно (оба уровня).
 		set_variable = { SOV_unit_leader_level = SOV_accused_unit_leader_level }
 		add_to_variable = { SOV_unit_leader_level = SOV_accuser_unit_leader_level }
 		SOV_paranoia_decrease_based_on_unit_leader_level_effect = yes
 		custom_effect_tooltip = NSB_soviet_paranoia_system_events.24_paranoia_accused_decrease_tt
 
-		# +0.2 доверия Сталина (после ребаланса — был 0.1).
 		add_power_balance_value = {
 			id = SOV_stalin_trust_balance
 			value = 0.2
@@ -268,7 +249,7 @@ unit_leader_event = {
 		SOV_increase_opposition_army_support_small = yes
 	}
 
-	option = { #MCKSP: REFUSE REPRESSIONS (гости убеждают отказаться от репрессий)
+	option = { #MCKSP: REFUSE REPRESSIONS
 		name = NSB_soviet_paranoia_system_events.24.e
 
 		trigger = {
@@ -279,9 +260,7 @@ unit_leader_event = {
 			base = 1
 		}
 
-		# Паранойя растёт суммарно (оба уровня) — как при .c, но без cow-трэйта и без PP-стоимости.
-		# Сам ПРИРОСТ от решения капается на 25 (не финальное значение паранойи).
-		# Если уровни обоих генералов суммарно > 25, обрезаем до 25 перед применением.
+		# Прирост паранойи капается на 25 (не финал, а вклад от решения).
 		set_variable = { SOV_unit_leader_level = SOV_accused_unit_leader_level }
 		add_to_variable = { SOV_unit_leader_level = SOV_accuser_unit_leader_level }
 		clamp_variable = {
@@ -290,16 +269,12 @@ unit_leader_event = {
 			max = 25
 		}
 		SOV_paranoia_increase_based_on_unit_leader_level_effect = yes
-		# Кастомный тултип — показывает капнутое число, не vanilla SOV_combined_unit_leader_level.
 		custom_effect_tooltip = MCKSP_paranoia_capped_increase_tt
 
-		# −0.15 доверия Сталина (после ребаланса — был −0.1).
 		add_power_balance_value = {
 			id = SOV_stalin_trust_balance
 			value = -0.15
 		}
-
-		# +10% базовой стабильности — гости успокаивают общество отказом от репрессий.
 		add_stability = 0.1
 
 		hidden_effect = {
