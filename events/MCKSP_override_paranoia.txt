@@ -1,0 +1,324 @@
+# Override vanilla NSB_soviet_paranoia_system_events.24 "Generals accuse each other".
+# Базовый файл: events/NSB_Soviet.txt:690-878.
+#
+# Цель — добавить 2 новые опции (.d, .e), доступные только когда гости активны
+# (has_country_flag = guests_active). Опции двигают баланс «Доверие Сталина»:
+#   .d — гости убеждают Сталина расстрелять ОБОИХ генералов → +0.1 доверия.
+#   .e — гости убеждают Сталина отказаться от репрессий → −0.1 доверия.
+#
+# Остальные 3 опции (.a, .b, .c) скопированы 1:1 с vanilla — engine берёт
+# последний загруженный вариант событий с таким id, поэтому копируем целиком.
+# При обновлении NSB этот файл нужно сверить с актуальной .24 в vanilla.
+
+add_namespace = NSB_soviet_paranoia_system_events
+
+### GENERAL ACCUSES GENERAL - ARMY (MCKSP-extended) ###
+unit_leader_event = {
+	id = NSB_soviet_paranoia_system_events.24
+	title = NSB_soviet_paranoia_system_events.24.t
+	desc = NSB_soviet_paranoia_system_events.24.desc
+	picture = GFX_report_event_soviet_purge_officers_02
+
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			SOV_paranoia_increase_purge_counter_regular = yes
+			# MCKSP: предвычисленная "капнутая" версия суммы уровней для опции .e.
+			# Vanilla SOV_combined_unit_leader_level выставлен в trigger scripted effect
+			# и используется в .c через NSB_..._both_increase_tt. Для нашей .e (кап 25)
+			# нужна отдельная переменная, иначе preview-тултип покажет некапнутое число.
+			set_variable = { mcksp_paranoia_capped_e = SOV_combined_unit_leader_level }
+			clamp_variable = {
+				var = mcksp_paranoia_capped_e
+				min = 0
+				max = 25
+			}
+		}
+	}
+
+	# ============= VANILLA OPTIONS (1:1 copy) =============
+
+	option = { #PURGE ACCUSED
+		name = NSB_soviet_paranoia_system_events.24.a
+		ai_chance = {
+			base = 10
+		}
+
+		hidden_effect = {
+			random_army_leader = {
+				limit = {
+					has_character_flag = SOV_purge_accused_flag
+				}
+				SOV_purge_character_effect = yes
+			}
+		}
+		custom_effect_tooltip = SOV_characters_will_be_purged_tt
+		character_list_tooltip = {
+			limit = {
+				has_character_flag = SOV_purge_accused_flag
+			}
+		}
+
+		hidden_effect = {
+			SOV_paranoia_update_portraits_ui = yes
+		}
+
+		SOV_paranoia_daunt_generals_minor_effect = yes
+
+		set_variable = { SOV_unit_leader_level = SOV_accused_unit_leader_level }
+		SOV_paranoia_decrease_based_on_unit_leader_level_effect = yes
+		custom_effect_tooltip = NSB_soviet_paranoia_system_events.24_paranoia_accused_decrease_tt
+
+		hidden_effect = {
+			clear_variable = SOV_accused_unit_leader_level
+			clear_variable = SOV_accuser_unit_leader_level
+			clear_variable = SOV_accused_character_for_loc
+			clear_variable = SOV_accuser_character_for_loc
+			every_army_leader = {
+				limit = {
+					has_character_flag = SOV_purge_accuser_flag
+				}
+				clr_character_flag = SOV_purge_accuser_flag
+			}
+		}
+
+		if = {
+			limit = {
+				has_political_power < SOV_purge_event_pp_to_avoid_regular
+			}
+			custom_effect_tooltip = SOV_purge_event_not_enough_pp_to_avoid_regular_tt
+		}
+		SOV_increase_opposition_army_support_small = yes
+	}
+
+	option = { #PURGE ACCUSER
+		name = NSB_soviet_paranoia_system_events.24.b
+		ai_chance = {
+			base = 5
+			modifier = {
+				factor = 2
+				SOV_is_going_historical_stalinist = no
+			}
+		}
+
+		hidden_effect = {
+			random_army_leader = {
+				limit = {
+					has_character_flag = SOV_purge_accuser_flag
+				}
+				SOV_purge_character_effect = yes
+			}
+		}
+		custom_effect_tooltip = SOV_characters_will_be_purged_tt
+		character_list_tooltip = {
+			limit = {
+				has_character_flag = SOV_purge_accuser_flag
+			}
+		}
+
+		SOV_paranoia_daunt_generals_minor_effect = yes
+
+		set_variable = { SOV_unit_leader_level = SOV_accuser_unit_leader_level }
+		SOV_paranoia_decrease_based_on_unit_leader_level_effect = yes
+		custom_effect_tooltip = NSB_soviet_paranoia_system_events.24_paranoia_accused_decrease_tt
+
+		hidden_effect = {
+			clear_variable = SOV_accused_unit_leader_level
+			clear_variable = SOV_accuser_unit_leader_level
+			clear_variable = SOV_accused_character_for_loc
+			clear_variable = SOV_accuser_character_for_loc
+			every_army_leader = {
+				limit = {
+					has_character_flag = SOV_purge_accused_flag
+				}
+				clr_character_flag = SOV_purge_accused_flag
+			}
+		}
+
+		if = {
+			limit = {
+				has_political_power < SOV_purge_event_pp_to_avoid_regular
+			}
+			custom_effect_tooltip = SOV_purge_event_not_enough_pp_to_avoid_regular_tt
+		}
+		SOV_increase_opposition_army_support_small = yes
+	}
+
+	option = { #NO WAIT! Let's Think about it
+		# Vanilla опция «завершение следствия без заключения». При активных гостях
+		# (has_country_flag = guests_active) скрываем — её заменяет MCKSP-опция .e
+		# («отказ от репрессий»), у которой нет PP-гейта и есть −0.1 доверия Сталина.
+		name = NSB_soviet_paranoia_system_events.24.c
+		ai_chance = {
+			base = 2
+			modifier = {
+				factor = 0
+				has_political_power < SOV_purge_event_pp_to_avoid_regular_pay
+			}
+			modifier = {
+				factor = 0
+				SOV_is_opposition = yes
+			}
+		}
+
+		trigger = {
+			NOT = { has_country_flag = guests_active }
+			NOT = { has_political_power < SOV_purge_event_pp_to_avoid_regular }
+		}
+
+		add_political_power = SOV_purge_event_pp_to_avoid_regular_pay
+
+		every_army_leader = {
+			limit = {
+				OR = {
+					has_character_flag = SOV_purge_accuser_flag
+					has_character_flag = SOV_purge_accused_flag
+				}
+			}
+			add_unit_leader_trait = trait_SOV_cowed_by_stalin_army
+		}
+
+		set_variable = { SOV_unit_leader_level = SOV_accused_unit_leader_level }
+		add_to_variable = { SOV_unit_leader_level = SOV_accuser_unit_leader_level }
+		SOV_paranoia_increase_based_on_unit_leader_level_effect = yes
+		custom_effect_tooltip = NSB_soviet_paranoia_system_events.24_paranoia_both_increase_tt
+
+		hidden_effect = {
+			clear_variable = SOV_accused_unit_leader_level
+			clear_variable = SOV_accuser_unit_leader_level
+			clear_variable = SOV_accused_character_for_loc
+			clear_variable = SOV_accuser_character_for_loc
+			random_army_leader = {
+				limit = {
+					has_character_flag = SOV_purge_accused_flag
+				}
+				clr_character_flag = SOV_purge_accused_flag
+			}
+			random_army_leader = {
+				limit = {
+					has_character_flag = SOV_purge_accuser_flag
+				}
+				clr_character_flag = SOV_purge_accuser_flag
+			}
+		}
+	}
+
+	# ============= MCKSP-DOPOLNITELNYE OPTIONS =============
+	# Видны только когда гости активны (has_country_flag = guests_active).
+
+	option = { #MCKSP: PURGE BOTH (гости подталкивают к расстрелу обоих)
+		name = NSB_soviet_paranoia_system_events.24.d
+
+		trigger = {
+			has_country_flag = guests_active
+		}
+
+		ai_chance = {
+			base = 1
+		}
+
+		# Расстрел обоих — обвинитель и обвиняемый.
+		hidden_effect = {
+			every_army_leader = {
+				limit = {
+					OR = {
+						has_character_flag = SOV_purge_accused_flag
+						has_character_flag = SOV_purge_accuser_flag
+					}
+				}
+				SOV_purge_character_effect = yes
+			}
+		}
+		custom_effect_tooltip = SOV_characters_will_be_purged_tt
+		character_list_tooltip = {
+			limit = {
+				OR = {
+					has_character_flag = SOV_purge_accused_flag
+					has_character_flag = SOV_purge_accuser_flag
+				}
+			}
+		}
+
+		hidden_effect = {
+			SOV_paranoia_update_portraits_ui = yes
+		}
+
+		SOV_paranoia_daunt_generals_minor_effect = yes
+
+		# Паранойя падает суммарно (оба уровня).
+		set_variable = { SOV_unit_leader_level = SOV_accused_unit_leader_level }
+		add_to_variable = { SOV_unit_leader_level = SOV_accuser_unit_leader_level }
+		SOV_paranoia_decrease_based_on_unit_leader_level_effect = yes
+		custom_effect_tooltip = NSB_soviet_paranoia_system_events.24_paranoia_accused_decrease_tt
+
+		# +0.2 доверия Сталина (после ребаланса — был 0.1).
+		add_power_balance_value = {
+			id = SOV_stalin_trust_balance
+			value = 0.2
+		}
+
+		hidden_effect = {
+			clear_variable = SOV_accused_unit_leader_level
+			clear_variable = SOV_accuser_unit_leader_level
+			clear_variable = SOV_accused_character_for_loc
+			clear_variable = SOV_accuser_character_for_loc
+		}
+
+		SOV_increase_opposition_army_support_small = yes
+	}
+
+	option = { #MCKSP: REFUSE REPRESSIONS (гости убеждают отказаться от репрессий)
+		name = NSB_soviet_paranoia_system_events.24.e
+
+		trigger = {
+			has_country_flag = guests_active
+		}
+
+		ai_chance = {
+			base = 1
+		}
+
+		# Паранойя растёт суммарно (оба уровня) — как при .c, но без cow-трэйта и без PP-стоимости.
+		# Сам ПРИРОСТ от решения капается на 25 (не финальное значение паранойи).
+		# Если уровни обоих генералов суммарно > 25, обрезаем до 25 перед применением.
+		set_variable = { SOV_unit_leader_level = SOV_accused_unit_leader_level }
+		add_to_variable = { SOV_unit_leader_level = SOV_accuser_unit_leader_level }
+		clamp_variable = {
+			var = SOV_unit_leader_level
+			min = 0
+			max = 25
+		}
+		SOV_paranoia_increase_based_on_unit_leader_level_effect = yes
+		# Кастомный тултип — показывает капнутое число, не vanilla SOV_combined_unit_leader_level.
+		custom_effect_tooltip = MCKSP_paranoia_capped_increase_tt
+
+		# −0.15 доверия Сталина (после ребаланса — был −0.1).
+		add_power_balance_value = {
+			id = SOV_stalin_trust_balance
+			value = -0.15
+		}
+
+		# +10% базовой стабильности — гости успокаивают общество отказом от репрессий.
+		add_stability = 0.1
+
+		hidden_effect = {
+			clear_variable = SOV_accused_unit_leader_level
+			clear_variable = SOV_accuser_unit_leader_level
+			clear_variable = SOV_accused_character_for_loc
+			clear_variable = SOV_accuser_character_for_loc
+			random_army_leader = {
+				limit = {
+					has_character_flag = SOV_purge_accused_flag
+				}
+				clr_character_flag = SOV_purge_accused_flag
+			}
+			random_army_leader = {
+				limit = {
+					has_character_flag = SOV_purge_accuser_flag
+				}
+				clr_character_flag = SOV_purge_accuser_flag
+			}
+		}
+	}
+}

@@ -118,3 +118,9 @@
  trust_event.2.d:0 "The Leader's patience has run out. NKVD reports lie in a stack on his desk — each more terrible than the last. Conspiracies, leaks, alien ideologies, suspicious ties. Tonight all ten guests from the future were arrested on warrants signed personally by Comrade Stalin. Three days later a closed troika handed down its verdict: the supreme measure of social defence. The bodies were buried namelessly. From now on no mention of the guests from the future is to appear in the Soviet press — ever."
  trust_event.2.a:0 "The mistake has been corrected."
 
+# Extra options for NSB_soviet_paranoia_system_events.24 (generals accusing each other).
+# Visible only when guests are active.
+ NSB_soviet_paranoia_system_events.24.d:0 "The guests recommend purging both."
+ NSB_soviet_paranoia_system_events.24.e:0 "The guests urge to refuse repressions."
+ MCKSP_paranoia_capped_increase_tt:0 "£SOV_paranoia_text_icon Political Paranoia will increase by: §R[?SOV.mcksp_paranoia_capped_e]§! (capped at 25)"
+

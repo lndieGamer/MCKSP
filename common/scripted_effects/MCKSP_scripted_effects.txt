@@ -113,6 +113,19 @@ MCKSP_purge_guests_effect = {
 		mcksp_placeholder_ilgam = 0
 	}
 
+	# Возврат имён партий к "ЗАПРЕЩЕНО" (откат активации из activate_guests_system).
+	# Локаль MCKSP_redacted определена в MCKSP_ideologies_l_*.yml.
+	set_party_name = { ideology = mcksp_social_liberalism long_name = MCKSP_redacted name = MCKSP_redacted }
+	set_party_name = { ideology = mcksp_liberal_humanism long_name = MCKSP_redacted name = MCKSP_redacted }
+	set_party_name = { ideology = mcksp_christian_democracy long_name = MCKSP_redacted name = MCKSP_redacted }
+	set_party_name = { ideology = mcksp_market_socialism long_name = MCKSP_redacted name = MCKSP_redacted }
+	set_party_name = { ideology = mcksp_pragmatic_syncretism long_name = MCKSP_redacted name = MCKSP_redacted }
+	set_party_name = { ideology = mcksp_scientific_progressism long_name = MCKSP_redacted name = MCKSP_redacted }
+	set_party_name = { ideology = mcksp_statist_technocratism long_name = MCKSP_redacted name = MCKSP_redacted }
+	set_party_name = { ideology = mcksp_national_conservatism long_name = MCKSP_redacted name = MCKSP_redacted }
+	set_party_name = { ideology = mcksp_democratic_socialism long_name = MCKSP_redacted name = MCKSP_redacted }
+	set_party_name = { ideology = mcksp_placeholder_ilgam long_name = MCKSP_redacted name = MCKSP_redacted }
+
 	clr_country_flag = guests_active
 }
 
