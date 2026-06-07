@@ -83,10 +83,13 @@ country_event = {
 	}
 	option = {
 		name = interrogation_event.1.b
-		set_country_flag = guests_active
-		activate_guests_system = yes
 		add_ideas = guests_from_future_idea
+		# activate_guests_system делает set_party_name × 10, promote_character × 10,
+		# retire мока, set_popularities + set_variable. Без hidden_effect это
+		# показывается в tooltip-е опции и засоряет UI. Свёртываем под кат.
 		hidden_effect = {
+			set_country_flag = guests_active
+			activate_guests_system = yes
 			SOV = { country_event = { days = 90 id = introduction_event.1 } }
 		}
 	}

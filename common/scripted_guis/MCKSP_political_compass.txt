@@ -15,14 +15,15 @@ scripted_gui = {
 	#    на «открыть» и «закрыть», переключение между блоками идёт через флаг.
 	# ======================================================================
 
-	# Когда компас ЗАКРЫТ — клик открывает.
+	# Когда компас ЗАКРЫТ — видно окно с кнопкой ► (MCKSP_open_compass). Клик открывает.
 	MCKSP_compass_button_open = {
 		context_type       = player_context
 		parent_window_name = "countrypoliticsview"
-		window_name        = "MCKSP_compass_button_window"
+		window_name        = "MCKSP_compass_button_window_open"
 
 		visible = {
 			tag = SOV
+			has_country_flag = guests_active
 			NOT = { has_country_flag = SOV_compass_open }
 		}
 
@@ -33,19 +34,20 @@ scripted_gui = {
 		}
 	}
 
-	# Когда компас ОТКРЫТ — клик закрывает.
+	# Когда компас ОТКРЫТ — видно окно с кнопкой ◄ (MCKSP_close_compass). Клик закрывает.
 	MCKSP_compass_button_close = {
 		context_type       = player_context
 		parent_window_name = "countrypoliticsview"
-		window_name        = "MCKSP_compass_button_window"
+		window_name        = "MCKSP_compass_button_window_close"
 
 		visible = {
 			tag = SOV
+			has_country_flag = guests_active
 			has_country_flag = SOV_compass_open
 		}
 
 		effects = {
-			MCKSP_open_compass_click = {
+			MCKSP_close_compass_click = {
 				clr_country_flag = SOV_compass_open
 			}
 		}
@@ -61,6 +63,7 @@ scripted_gui = {
 
 		visible = {
 			tag = SOV
+			has_country_flag = guests_active
 		}
 	}
 

@@ -7,13 +7,27 @@
 
 spriteTypes = {
 
-	# Стрелка-кнопка на правой грани окна политики. Два кадра:
-	#   1 — закрыто (►),  2 — открыто (◄).
-	# Размер каждого кадра: 26x46. Полоска: 52x46 (2 кадра по горизонтали).
+	# Стрелка-кнопка на правой грани окна политики — РАЗДЕЛЕНА на 2 sprite
+	# (►/◄), потому что buttonType интерпретирует 4 кадра как
+	# normal/hover/pressed/disabled per sprite. Один dds на оба направления
+	# не уложить — нужны 2 текстуры.
+	#
+	# GFX_MCKSP_compass_arrow_button — кнопка "ОТКРЫТЬ компас" (►).
+	# Используется в scripted_gui MCKSP_compass_button_open (флаг SOV_compass_open снят).
+	# 4 кадра 26x46 (полоска 104x46): 1 normal ► / 2 hover ► / 3 pressed ► / 4 disabled ►.
 	spriteType = {
 		name = "GFX_MCKSP_compass_arrow_button"
 		texturefile = "gfx/interface/MCKSP/compass/compass_arrow_button.dds"
-		noOfFrames = 2
+		noOfFrames = 4
+	}
+
+	# GFX_MCKSP_compass_arrow_button_close — кнопка "ЗАКРЫТЬ компас" (◄).
+	# Используется в scripted_gui MCKSP_compass_button_close (флаг SOV_compass_open выставлен).
+	# 4 кадра 26x46 (полоска 104x46): 1 normal ◄ / 2 hover ◄ / 3 pressed ◄ / 4 disabled ◄.
+	spriteType = {
+		name = "GFX_MCKSP_compass_arrow_button_close"
+		texturefile = "gfx/interface/MCKSP/compass/compass_arrow_button_close.dds"
+		noOfFrames = 4
 	}
 
 	# Поле компаса 360x360: сетка −10..+10, 4 подкрашенных квадранта,

@@ -23,8 +23,12 @@ guiTypes = {
 	#   x=540 — правый край списка партий (326+214=540)
 	#   y=312 — на одной линии со списком
 	# --------------------------------------------------------------------------
+	# Два отдельных контейнера для кнопок-стрелок ►/◄, потому что scripted_gui
+	# гейтит видимость целого окна (window_name), а не buttonType внутри него.
+	# Оба окна позиционируются одинаково — визуально кнопка одна, переключаются
+	# взаимно через scripted_gui visible.
 	containerWindowType = {
-		name = "MCKSP_compass_button_window"
+		name = "MCKSP_compass_button_window_open"
 		position = { x = 540 y = 312 }
 		size = { width = 26 height = 46 }
 		clipping = no
@@ -35,6 +39,21 @@ guiTypes = {
 			quadTextureSprite = "GFX_MCKSP_compass_arrow_button"
 			pdx_tooltip = "MCKSP_COMPASS_BUTTON_TT"
 			clicksound = click_default
+		}
+	}
+
+	containerWindowType = {
+		name = "MCKSP_compass_button_window_close"
+		position = { x = 540 y = 312 }
+		size = { width = 26 height = 46 }
+		clipping = no
+
+		buttonType = {
+			name = "MCKSP_close_compass"
+			position = { x = 0 y = 0 }
+			quadTextureSprite = "GFX_MCKSP_compass_arrow_button_close"
+			pdx_tooltip = "MCKSP_COMPASS_BUTTON_TT"
+			clicksound = click_close
 		}
 	}
 
