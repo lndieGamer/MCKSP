@@ -4,9 +4,20 @@
 SOV_MCKSP_decisions_cat: "Кампания по сокрытию Инцидента 'Б'"
   SOV_MCKSP_decisions_cat_desc: "Произошедшие в Москве события были названы Инцидентом 'Б'. К сожалению, информация о людях из иного времени уже просочилась за пределы правительственных кабинетов. Мы должны принять меры, чтобы предотвратить дальнейшее распространение этой информации."
 
+  SOV_debug_finish_coverup: "[DEBUG] Завершить сокрытие"
+  SOV_debug_finish_coverup_desc: "§RОтладочное решение (только в режиме -debug).§! Мгновенно снимает все уровни идеи инцидента Б — сокрытие считается завершённым, после чего запускается допрос."
+
+  decision_cost_CP_15: "£command_power  §Y15§!"
+  decision_cost_CP_15_blocked: "£command_power  §R15§!"
+  decision_cost_CP_15_tooltip: "Необходимо иметь £command_power  §Y15§! для применения решения"
+
   decision_cost_CP_20: "£command_power  §Y20§!"
   decision_cost_CP_20_blocked: "£command_power  §R20§!"
   decision_cost_CP_20_tooltip: "Необходимо иметь £command_power  §Y20§! для применения решения"
+
+  decision_cost_CP_30: "£command_power  §Y30§!"
+  decision_cost_CP_30_blocked: "£command_power  §R30§!"
+  decision_cost_CP_30_tooltip: "Необходимо иметь £command_power  §Y30§! для применения решения"
 
   decision_cost_CP_40: "£command_power  §Y40§!"
   decision_cost_CP_40_blocked: "£command_power  §R40§!"

@@ -2,10 +2,16 @@ SOV_MCKSP_decisions_cat = {
 	SOV_involve_army = {
 		icon = GFX_decision_generic_reorganize_irregulars
 		visible = {
+			# Видны после ареста (флаг mcksp_incident_started из start_event.3) и
+			# пока есть ЛЮБОЙ уровень идеи инцидента. campaign_event понижает
+			# уровень (definetely→happened→maybe→снято), поэтому гейт по любому из
+			# трёх — иначе UI пропал бы после первого понижения (софтлок: допрос
+			# ждёт полной очистки). Полная очистка → скрытие + допрос (on_weekly_SOV).
+			has_country_flag = mcksp_incident_started
 			OR = {
-				has_idea = something_definetely_happened_idea
-				has_idea = something_happened_idea
 				has_idea = something_maybe_happened_idea
+				has_idea = something_happened_idea
+				has_idea = something_definetely_happened_idea
 			}
 		}
 		available = {
@@ -13,9 +19,9 @@ SOV_MCKSP_decisions_cat = {
 		}
 
 		custom_cost_trigger = {
-    		command_power > 19
+    		command_power > 14
 		}
-		custom_cost_text = decision_cost_CP_20
+		custom_cost_text = decision_cost_CP_15
 
 		days_remove = 30
 		fire_only_once = yes
@@ -26,19 +32,29 @@ SOV_MCKSP_decisions_cat = {
 
 		complete_effect = {
 			hidden_effect = {
-				add_command_power = -20
+				add_command_power = -15
 			}
-			SOV = { country_event = { days = 30 id = campaign_event.1 } }
 		}
-	}	
+		# Событие — в remove_effect: срабатывает ровно по истечении видимого
+		# таймера days_remove. Можно вести несколько решений сокрытия параллельно.
+		remove_effect = {
+			SOV = { country_event = { id = campaign_event.1 } }
+		}
+	}
 
 	SOV_special_forces = {
 		icon = GFX_decision_generic_reorganize_irregulars
 		visible = {
+			# Видны после ареста (флаг mcksp_incident_started из start_event.3) и
+			# пока есть ЛЮБОЙ уровень идеи инцидента. campaign_event понижает
+			# уровень (definetely→happened→maybe→снято), поэтому гейт по любому из
+			# трёх — иначе UI пропал бы после первого понижения (софтлок: допрос
+			# ждёт полной очистки). Полная очистка → скрытие + допрос (on_weekly_SOV).
+			has_country_flag = mcksp_incident_started
 			OR = {
-				has_idea = something_definetely_happened_idea
-				has_idea = something_happened_idea
 				has_idea = something_maybe_happened_idea
+				has_idea = something_happened_idea
+				has_idea = something_definetely_happened_idea
 			}
 		}
 		available = {
@@ -46,9 +62,9 @@ SOV_MCKSP_decisions_cat = {
 		}
 
 		custom_cost_trigger = {
-			command_power > 39
+			command_power > 29
 		}
-		custom_cost_text = decision_cost_CP_40
+		custom_cost_text = decision_cost_CP_30
 
 		days_remove = 15
 		fire_only_once = yes
@@ -59,26 +75,34 @@ SOV_MCKSP_decisions_cat = {
 
 		complete_effect = {
 			hidden_effect = {
-				add_command_power = -40
+				add_command_power = -30
 			}
-			SOV = { country_event = { days = 15 id = campaign_event.2 } }
+		}
+		remove_effect = {
+			SOV = { country_event = { id = campaign_event.2 } }
 		}
 	}
 
 	SOV_propaganda_speeches = {
 		icon = GFX_decision_generic_speech
 		visible = {
+			# Видны после ареста (флаг mcksp_incident_started из start_event.3) и
+			# пока есть ЛЮБОЙ уровень идеи инцидента. campaign_event понижает
+			# уровень (definetely→happened→maybe→снято), поэтому гейт по любому из
+			# трёх — иначе UI пропал бы после первого понижения (софтлок: допрос
+			# ждёт полной очистки). Полная очистка → скрытие + допрос (on_weekly_SOV).
+			has_country_flag = mcksp_incident_started
 			OR = {
-				has_idea = something_definetely_happened_idea
-				has_idea = something_happened_idea
 				has_idea = something_maybe_happened_idea
+				has_idea = something_happened_idea
+				has_idea = something_definetely_happened_idea
 			}
 		}
 		available = {
 			always = yes
 		}
 
-		cost = 150
+		cost = 100
 
 		days_remove = 90
 		fire_only_once = yes
@@ -87,18 +111,24 @@ SOV_MCKSP_decisions_cat = {
 			stability_factor = 0.1
 		}
 
-		complete_effect = {
-			SOV = { country_event = { days = 90 id = campaign_event.3 } }
+		remove_effect = {
+			SOV = { country_event = { id = campaign_event.3 } }
 		}
 	}
 
 	SOV_let_things_slide = {
 		icon = GFX_decision_generic_break_treaty
 		visible = {
+			# Видны после ареста (флаг mcksp_incident_started из start_event.3) и
+			# пока есть ЛЮБОЙ уровень идеи инцидента. campaign_event понижает
+			# уровень (definetely→happened→maybe→снято), поэтому гейт по любому из
+			# трёх — иначе UI пропал бы после первого понижения (софтлок: допрос
+			# ждёт полной очистки). Полная очистка → скрытие + допрос (on_weekly_SOV).
+			has_country_flag = mcksp_incident_started
 			OR = {
-				has_idea = something_definetely_happened_idea
-				has_idea = something_happened_idea
 				has_idea = something_maybe_happened_idea
+				has_idea = something_happened_idea
+				has_idea = something_definetely_happened_idea
 			}
 		}
 		available = {
@@ -108,29 +138,54 @@ SOV_MCKSP_decisions_cat = {
 		days_remove = 120
 		fire_only_once = yes
 
-		complete_effect = {
+		remove_effect = {
 			random_list = {
 
 				#Хороший исход
         		30 = {
-					SOV = { country_event = { days = 120 id = campaign_event.4 } }
+					SOV = { country_event = { id = campaign_event.4 } }
         		}
 
 				#Наилучший исход
         		10 = {
-					SOV = { country_event = { days = 120 id = campaign_event.5 } }
+					SOV = { country_event = { id = campaign_event.5 } }
             	}
 
 				#Плохой исход
 				40 = {
-					SOV = { country_event = { days = 120 id = campaign_event.6 } }
+					SOV = { country_event = { id = campaign_event.6 } }
             	}
 
 				#Ничего не произошло
 				20 = {
-					
+
 				}
 			}
+		}
+	}
+
+	# DEBUG — только в режиме -debug. Мгновенно завершает сокрытие: снимает все
+	# уровни идеи инцидента. Дальше on_weekly_SOV запустит допрос.
+	SOV_debug_finish_coverup = {
+		icon = GFX_decision_generic_form_nation
+		visible = {
+			is_debug = yes
+			has_country_flag = mcksp_incident_started
+			OR = {
+				has_idea = something_maybe_happened_idea
+				has_idea = something_happened_idea
+				has_idea = something_definetely_happened_idea
+			}
+		}
+		available = {
+			always = yes
+		}
+		fire_only_once = no
+
+		complete_effect = {
+			if = { limit = { has_idea = something_definetely_happened_idea } remove_ideas = something_definetely_happened_idea }
+			if = { limit = { has_idea = something_happened_idea } remove_ideas = something_happened_idea }
+			if = { limit = { has_idea = something_maybe_happened_idea } remove_ideas = something_maybe_happened_idea }
 		}
 	}
 

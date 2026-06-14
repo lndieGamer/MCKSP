@@ -443,6 +443,19 @@ MCKSP_purge_guests_effect = {
 	retire_character = SOV_artem_ayusheev
 	retire_character = SOV_ilgam_fagamanov
 
+	# Пулевые отверстия на компасе для всех расстрелянных (см. оверлеи bh_*_win
+	# в interface/MCKSP_political_compass.gui + гейтинг в scripted_guis).
+	set_country_flag = mcksp_guest_gone_nikita
+	set_country_flag = mcksp_guest_gone_arseny
+	set_country_flag = mcksp_guest_gone_stepan
+	set_country_flag = mcksp_guest_gone_demokrit
+	set_country_flag = mcksp_guest_gone_gleb
+	set_country_flag = mcksp_guest_gone_ivan
+	set_country_flag = mcksp_guest_gone_ilya
+	set_country_flag = mcksp_guest_gone_evgeny
+	set_country_flag = mcksp_guest_gone_artem
+	set_country_flag = mcksp_guest_gone_ilgam
+
 	remove_ideas = guests_from_future_idea
 
 	set_popularities = {

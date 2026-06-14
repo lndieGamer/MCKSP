@@ -82,4 +82,21 @@ scripted_gui = {
 			}
 		}
 	}
+
+	# ======================================================================
+	# Пулевые отверстия расстрелянных. Оверлей bh_<имя>_win виден, только если
+	# гость убран — флаг mcksp_guest_gone_<имя> ставят MCKSP_scapegoat_resolve
+	# (расстрел одного) и MCKSP_purge_guests_effect (терминальный расстрел всех).
+	# Отверстие рисуется поверх цветной точки на той же координате.
+	# ======================================================================
+	MCKSP_bh_nikita   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "bh_nikita_win"   visible = { has_country_flag = SOV_compass_open has_country_flag = mcksp_guest_gone_nikita } }
+	MCKSP_bh_arseny   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "bh_arseny_win"   visible = { has_country_flag = SOV_compass_open has_country_flag = mcksp_guest_gone_arseny } }
+	MCKSP_bh_demokrit = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "bh_demokrit_win" visible = { has_country_flag = SOV_compass_open has_country_flag = mcksp_guest_gone_demokrit } }
+	MCKSP_bh_gleb     = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "bh_gleb_win"     visible = { has_country_flag = SOV_compass_open has_country_flag = mcksp_guest_gone_gleb } }
+	MCKSP_bh_stepan   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "bh_stepan_win"   visible = { has_country_flag = SOV_compass_open has_country_flag = mcksp_guest_gone_stepan } }
+	MCKSP_bh_ivan     = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "bh_ivan_win"     visible = { has_country_flag = SOV_compass_open has_country_flag = mcksp_guest_gone_ivan } }
+	MCKSP_bh_ilya     = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "bh_ilya_win"     visible = { has_country_flag = SOV_compass_open has_country_flag = mcksp_guest_gone_ilya } }
+	MCKSP_bh_evgeny   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "bh_evgeny_win"   visible = { has_country_flag = SOV_compass_open has_country_flag = mcksp_guest_gone_evgeny } }
+	MCKSP_bh_artem    = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "bh_artem_win"    visible = { has_country_flag = SOV_compass_open has_country_flag = mcksp_guest_gone_artem } }
+	MCKSP_bh_ilgam    = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "bh_ilgam_win"    visible = { has_country_flag = SOV_compass_open has_country_flag = mcksp_guest_gone_ilgam } }
 }

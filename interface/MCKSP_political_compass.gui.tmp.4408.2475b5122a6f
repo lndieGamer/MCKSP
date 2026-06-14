@@ -229,41 +229,4 @@ guiTypes = {
 		}
 	}
 
-	# Пулевые отверстия расстрелянных — окна ВЕРХНЕГО УРОВНЯ, парентятся к
-	# MCKSP_compass_window через scripted_gui (visible = mcksp_guest_gone_<имя>).
-	# Так гейтинг реально работает (вложенные статичные окна не гейтятся) и они
-	# рисуются ПОВЕРХ точек/легенды. bh — малое отверстие на точке поля;
-	# bh_sym — большое на месте символа партии в легенде (scale 0.40 ≈ 26px).
-	# Координаты relative к compass_window (как у точек/легенды).
-	containerWindowType = { name = "bh_nikita_win"   position = { x = 0 y = 0 } size = { width = 602 height = 700 } clipping = no
-		iconType = { name = "bh"     position = { x = 258 y = 333 } quadTextureSprite = "GFX_MCKSP_bullet_hole" pdx_tooltip = "MCKSP_PT_NIKITA" }
-		iconType = { name = "bh_sym" position = { x = 25  y = 469 } quadTextureSprite = "GFX_MCKSP_bullet_hole_large" scale = 0.40 pdx_tooltip = "MCKSP_PT_NIKITA" } }
-	containerWindowType = { name = "bh_arseny_win"   position = { x = 0 y = 0 } size = { width = 602 height = 700 } clipping = no
-		iconType = { name = "bh"     position = { x = 276 y = 315 } quadTextureSprite = "GFX_MCKSP_bullet_hole" pdx_tooltip = "MCKSP_PT_ARSENY" }
-		iconType = { name = "bh_sym" position = { x = 341 y = 469 } quadTextureSprite = "GFX_MCKSP_bullet_hole_large" scale = 0.40 pdx_tooltip = "MCKSP_PT_ARSENY" } }
-	containerWindowType = { name = "bh_demokrit_win" position = { x = 0 y = 0 } size = { width = 602 height = 700 } clipping = no
-		iconType = { name = "bh"     position = { x = 204 y = 225 } quadTextureSprite = "GFX_MCKSP_bullet_hole" pdx_tooltip = "MCKSP_PT_DEMOKRIT" }
-		iconType = { name = "bh_sym" position = { x = 25  y = 511 } quadTextureSprite = "GFX_MCKSP_bullet_hole_large" scale = 0.40 pdx_tooltip = "MCKSP_PT_DEMOKRIT" } }
-	containerWindowType = { name = "bh_gleb_win"     position = { x = 0 y = 0 } size = { width = 602 height = 700 } clipping = no
-		iconType = { name = "bh"     position = { x = 312 y = 225 } quadTextureSprite = "GFX_MCKSP_bullet_hole" pdx_tooltip = "MCKSP_PT_GLEB" }
-		iconType = { name = "bh_sym" position = { x = 341 y = 511 } quadTextureSprite = "GFX_MCKSP_bullet_hole_large" scale = 0.40 pdx_tooltip = "MCKSP_PT_GLEB" } }
-	containerWindowType = { name = "bh_stepan_win"   position = { x = 0 y = 0 } size = { width = 602 height = 700 } clipping = no
-		iconType = { name = "bh"     position = { x = 330 y = 207 } quadTextureSprite = "GFX_MCKSP_bullet_hole" pdx_tooltip = "MCKSP_PT_STEPAN" }
-		iconType = { name = "bh_sym" position = { x = 25  y = 553 } quadTextureSprite = "GFX_MCKSP_bullet_hole_large" scale = 0.40 pdx_tooltip = "MCKSP_PT_STEPAN" } }
-	containerWindowType = { name = "bh_ivan_win"     position = { x = 0 y = 0 } size = { width = 602 height = 700 } clipping = no
-		iconType = { name = "bh"     position = { x = 312 y = 171 } quadTextureSprite = "GFX_MCKSP_bullet_hole" pdx_tooltip = "MCKSP_PT_IVAN" }
-		iconType = { name = "bh_sym" position = { x = 341 y = 553 } quadTextureSprite = "GFX_MCKSP_bullet_hole_large" scale = 0.40 pdx_tooltip = "MCKSP_PT_IVAN" } }
-	containerWindowType = { name = "bh_ilya_win"     position = { x = 0 y = 0 } size = { width = 602 height = 700 } clipping = no
-		iconType = { name = "bh"     position = { x = 330 y = 135 } quadTextureSprite = "GFX_MCKSP_bullet_hole" pdx_tooltip = "MCKSP_PT_ILYA" }
-		iconType = { name = "bh_sym" position = { x = 25  y = 595 } quadTextureSprite = "GFX_MCKSP_bullet_hole_large" scale = 0.40 pdx_tooltip = "MCKSP_PT_ILYA" } }
-	containerWindowType = { name = "bh_evgeny_win"   position = { x = 0 y = 0 } size = { width = 602 height = 700 } clipping = no
-		iconType = { name = "bh"     position = { x = 366 y = 99 } quadTextureSprite = "GFX_MCKSP_bullet_hole" pdx_tooltip = "MCKSP_PT_EVGENY" }
-		iconType = { name = "bh_sym" position = { x = 341 y = 595 } quadTextureSprite = "GFX_MCKSP_bullet_hole_large" scale = 0.40 pdx_tooltip = "MCKSP_PT_EVGENY" } }
-	containerWindowType = { name = "bh_artem_win"    position = { x = 0 y = 0 } size = { width = 602 height = 700 } clipping = no
-		iconType = { name = "bh"     position = { x = 222 y = 279 } quadTextureSprite = "GFX_MCKSP_bullet_hole" pdx_tooltip = "MCKSP_PT_ARTEM" }
-		iconType = { name = "bh_sym" position = { x = 25  y = 637 } quadTextureSprite = "GFX_MCKSP_bullet_hole_large" scale = 0.40 pdx_tooltip = "MCKSP_PT_ARTEM" } }
-	containerWindowType = { name = "bh_ilgam_win"    position = { x = 0 y = 0 } size = { width = 602 height = 700 } clipping = no
-		iconType = { name = "bh"     position = { x = 240 y = 153 } quadTextureSprite = "GFX_MCKSP_bullet_hole" pdx_tooltip = "MCKSP_PT_ILGAM" }
-		iconType = { name = "bh_sym" position = { x = 341 y = 637 } quadTextureSprite = "GFX_MCKSP_bullet_hole_large" scale = 0.40 pdx_tooltip = "MCKSP_PT_ILGAM" } }
-
 }

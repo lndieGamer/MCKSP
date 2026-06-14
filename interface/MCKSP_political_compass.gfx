@@ -75,4 +75,16 @@ spriteTypes = {
 		texturefile = "gfx/interface/MCKSP/compass/dot_hover_btn.dds"
 		noOfFrames = 4
 	}
+
+	# Пулевое отверстие — метка координаты расстрелянного Сталиным гостя.
+	# Малое 14x14 — замена точки на поле компаса (тот же размер, оверлеем поверх
+	# цветной точки). Большое 64x64 — иконка партии / плейсхолдер. A8R8G8B8 с альфой.
+	spriteType = {
+		name = "GFX_MCKSP_bullet_hole"
+		texturefile = "gfx/interface/MCKSP/compass/compass_bullet_hole.dds"
+	}
+	spriteType = {
+		name = "GFX_MCKSP_bullet_hole_large"
+		texturefile = "gfx/interface/MCKSP/compass/bullet_hole_large.dds"
+	}
 }
