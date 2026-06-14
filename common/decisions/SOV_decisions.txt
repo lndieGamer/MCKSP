@@ -8,7 +8,10 @@ SOV_MCKSP_decisions_cat = {
 					has_idea = something_happened_idea 
 					has_idea = something_maybe_happened_idea 
 				}
-				has_idea = guests_from_future_idea
+				OR = {
+					has_idea = guests_from_future_idea
+					has_idea = guests_from_future_weakened_idea
+				}
 			}
 		}
 		available = {
@@ -44,7 +47,10 @@ SOV_MCKSP_decisions_cat = {
 					has_idea = something_happened_idea 
 					has_idea = something_maybe_happened_idea 
 				}
-				has_idea = guests_from_future_idea
+				OR = {
+					has_idea = guests_from_future_idea
+					has_idea = guests_from_future_weakened_idea
+				}
 			}
 		}
 		available = {
@@ -80,7 +86,10 @@ SOV_MCKSP_decisions_cat = {
 					has_idea = something_happened_idea 
 					has_idea = something_maybe_happened_idea 
 				}
-				has_idea = guests_from_future_idea
+				OR = {
+					has_idea = guests_from_future_idea
+					has_idea = guests_from_future_weakened_idea
+				}
 			}
 		}
 		available = {
@@ -110,7 +119,10 @@ SOV_MCKSP_decisions_cat = {
 					has_idea = something_happened_idea 
 					has_idea = something_maybe_happened_idea 
 				}
-				has_idea = guests_from_future_idea
+				OR = {
+					has_idea = guests_from_future_idea
+					has_idea = guests_from_future_weakened_idea
+				}
 			}
 		}
 		available = {

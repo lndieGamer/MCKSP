@@ -44,5 +44,46 @@ ideas = {
                 research_speed_factor = 1
             }
         }
+
+        # 2-а «Подарок из будущего» — на 90 дней подменяет guests_from_future_idea
+        # этим вариантом с урезанным вдвое research-бонусом (+100% → +50%). Тот же
+        # вид в UI. Обратная подмена — trust_event.3 через 90 дней. Остальные
+        # модификаторы идентичны оригиналу.
+        guests_from_future_weakened_idea = {
+            picture = generic_research_bonus
+
+            modifier = {
+                political_power_factor = -0.25
+                stability_factor = -0.2
+                research_speed_factor = 0.5
+            }
+        }
+
+        # 2-г «Тайная партийная агитация» — маркер на 180 дней. Сам прирост
+        # популярности (+0.003/день всем партиям гостей) делает MCKSP_agitation_tick
+        # в on_daily_SOV, пока идея присутствует.
+        mcksp_secret_agitation_idea = {
+            picture = generic_political_support
+
+            modifier = {
+                political_power_factor = -0.05
+            }
+        }
+
+        # 2-в «Козёл отпущения», провал — «Враг народа за границей!».
+        # Снимается автоматически, если у руля не коммунисты (заглушка под будущую
+        # механику «Сталин не у власти», аналог убийства Троцкого).
+        mcksp_enemy_abroad_spirit = {
+            picture = generic_disjointed_gov
+
+            modifier = {
+                stability_factor = -0.15
+                political_power_factor = -0.1
+            }
+
+            cancel = {
+                NOT = { has_government = communism }
+            }
+        }
     }
 }

@@ -1,0 +1,31 @@
+# Модификаторы дрифта для SOV_stalin_trust_balance.
+# power_balance_daily: МИНУС = дрифт влево (к недоверию), ПЛЮС = вправо (к доверию).
+# Навешиваются через add_power_balance_modifier (см. MCKSP_scripted_effects.txt).
+
+# 1-а «Подозрительность Сталина» — постоянный дрифт влево. Навешивается в
+# activate_guests_system, не снимается.
+mcksp_stalin_paranoia_drift = {
+	power_balance_daily = -0.004
+}
+
+# 1-в «Треснувший трон» — динамический дрифт по популярности коммунизма.
+# Пивот 60%. >60% → вправо (база +0.001, +0.001 за каждые 5% сверх 60).
+# <60% → влево (база -0.001, -0.001 за каждые 5% ниже 60).
+# Тиры пересчитываются в MCKSP_recalc_cracked_throne (on_weekly_SOV);
+# одновременно навешен ровно один.
+mcksp_throne_r1 = { power_balance_daily = 0.001 }  # 60–65%
+mcksp_throne_r2 = { power_balance_daily = 0.002 }  # 65–70%
+mcksp_throne_r3 = { power_balance_daily = 0.003 }  # 70–75%
+mcksp_throne_r4 = { power_balance_daily = 0.004 }  # 75–80%
+mcksp_throne_r5 = { power_balance_daily = 0.005 }  # 80–85%
+mcksp_throne_r6 = { power_balance_daily = 0.006 }  # 85–90%
+mcksp_throne_r7 = { power_balance_daily = 0.007 }  # 90–95%
+mcksp_throne_r8 = { power_balance_daily = 0.008 }  # 95%+
+
+mcksp_throne_l1 = { power_balance_daily = -0.001 } # 55–60%
+mcksp_throne_l2 = { power_balance_daily = -0.002 } # 50–55%
+mcksp_throne_l3 = { power_balance_daily = -0.003 } # 45–50%
+mcksp_throne_l4 = { power_balance_daily = -0.004 } # 40–45%
+mcksp_throne_l5 = { power_balance_daily = -0.005 } # 35–40%
+mcksp_throne_l6 = { power_balance_daily = -0.006 } # 30–35%
+mcksp_throne_l7 = { power_balance_daily = -0.007 } # <30%

@@ -7,6 +7,10 @@ SOV_stalin_trust_balance = {
 	left_side = SOV_stalin_distrust_side
 	right_side = SOV_stalin_trust_side
 
+	# Решения механики показываются внутри окна баланса (powerbalanceview), а не
+	# в обычной вкладке решений.
+	decision_category = SOV_MCKSP_trust_cat
+
 	range = {
 		id = SOV_stalin_neutral_range
 		min = -0.2

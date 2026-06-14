@@ -1,10 +1,6 @@
 ﻿l_russian:
 # MCKSP Mod - Russian ideologies localisation file
 #
-# Имена и описания 8 MCKSP-идеологий — СТАТИЧНЫЕ. HOI4 не оценивает
-# scripted_localisation в ideology-локалях (проверено: engine читает
-# "[Root.GetXxx]" как литеральное имя группы и валит в ideology.cpp).
-#
 # Скрытие до активации делается через initial set_party_name = MCKSP_redacted
 # в common/on_actions/MCKSP_on_actions.txt (on_startup для every_country).
 # Это перекрывает parties_grid + сектора круга. activate_guests_system
@@ -59,7 +55,6 @@
  MCKSP_redacted: "§RЗАПРЕЩЕНО§!"
  MCKSP_redacted_desc: "Сведения о данной политической группе отсутствуют в реестре НКВД. Доступ к материалам приостановлен."
 
-# ТО — не отдельная группа, а тёмная трансформация РДС через decision.
  mcksp_technocratic_order: "ТО"
  mcksp_technocratic_order_desc: "Технократический орден. Вырожденная форма державного национал-консерватизма: тоталитарная диктатура корпуса инженеров, безусловное превосходство «компетентных» над массами."
 

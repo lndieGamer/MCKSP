@@ -3,6 +3,7 @@ add_namespace = interrogation_event
 add_namespace = introduction_event
 add_namespace = campaign_event
 add_namespace = trust_event
+add_namespace = scapegoat_event
 
 #Группа стартовых ивентов _____________________________________________________
 
@@ -472,5 +473,111 @@ country_event = {
 		name = trust_event.2.a
 		MCKSP_purge_guests_effect = yes
 		set_country_flag = SOV_guests_purged
+	}
+}
+
+# 2-а: возврат полного research-бонуса через 90 дней (снятие ослабленного варианта).
+country_event = {
+	id = trust_event.3
+	hidden = yes
+	is_triggered_only = yes
+
+	immediate = {
+		if = {
+			limit = {
+				has_country_flag = guests_active
+				has_idea = guests_from_future_weakened_idea
+			}
+			swap_ideas = {
+				remove_idea = guests_from_future_weakened_idea
+				add_idea = guests_from_future_idea
+			}
+		}
+	}
+}
+
+# ============================================================================
+# 2-в «Козёл отпущения». Выбор жертвы — решения SOV_scapegoat_pick_<имя>
+# (см. common/decisions/SOV_trust_decisions.txt). Дальше: .2 приказ/отмена →
+# (45 дней) → .4 расстрел (50%) / .5 побег за границу (50%).
+# Флаги: mcksp_scapegoat_in_progress (выбор), mcksp_scapegoat_committed
+# (операция идёт), mcksp_scapegoat_target_<имя>.
+# ============================================================================
+
+# Подготовка к задержанию: отдать приказ или отменить операцию.
+country_event = {
+	id = scapegoat_event.2
+	title = scapegoat_event.2.t
+	desc = scapegoat_event.2.d
+	picture = GFX_report_event_soviet_purge_officers_02
+
+	is_triggered_only = yes
+
+	# Отдать приказ — НЕОБРАТИМО. Через 45 дней 50/50: расстрел или побег.
+	# Имя кнопки белое; красное предупреждение — в тултипе. Исходы скрыты
+	# (hidden_effect), чтобы шансы и id ивентов не светились игроку.
+	option = {
+		name = scapegoat_event.2.order
+		custom_effect_tooltip = scapegoat_event.2.order_tt
+		hidden_effect = {
+			random_list = {
+				50 = { country_event = { id = scapegoat_event.4 days = 45 } }
+				50 = { country_event = { id = scapegoat_event.5 days = 45 } }
+			}
+		}
+	}
+
+	# Отменить операцию — возврат на исходные, решение снова доступно.
+	option = {
+		name = scapegoat_event.2.cancel
+		MCKSP_scapegoat_clear_flags = yes
+	}
+}
+
+# Развязка — успех: расстрел. Гость удалён, партия «ЗАПРЕЩЕНО», +30% доверия.
+country_event = {
+	id = scapegoat_event.4
+	title = scapegoat_event.4.t
+	desc = scapegoat_event.4.d
+	picture = GFX_report_event_soviet_purge_officers_02
+
+	is_triggered_only = yes
+
+	option = {
+		name = scapegoat_event.4.a
+		MCKSP_scapegoat_resolve = yes
+	}
+}
+
+# Развязка — провал: гость сбежал за границу.
+country_event = {
+	id = scapegoat_event.5
+	title = scapegoat_event.5.t
+	desc = scapegoat_event.5.d
+	picture = GFX_report_event_generic
+
+	is_triggered_only = yes
+
+	# «Чёрт возьми!» — +15% доверия, нацдух «Враг народа за границей!».
+	option = {
+		name = scapegoat_event.5.a
+		add_power_balance_value = {
+			id = SOV_stalin_trust_balance
+			value = 0.15
+		}
+		add_ideas = mcksp_enemy_abroad_spirit
+		MCKSP_scapegoat_clear_flags = yes
+	}
+
+	# «Поймай меня, если сможешь» — те же эффекты (заготовка под игру за беглеца
+	# в правительстве в изгнании).
+	option = {
+		name = scapegoat_event.5.b
+		add_power_balance_value = {
+			id = SOV_stalin_trust_balance
+			value = 0.15
+		}
+		add_ideas = mcksp_enemy_abroad_spirit
+		MCKSP_scapegoat_clear_flags = yes
 	}
 }

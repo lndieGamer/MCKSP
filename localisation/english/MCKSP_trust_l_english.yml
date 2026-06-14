@@ -1,0 +1,97 @@
+﻿l_english:
+# MCKSP Mod - balance of power mechanic (Stalin's trust)
+
+ # --- Drift reasons (BoP modifier names shown in the trust window) ---
+ mcksp_stalin_paranoia_drift: "Stalin's Suspicion"
+ mcksp_throne_r1: "Cracked Throne (Party popularity)"
+ mcksp_throne_r2: "Cracked Throne (Party popularity)"
+ mcksp_throne_r3: "Cracked Throne (Party popularity)"
+ mcksp_throne_r4: "Cracked Throne (Party popularity)"
+ mcksp_throne_r5: "Cracked Throne (Party popularity)"
+ mcksp_throne_r6: "Cracked Throne (Party popularity)"
+ mcksp_throne_r7: "Cracked Throne (Party popularity)"
+ mcksp_throne_r8: "Cracked Throne (Party popularity)"
+ mcksp_throne_l1: "Cracked Throne (Party popularity)"
+ mcksp_throne_l2: "Cracked Throne (Party popularity)"
+ mcksp_throne_l3: "Cracked Throne (Party popularity)"
+ mcksp_throne_l4: "Cracked Throne (Party popularity)"
+ mcksp_throne_l5: "Cracked Throne (Party popularity)"
+ mcksp_throne_l6: "Cracked Throne (Party popularity)"
+ mcksp_throne_l7: "Cracked Throne (Party popularity)"
+
+ # --- Decision category ---
+ SOV_MCKSP_trust_cat: "The Leader's Trust"
+ SOV_MCKSP_trust_cat_desc: "Joseph Vissarionovich watches the guests from the future closely. Every move brings us either toward his favour or toward the execution wall."
+
+ # --- 2-a Gift from the Future ---
+ SOV_gift_from_future_tt: "Grants a random next technology in one of the branches"
+ SOV_gift_from_future: "Gift from the Future"
+ SOV_gift_from_future_desc: "Hand Comrade Stalin one of the technologies brought from the future. The gesture of goodwill strengthens his trust, but distracts our scientists from current work."
+
+ # --- 2-b Public Oath to the Leader ---
+ SOV_public_oath: "Public Oath to the Leader"
+ SOV_public_oath_desc: "Put the guests on the rostrum and make them publicly swear loyalty to Comrade Stalin. Trust spikes, but the people sour on our parties.\n\nOne-time. Available if at least one guest party is at 10%+."
+
+ # --- 2-c Scapegoat ---
+ SOV_scapegoat: "Scapegoat"
+ SOV_scapegoat_desc: "On the guests' own tip, stage the arrest of one of them at the Party congress. If it succeeds, Stalin's trust soars. If it fails, the consequences are unpredictable.\n\nOpens the victim-selection buttons (below)."
+
+ # --- 2-d Secret Party Agitation ---
+ SOV_secret_agitation: "Secret Party Agitation"
+ SOV_secret_agitation_desc: "Launch underground agitation for the guest parties. The people drift toward us, but Stalin smells trouble."
+
+ # --- 2-e Report of Success ---
+ SOV_success_report: "Report of Success"
+ SOV_success_report_desc: "Report labour achievements to the Leader. Trust rises, but factories must be turned over to consumer goods."
+
+ # --- 2-f Unauthorized Initiative ---
+ SOV_unauthorized_initiative: "Unauthorized Initiative"
+ SOV_unauthorized_initiative_desc: "Act around the Leader, pushing the guests' ideas directly. The people respond, but Stalin will not approve."
+
+ # --- Ideas / national spirit ---
+ guests_from_future_weakened_idea: "Guests from the future"
+ guests_from_future_weakened_idea_desc: "Our best minds are busy dissecting the technologies handed to the Leader — the research bonus is temporarily halved.\n\n§R-25%§! political power gain\n§R-20%§! stability\n§Y+50%§! research speed"
+
+ mcksp_secret_agitation_idea: "Secret Party Agitation"
+ mcksp_secret_agitation_idea_desc: "Underground agitators recruit supporters for the guest parties day after day.\n\n§Y+20 pp total§! popularity to the guest bloc over 140 days\n§R-5%§! political power gain"
+
+ mcksp_enemy_abroad_spirit: "Enemy of the People Abroad!"
+ mcksp_enemy_abroad_spirit_desc: "The fugitive smears Soviet rule from abroad. While Stalin holds the reins, this disgrace cannot be erased.\n\n§R-15%§! stability\n§R-10%§! political power gain"
+
+ # --- Scapegoat chain ---
+ # Victim-selection buttons (decisions).
+ SOV_scapegoat_pick_nikita: "Hand over: Nikita Iakushin (SDS)"
+ SOV_scapegoat_pick_arseny: "Hand over: Arseny Pavlov (LGS)"
+ SOV_scapegoat_pick_stepan: "Hand over: Stepan Pavlov (CDU)"
+ SOV_scapegoat_pick_demokrit: "Hand over: Demokrit Ikonomidi (NES)"
+ SOV_scapegoat_pick_gleb: "Hand over: Gleb Rychkov (BOC)"
+ SOV_scapegoat_pick_ivan: "Hand over: Ivan Danchenko (USP)"
+ SOV_scapegoat_pick_ilya: "Hand over: Ilya Popov (USO)"
+ SOV_scapegoat_pick_evgeny: "Hand over: Evgeny Okeanov (RSU)"
+ SOV_scapegoat_pick_artem: "Hand over: Artem Ayusheev (Progress)"
+ SOV_scapegoat_pick_ilgam: "Hand over: Ilgam Fagamanov (PF)"
+ SOV_scapegoat_pick_nikita_desc: "Brand this guest an enemy of the people and begin preparing the arrest. Picking one victim closes the others."
+ SOV_scapegoat_pick_arseny_desc: "Brand this guest an enemy of the people and begin preparing the arrest. Picking one victim closes the others."
+ SOV_scapegoat_pick_stepan_desc: "Brand this guest an enemy of the people and begin preparing the arrest. Picking one victim closes the others."
+ SOV_scapegoat_pick_demokrit_desc: "Brand this guest an enemy of the people and begin preparing the arrest. Picking one victim closes the others."
+ SOV_scapegoat_pick_gleb_desc: "Brand this guest an enemy of the people and begin preparing the arrest. Picking one victim closes the others."
+ SOV_scapegoat_pick_ivan_desc: "Brand this guest an enemy of the people and begin preparing the arrest. Picking one victim closes the others."
+ SOV_scapegoat_pick_ilya_desc: "Brand this guest an enemy of the people and begin preparing the arrest. Picking one victim closes the others."
+ SOV_scapegoat_pick_evgeny_desc: "Brand this guest an enemy of the people and begin preparing the arrest. Picking one victim closes the others."
+ SOV_scapegoat_pick_artem_desc: "Brand this guest an enemy of the people and begin preparing the arrest. Picking one victim closes the others."
+ SOV_scapegoat_pick_ilgam_desc: "Brand this guest an enemy of the people and begin preparing the arrest. Picking one victim closes the others."
+
+ scapegoat_event.2.t: "Preparing the Arrest"
+ scapegoat_event.2.d: "The NKVD is ready to move. The papers are signed, the route mapped. All that remains is to give the order — or back off while there is still time."
+ scapegoat_event.2.order: "Give the order"
+ scapegoat_event.2.order_tt: "§RThis will lead to unpredictable consequences...§!"
+ scapegoat_event.2.cancel: "Call off the operation"
+
+ scapegoat_event.4.t: "Sentence Carried Out"
+ scapegoat_event.4.d: "The operation went off without a hitch. The chosen guest was arrested, tried, and shot as an enemy of the people. His party is outlawed. Comrade Stalin is pleased with our vigilance."
+ scapegoat_event.4.a: "So perish all enemies of the revolution"
+
+ scapegoat_event.5.t: "The Enemy Slipped Away"
+ scapegoat_event.5.d: "Something went wrong. Warned by someone, our 'scapegoat' crossed the border and now smears Soviet rule from abroad. The Leader is furious."
+ scapegoat_event.5.a: "Damn it!"
+ scapegoat_event.5.b: "Catch me if you can..."

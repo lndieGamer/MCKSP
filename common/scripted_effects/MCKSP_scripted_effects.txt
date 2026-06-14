@@ -56,6 +56,378 @@ activate_guests_system = {
 		id = SOV_stalin_trust_balance
 		set_default = yes
 	}
+
+	# Дрифты доверия (см. common/modifiers/MCKSP_power_balance_modifiers.txt):
+	# постоянная подозрительность + первичный пересчёт «треснувшего трона».
+	# Пересчёт трона дальше ведёт on_weekly_SOV.
+	add_power_balance_modifier = {
+		id = SOV_stalin_trust_balance
+		modifier = mcksp_stalin_paranoia_drift
+	}
+	MCKSP_recalc_cracked_throne = yes
+}
+
+# 1-в «Треснувший трон». Снимает все 13 тиров и навешивает один по текущей
+# популярности коммунизма. Вызывается из on_weekly_SOV и при активации.
+MCKSP_recalc_cracked_throne = {
+	remove_power_balance_modifier = { id = SOV_stalin_trust_balance modifier = mcksp_throne_r1 }
+	remove_power_balance_modifier = { id = SOV_stalin_trust_balance modifier = mcksp_throne_r2 }
+	remove_power_balance_modifier = { id = SOV_stalin_trust_balance modifier = mcksp_throne_r3 }
+	remove_power_balance_modifier = { id = SOV_stalin_trust_balance modifier = mcksp_throne_r4 }
+	remove_power_balance_modifier = { id = SOV_stalin_trust_balance modifier = mcksp_throne_r5 }
+	remove_power_balance_modifier = { id = SOV_stalin_trust_balance modifier = mcksp_throne_r6 }
+	remove_power_balance_modifier = { id = SOV_stalin_trust_balance modifier = mcksp_throne_r7 }
+	remove_power_balance_modifier = { id = SOV_stalin_trust_balance modifier = mcksp_throne_r8 }
+	remove_power_balance_modifier = { id = SOV_stalin_trust_balance modifier = mcksp_throne_l1 }
+	remove_power_balance_modifier = { id = SOV_stalin_trust_balance modifier = mcksp_throne_l2 }
+	remove_power_balance_modifier = { id = SOV_stalin_trust_balance modifier = mcksp_throne_l3 }
+	remove_power_balance_modifier = { id = SOV_stalin_trust_balance modifier = mcksp_throne_l4 }
+	remove_power_balance_modifier = { id = SOV_stalin_trust_balance modifier = mcksp_throne_l5 }
+	remove_power_balance_modifier = { id = SOV_stalin_trust_balance modifier = mcksp_throne_l6 }
+	remove_power_balance_modifier = { id = SOV_stalin_trust_balance modifier = mcksp_throne_l7 }
+
+	# Пивот 60%. Правые пороги включают граничную точку (65%→r2, 70%→r3 …): epsilon.
+	if = {
+		limit = { communism > 0.9499 }
+		add_power_balance_modifier = { id = SOV_stalin_trust_balance modifier = mcksp_throne_r8 }
+	}
+	else_if = {
+		limit = { communism > 0.8999 }
+		add_power_balance_modifier = { id = SOV_stalin_trust_balance modifier = mcksp_throne_r7 }
+	}
+	else_if = {
+		limit = { communism > 0.8499 }
+		add_power_balance_modifier = { id = SOV_stalin_trust_balance modifier = mcksp_throne_r6 }
+	}
+	else_if = {
+		limit = { communism > 0.7999 }
+		add_power_balance_modifier = { id = SOV_stalin_trust_balance modifier = mcksp_throne_r5 }
+	}
+	else_if = {
+		limit = { communism > 0.7499 }
+		add_power_balance_modifier = { id = SOV_stalin_trust_balance modifier = mcksp_throne_r4 }
+	}
+	else_if = {
+		limit = { communism > 0.6999 }
+		add_power_balance_modifier = { id = SOV_stalin_trust_balance modifier = mcksp_throne_r3 }
+	}
+	else_if = {
+		limit = { communism > 0.6499 }
+		add_power_balance_modifier = { id = SOV_stalin_trust_balance modifier = mcksp_throne_r2 }
+	}
+	else_if = {
+		limit = { communism > 0.5999 }
+		add_power_balance_modifier = { id = SOV_stalin_trust_balance modifier = mcksp_throne_r1 }
+	}
+	else_if = {
+		limit = { communism > 0.55 }
+		add_power_balance_modifier = { id = SOV_stalin_trust_balance modifier = mcksp_throne_l1 }
+	}
+	else_if = {
+		limit = { communism > 0.5 }
+		add_power_balance_modifier = { id = SOV_stalin_trust_balance modifier = mcksp_throne_l2 }
+	}
+	else_if = {
+		limit = { communism > 0.45 }
+		add_power_balance_modifier = { id = SOV_stalin_trust_balance modifier = mcksp_throne_l3 }
+	}
+	else_if = {
+		limit = { communism > 0.4 }
+		add_power_balance_modifier = { id = SOV_stalin_trust_balance modifier = mcksp_throne_l4 }
+	}
+	else_if = {
+		limit = { communism > 0.35 }
+		add_power_balance_modifier = { id = SOV_stalin_trust_balance modifier = mcksp_throne_l5 }
+	}
+	else_if = {
+		limit = { communism > 0.3 }
+		add_power_balance_modifier = { id = SOV_stalin_trust_balance modifier = mcksp_throne_l6 }
+	}
+	else = {
+		add_power_balance_modifier = { id = SOV_stalin_trust_balance modifier = mcksp_throne_l7 }
+	}
+}
+
+# 2-г тик (eженедельный, on_weekly_SOV): +0.001 (0.1 п.п.) на партию в неделю.
+# Идея длится 140 дней = 20 недель → +0.02 на партию, суммарно ~+20 п.п. блоку.
+# Шаг 0.001 — минимум точности popularity; меньшие значения движок округляет
+# вверх, отчего прежний дневной 0.000111 обваливал коммунизм.
+MCKSP_agitation_tick = {
+	add_popularity = { ideology = mcksp_social_liberalism popularity = 0.001 }
+	add_popularity = { ideology = mcksp_liberal_humanism popularity = 0.001 }
+	add_popularity = { ideology = mcksp_christian_democracy popularity = 0.001 }
+	add_popularity = { ideology = mcksp_market_socialism popularity = 0.001 }
+	add_popularity = { ideology = mcksp_pragmatic_syncretism popularity = 0.001 }
+	add_popularity = { ideology = mcksp_scientific_progressism popularity = 0.001 }
+	add_popularity = { ideology = mcksp_statist_technocratism popularity = 0.001 }
+	add_popularity = { ideology = mcksp_national_conservatism popularity = 0.001 }
+	add_popularity = { ideology = mcksp_democratic_socialism popularity = 0.001 }
+	add_popularity = { ideology = mcksp_placeholder_ilgam popularity = 0.001 }
+}
+
+# 2-е «Самовольная инициатива»: разовый +5 п.п. блоку суммарно (0.005 × 10 партий).
+MCKSP_initiative_popularity = {
+	add_popularity = { ideology = mcksp_social_liberalism popularity = 0.005 }
+	add_popularity = { ideology = mcksp_liberal_humanism popularity = 0.005 }
+	add_popularity = { ideology = mcksp_christian_democracy popularity = 0.005 }
+	add_popularity = { ideology = mcksp_market_socialism popularity = 0.005 }
+	add_popularity = { ideology = mcksp_pragmatic_syncretism popularity = 0.005 }
+	add_popularity = { ideology = mcksp_scientific_progressism popularity = 0.005 }
+	add_popularity = { ideology = mcksp_statist_technocratism popularity = 0.005 }
+	add_popularity = { ideology = mcksp_national_conservatism popularity = 0.005 }
+	add_popularity = { ideology = mcksp_democratic_socialism popularity = 0.005 }
+	add_popularity = { ideology = mcksp_placeholder_ilgam popularity = 0.005 }
+}
+
+# 2-б «Публичная присяга Вождю»: партии с >=10% теряют 10 п.п., партии с <10%
+# срезаются вдвое (относительно текущей). party_popularity@ читает 0..1.
+MCKSP_public_oath_popularity = {
+	MCKSP_oath_cut_mcksp_social_liberalism = yes
+	MCKSP_oath_cut_mcksp_liberal_humanism = yes
+	MCKSP_oath_cut_mcksp_christian_democracy = yes
+	MCKSP_oath_cut_mcksp_market_socialism = yes
+	MCKSP_oath_cut_mcksp_pragmatic_syncretism = yes
+	MCKSP_oath_cut_mcksp_scientific_progressism = yes
+	MCKSP_oath_cut_mcksp_statist_technocratism = yes
+	MCKSP_oath_cut_mcksp_national_conservatism = yes
+	MCKSP_oath_cut_mcksp_democratic_socialism = yes
+	MCKSP_oath_cut_mcksp_placeholder_ilgam = yes
+}
+
+MCKSP_oath_cut_mcksp_social_liberalism = {
+	if = {
+		limit = { mcksp_social_liberalism > 0.099 }
+		add_popularity = { ideology = mcksp_social_liberalism popularity = -0.1 }
+	}
+	else = {
+		set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_social_liberalism }
+		multiply_temp_variable = { mcksp_tmp_pop = -0.5 }
+		add_popularity = { ideology = mcksp_social_liberalism popularity = var:mcksp_tmp_pop }
+	}
+}
+MCKSP_oath_cut_mcksp_liberal_humanism = {
+	if = {
+		limit = { mcksp_liberal_humanism > 0.099 }
+		add_popularity = { ideology = mcksp_liberal_humanism popularity = -0.1 }
+	}
+	else = {
+		set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_liberal_humanism }
+		multiply_temp_variable = { mcksp_tmp_pop = -0.5 }
+		add_popularity = { ideology = mcksp_liberal_humanism popularity = var:mcksp_tmp_pop }
+	}
+}
+MCKSP_oath_cut_mcksp_christian_democracy = {
+	if = {
+		limit = { mcksp_christian_democracy > 0.099 }
+		add_popularity = { ideology = mcksp_christian_democracy popularity = -0.1 }
+	}
+	else = {
+		set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_christian_democracy }
+		multiply_temp_variable = { mcksp_tmp_pop = -0.5 }
+		add_popularity = { ideology = mcksp_christian_democracy popularity = var:mcksp_tmp_pop }
+	}
+}
+MCKSP_oath_cut_mcksp_market_socialism = {
+	if = {
+		limit = { mcksp_market_socialism > 0.099 }
+		add_popularity = { ideology = mcksp_market_socialism popularity = -0.1 }
+	}
+	else = {
+		set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_market_socialism }
+		multiply_temp_variable = { mcksp_tmp_pop = -0.5 }
+		add_popularity = { ideology = mcksp_market_socialism popularity = var:mcksp_tmp_pop }
+	}
+}
+MCKSP_oath_cut_mcksp_pragmatic_syncretism = {
+	if = {
+		limit = { mcksp_pragmatic_syncretism > 0.099 }
+		add_popularity = { ideology = mcksp_pragmatic_syncretism popularity = -0.1 }
+	}
+	else = {
+		set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_pragmatic_syncretism }
+		multiply_temp_variable = { mcksp_tmp_pop = -0.5 }
+		add_popularity = { ideology = mcksp_pragmatic_syncretism popularity = var:mcksp_tmp_pop }
+	}
+}
+MCKSP_oath_cut_mcksp_scientific_progressism = {
+	if = {
+		limit = { mcksp_scientific_progressism > 0.099 }
+		add_popularity = { ideology = mcksp_scientific_progressism popularity = -0.1 }
+	}
+	else = {
+		set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_scientific_progressism }
+		multiply_temp_variable = { mcksp_tmp_pop = -0.5 }
+		add_popularity = { ideology = mcksp_scientific_progressism popularity = var:mcksp_tmp_pop }
+	}
+}
+MCKSP_oath_cut_mcksp_statist_technocratism = {
+	if = {
+		limit = { mcksp_statist_technocratism > 0.099 }
+		add_popularity = { ideology = mcksp_statist_technocratism popularity = -0.1 }
+	}
+	else = {
+		set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_statist_technocratism }
+		multiply_temp_variable = { mcksp_tmp_pop = -0.5 }
+		add_popularity = { ideology = mcksp_statist_technocratism popularity = var:mcksp_tmp_pop }
+	}
+}
+MCKSP_oath_cut_mcksp_national_conservatism = {
+	if = {
+		limit = { mcksp_national_conservatism > 0.099 }
+		add_popularity = { ideology = mcksp_national_conservatism popularity = -0.1 }
+	}
+	else = {
+		set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_national_conservatism }
+		multiply_temp_variable = { mcksp_tmp_pop = -0.5 }
+		add_popularity = { ideology = mcksp_national_conservatism popularity = var:mcksp_tmp_pop }
+	}
+}
+MCKSP_oath_cut_mcksp_democratic_socialism = {
+	if = {
+		limit = { mcksp_democratic_socialism > 0.099 }
+		add_popularity = { ideology = mcksp_democratic_socialism popularity = -0.1 }
+	}
+	else = {
+		set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_democratic_socialism }
+		multiply_temp_variable = { mcksp_tmp_pop = -0.5 }
+		add_popularity = { ideology = mcksp_democratic_socialism popularity = var:mcksp_tmp_pop }
+	}
+}
+MCKSP_oath_cut_mcksp_placeholder_ilgam = {
+	if = {
+		limit = { mcksp_placeholder_ilgam > 0.099 }
+		add_popularity = { ideology = mcksp_placeholder_ilgam popularity = -0.1 }
+	}
+	else = {
+		set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_placeholder_ilgam }
+		multiply_temp_variable = { mcksp_tmp_pop = -0.5 }
+		add_popularity = { ideology = mcksp_placeholder_ilgam popularity = var:mcksp_tmp_pop }
+	}
+}
+
+# 2-в «Козёл отпущения», успех. Удаляет выбранного гостя (флаг mcksp_scapegoat_target_*),
+# обнуляет и маскирует его партию, начисляет +30% доверия. Цель ставит решение SOV_scapegoat_pick_<имя>.
+MCKSP_scapegoat_resolve = {
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.3 }
+
+	if = {
+		limit = { has_country_flag = mcksp_scapegoat_target_nikita }
+		retire_character = SOV_nikita_iakushin
+		set_country_flag = mcksp_guest_gone_nikita
+		set_party_name = { ideology = mcksp_social_liberalism long_name = MCKSP_redacted name = MCKSP_redacted }
+		set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_social_liberalism }
+		multiply_temp_variable = { mcksp_tmp_pop = -1 }
+		add_popularity = { ideology = mcksp_social_liberalism popularity = var:mcksp_tmp_pop }
+		set_variable = { p_nikita = 0 }
+	}
+	else_if = {
+		limit = { has_country_flag = mcksp_scapegoat_target_arseny }
+		retire_character = SOV_arseny_pavlov
+		set_country_flag = mcksp_guest_gone_arseny
+		set_party_name = { ideology = mcksp_liberal_humanism long_name = MCKSP_redacted name = MCKSP_redacted }
+		set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_liberal_humanism }
+		multiply_temp_variable = { mcksp_tmp_pop = -1 }
+		add_popularity = { ideology = mcksp_liberal_humanism popularity = var:mcksp_tmp_pop }
+		set_variable = { p_arseny = 0 }
+	}
+	else_if = {
+		limit = { has_country_flag = mcksp_scapegoat_target_stepan }
+		retire_character = SOV_stepan_pavlov
+		set_country_flag = mcksp_guest_gone_stepan
+		set_party_name = { ideology = mcksp_christian_democracy long_name = MCKSP_redacted name = MCKSP_redacted }
+		set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_christian_democracy }
+		multiply_temp_variable = { mcksp_tmp_pop = -1 }
+		add_popularity = { ideology = mcksp_christian_democracy popularity = var:mcksp_tmp_pop }
+		set_variable = { p_stepan = 0 }
+	}
+	else_if = {
+		limit = { has_country_flag = mcksp_scapegoat_target_demokrit }
+		retire_character = SOV_demokrit_ikonomidi
+		set_country_flag = mcksp_guest_gone_demokrit
+		set_party_name = { ideology = mcksp_market_socialism long_name = MCKSP_redacted name = MCKSP_redacted }
+		set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_market_socialism }
+		multiply_temp_variable = { mcksp_tmp_pop = -1 }
+		add_popularity = { ideology = mcksp_market_socialism popularity = var:mcksp_tmp_pop }
+		set_variable = { p_demokrit = 0 }
+	}
+	else_if = {
+		limit = { has_country_flag = mcksp_scapegoat_target_gleb }
+		retire_character = SOV_gleb_rychkov
+		set_country_flag = mcksp_guest_gone_gleb
+		set_party_name = { ideology = mcksp_pragmatic_syncretism long_name = MCKSP_redacted name = MCKSP_redacted }
+		set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_pragmatic_syncretism }
+		multiply_temp_variable = { mcksp_tmp_pop = -1 }
+		add_popularity = { ideology = mcksp_pragmatic_syncretism popularity = var:mcksp_tmp_pop }
+		set_variable = { p_gleb = 0 }
+	}
+	else_if = {
+		limit = { has_country_flag = mcksp_scapegoat_target_ivan }
+		retire_character = SOV_ivan_danchenko
+		set_country_flag = mcksp_guest_gone_ivan
+		set_party_name = { ideology = mcksp_scientific_progressism long_name = MCKSP_redacted name = MCKSP_redacted }
+		set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_scientific_progressism }
+		multiply_temp_variable = { mcksp_tmp_pop = -1 }
+		add_popularity = { ideology = mcksp_scientific_progressism popularity = var:mcksp_tmp_pop }
+		set_variable = { p_ivan = 0 }
+	}
+	else_if = {
+		limit = { has_country_flag = mcksp_scapegoat_target_ilya }
+		retire_character = SOV_ilya_popov
+		set_country_flag = mcksp_guest_gone_ilya
+		set_party_name = { ideology = mcksp_statist_technocratism long_name = MCKSP_redacted name = MCKSP_redacted }
+		set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_statist_technocratism }
+		multiply_temp_variable = { mcksp_tmp_pop = -1 }
+		add_popularity = { ideology = mcksp_statist_technocratism popularity = var:mcksp_tmp_pop }
+		set_variable = { p_ilya = 0 }
+	}
+	else_if = {
+		limit = { has_country_flag = mcksp_scapegoat_target_evgeny }
+		retire_character = SOV_evgeny_okeanov
+		set_country_flag = mcksp_guest_gone_evgeny
+		set_party_name = { ideology = mcksp_national_conservatism long_name = MCKSP_redacted name = MCKSP_redacted }
+		set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_national_conservatism }
+		multiply_temp_variable = { mcksp_tmp_pop = -1 }
+		add_popularity = { ideology = mcksp_national_conservatism popularity = var:mcksp_tmp_pop }
+		set_variable = { p_evgeny = 0 }
+	}
+	else_if = {
+		limit = { has_country_flag = mcksp_scapegoat_target_artem }
+		retire_character = SOV_artem_ayusheev
+		set_country_flag = mcksp_guest_gone_artem
+		set_party_name = { ideology = mcksp_democratic_socialism long_name = MCKSP_redacted name = MCKSP_redacted }
+		set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_democratic_socialism }
+		multiply_temp_variable = { mcksp_tmp_pop = -1 }
+		add_popularity = { ideology = mcksp_democratic_socialism popularity = var:mcksp_tmp_pop }
+		set_variable = { p_artem = 0 }
+	}
+	else_if = {
+		limit = { has_country_flag = mcksp_scapegoat_target_ilgam }
+		retire_character = SOV_ilgam_fagamanov
+		set_country_flag = mcksp_guest_gone_ilgam
+		set_party_name = { ideology = mcksp_placeholder_ilgam long_name = MCKSP_redacted name = MCKSP_redacted }
+		set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_placeholder_ilgam }
+		multiply_temp_variable = { mcksp_tmp_pop = -1 }
+		add_popularity = { ideology = mcksp_placeholder_ilgam popularity = var:mcksp_tmp_pop }
+		set_variable = { p_ilgam = 0 }
+	}
+
+	MCKSP_scapegoat_clear_flags = yes
+}
+
+# Сброс служебных флагов цепочки «Козёл отпущения» после развязки/отмены.
+MCKSP_scapegoat_clear_flags = {
+	clr_country_flag = mcksp_scapegoat_in_progress
+	clr_country_flag = mcksp_scapegoat_committed
+	clr_country_flag = mcksp_scapegoat_target_nikita
+	clr_country_flag = mcksp_scapegoat_target_arseny
+	clr_country_flag = mcksp_scapegoat_target_stepan
+	clr_country_flag = mcksp_scapegoat_target_demokrit
+	clr_country_flag = mcksp_scapegoat_target_gleb
+	clr_country_flag = mcksp_scapegoat_target_ivan
+	clr_country_flag = mcksp_scapegoat_target_ilya
+	clr_country_flag = mcksp_scapegoat_target_evgeny
+	clr_country_flag = mcksp_scapegoat_target_artem
+	clr_country_flag = mcksp_scapegoat_target_ilgam
 }
 
 # Терминал — расстрел гостей (trust_event.2.a).
@@ -99,4 +471,12 @@ MCKSP_purge_guests_effect = {
 	set_party_name = { ideology = mcksp_placeholder_ilgam long_name = MCKSP_redacted name = MCKSP_redacted }
 
 	clr_country_flag = guests_active
+
+	# Гости расстреляны — снести механику доверия и все mcksp-нацдухи/идеи.
+	# remove_power_balance убирает баланс вместе со всеми навешанными дрифтами.
+	remove_power_balance = { id = SOV_stalin_trust_balance }
+
+	if = { limit = { has_idea = mcksp_secret_agitation_idea } remove_ideas = mcksp_secret_agitation_idea }
+	if = { limit = { has_idea = guests_from_future_weakened_idea } remove_ideas = guests_from_future_weakened_idea }
+	if = { limit = { has_idea = mcksp_enemy_abroad_spirit } remove_ideas = mcksp_enemy_abroad_spirit }
 }

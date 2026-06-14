@@ -17,4 +17,24 @@ on_actions = {
 			}
 		}
 	}
+
+	# Движок баланса доверия. Мёрджится с vanilla on_*_SOV (NSB), не перекрывает.
+	# Тик еженедельный: шаг популярности 0.001 (0.1 п.п.) выше порога точности
+	# popularity — дневной шаг 0.0001 округлялся бы вверх и дрейф был бы кратно
+	# сильнее задуманного.
+	on_weekly_SOV = {
+		effect = {
+			if = {
+				limit = { has_country_flag = guests_active }
+				MCKSP_recalc_cracked_throne = yes   # 1-в пересчёт тиров
+			}
+			if = {
+				limit = {
+					has_country_flag = guests_active
+					has_idea = mcksp_secret_agitation_idea
+				}
+				MCKSP_agitation_tick = yes           # 2-г: +0.001/партию в неделю
+			}
+		}
+	}
 }

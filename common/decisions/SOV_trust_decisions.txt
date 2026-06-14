@@ -1,0 +1,334 @@
+# Решения механики баланса сил (доверие Сталина). Все видны при guests_active.
+# Мгновенный сдвиг доверия: add_power_balance_value (1% = 0.01).
+SOV_MCKSP_trust_cat = {
+
+	# 2-а «Подарок из будущего». +15% доверия, случайная следующая по ветке тех,
+	# −половина research-бонуса на 90 дней. КД 120 дней, 100 ПП.
+	SOV_gift_from_future = {
+		icon = GFX_decision_generic_research
+
+		visible = {
+			has_country_flag = guests_active
+		}
+		available = {
+			always = yes
+		}
+
+		cost = 100
+		days_remove = 120
+		fire_only_once = no
+
+		complete_effect = {
+			add_power_balance_value = {
+				id = SOV_stalin_trust_balance
+				value = 0.15
+			}
+			# Урезаем research-бонус оригинальной идеи вдвое на 90 дней через
+			# подмену на ослабленный вариант. Возврат — trust_event.3.
+			if = {
+				limit = { has_idea = guests_from_future_idea }
+				swap_ideas = {
+					remove_idea = guests_from_future_idea
+					add_idea = guests_from_future_weakened_idea
+				}
+				hidden_effect = { country_event = { id = trust_event.3 days = 90 } }
+			}
+
+			# Кураторский список: каждая ветка отдаёт ровно «следующую» тех.
+			# Ветка отключается (factor = 0), если предок не исследован ИЛИ цель
+			# уже есть. random_list не поддерживает trigger в записях — только
+			# modifier (как в vanilla BBA_Italy). Расширяемо. Fallback — ПП.
+			# hidden_effect — чтобы движок не вываливал список техов с шансами в тултип.
+			custom_effect_tooltip = SOV_gift_from_future_tt
+			hidden_effect = {
+			random_list = {
+				10 = { modifier = { factor = 0 OR = { NOT = { has_tech = construction1 } has_tech = construction2 } } set_technology = { construction2 = 1 } }
+				10 = { modifier = { factor = 0 OR = { NOT = { has_tech = construction2 } has_tech = construction3 } } set_technology = { construction3 = 1 } }
+				10 = { modifier = { factor = 0 OR = { NOT = { has_tech = construction3 } has_tech = construction4 } } set_technology = { construction4 = 1 } }
+				10 = { modifier = { factor = 0 OR = { NOT = { has_tech = construction4 } has_tech = construction5 } } set_technology = { construction5 = 1 } }
+				10 = { modifier = { factor = 0 OR = { NOT = { has_tech = excavation1 } has_tech = excavation2 } } set_technology = { excavation2 = 1 } }
+				10 = { modifier = { factor = 0 OR = { NOT = { has_tech = excavation2 } has_tech = excavation3 } } set_technology = { excavation3 = 1 } }
+				10 = { modifier = { factor = 0 OR = { NOT = { has_tech = excavation3 } has_tech = excavation4 } } set_technology = { excavation4 = 1 } }
+				10 = { modifier = { factor = 0 OR = { NOT = { has_tech = excavation4 } has_tech = excavation5 } } set_technology = { excavation5 = 1 } }
+				10 = { modifier = { factor = 0 OR = { NOT = { has_tech = infantry_weapons } has_tech = infantry_weapons1 } } set_technology = { infantry_weapons1 = 1 } }
+				10 = { modifier = { factor = 0 OR = { NOT = { has_tech = infantry_weapons1 } has_tech = improved_infantry_weapons } } set_technology = { improved_infantry_weapons = 1 } }
+				10 = { modifier = { factor = 0 OR = { NOT = { has_tech = improved_infantry_weapons } has_tech = advanced_infantry_weapons } } set_technology = { advanced_infantry_weapons = 1 } }
+				10 = { modifier = { factor = 0 OR = { NOT = { has_tech = tech_support } has_tech = tech_engineers } } set_technology = { tech_engineers = 1 } }
+				10 = { modifier = { factor = 0 OR = { NOT = { has_tech = tech_support } has_tech = tech_recon } } set_technology = { tech_recon = 1 } }
+				10 = { modifier = { factor = 0 OR = { NOT = { has_tech = electronic_mechanical_engineering } has_tech = radio } } set_technology = { radio = 1 } }
+				10 = { modifier = { factor = 0 OR = { NOT = { has_tech = radio } has_tech = improved_radio } } set_technology = { improved_radio = 1 } }
+				10 = { modifier = { factor = 0 OR = { NOT = { has_tech = electronic_mechanical_engineering } has_tech = mechanical_computing } } set_technology = { mechanical_computing = 1 } }
+				10 = { modifier = { factor = 0 OR = { NOT = { has_tech = gw_artillery } has_tech = interwar_artillery } } set_technology = { interwar_artillery = 1 } }
+				10 = { modifier = { factor = 0 OR = { NOT = { has_tech = interwar_artillery } has_tech = artillery1 } } set_technology = { artillery1 = 1 } }
+				# Fallback: все цели исследованы — компенсация ПП.
+				3 = { add_political_power = 100 }
+			}
+			}
+		}
+	}
+
+	# 2-б «Публичная присяга Вождю». Разово. +25% доверия, бьёт по партиям гостей.
+	# Доступно, если хотя бы у одной партии гостей >=10%.
+	SOV_public_oath = {
+		icon = GFX_decision_generic_political_rally
+
+		visible = {
+			has_country_flag = guests_active
+		}
+		available = {
+			OR = {
+				mcksp_social_liberalism > 0.099
+				mcksp_liberal_humanism > 0.099
+				mcksp_christian_democracy > 0.099
+				mcksp_market_socialism > 0.099
+				mcksp_pragmatic_syncretism > 0.099
+				mcksp_scientific_progressism > 0.099
+				mcksp_statist_technocratism > 0.099
+				mcksp_national_conservatism > 0.099
+				mcksp_democratic_socialism > 0.099
+				mcksp_placeholder_ilgam > 0.099
+			}
+		}
+
+		cost = 0
+		fire_only_once = yes
+
+		complete_effect = {
+			add_power_balance_value = {
+				id = SOV_stalin_trust_balance
+				value = 0.25
+			}
+			MCKSP_public_oath_popularity = yes
+		}
+	}
+
+	# 2-в «Козёл отпущения». 40 КВ. Открывает выбор жертвы — 10 решений-кнопок
+	# SOV_scapegoat_pick_<имя> ниже (видны при mcksp_scapegoat_in_progress).
+	# in_progress = фаза выбора; committed = операция идёт (45 дней).
+	SOV_scapegoat = {
+		icon = GFX_decision_generic_police_action
+
+		visible = {
+			has_country_flag = guests_active
+		}
+		available = {
+			NOT = { has_country_flag = mcksp_scapegoat_in_progress }
+			NOT = { has_country_flag = mcksp_scapegoat_committed }
+		}
+
+		custom_cost_trigger = {
+			command_power > 39
+		}
+		custom_cost_text = decision_cost_CP_40
+
+		fire_only_once = no
+
+		complete_effect = {
+			hidden_effect = {
+				add_command_power = -40
+			}
+			set_country_flag = mcksp_scapegoat_in_progress
+		}
+	}
+
+	# Кнопки выбора жертвы. Видны только в фазе выбора и пока гость жив.
+	# Клик: закрывает выбор (clr in_progress → остальные исчезают), фиксирует
+	# цель и операцию (committed), запускает подготовку scapegoat_event.2.
+	SOV_scapegoat_pick_nikita = {
+		icon = GFX_decision_generic_police_action
+		visible = { has_country_flag = mcksp_scapegoat_in_progress NOT = { has_country_flag = mcksp_guest_gone_nikita } }
+		available = { always = yes }
+		fire_only_once = no
+		complete_effect = {
+			clr_country_flag = mcksp_scapegoat_in_progress
+			set_country_flag = mcksp_scapegoat_committed
+			set_country_flag = mcksp_scapegoat_target_nikita
+			country_event = { id = scapegoat_event.2 hours = 6 }
+		}
+	}
+	SOV_scapegoat_pick_arseny = {
+		icon = GFX_decision_generic_police_action
+		visible = { has_country_flag = mcksp_scapegoat_in_progress NOT = { has_country_flag = mcksp_guest_gone_arseny } }
+		available = { always = yes }
+		fire_only_once = no
+		complete_effect = {
+			clr_country_flag = mcksp_scapegoat_in_progress
+			set_country_flag = mcksp_scapegoat_committed
+			set_country_flag = mcksp_scapegoat_target_arseny
+			country_event = { id = scapegoat_event.2 hours = 6 }
+		}
+	}
+	SOV_scapegoat_pick_stepan = {
+		icon = GFX_decision_generic_police_action
+		visible = { has_country_flag = mcksp_scapegoat_in_progress NOT = { has_country_flag = mcksp_guest_gone_stepan } }
+		available = { always = yes }
+		fire_only_once = no
+		complete_effect = {
+			clr_country_flag = mcksp_scapegoat_in_progress
+			set_country_flag = mcksp_scapegoat_committed
+			set_country_flag = mcksp_scapegoat_target_stepan
+			country_event = { id = scapegoat_event.2 hours = 6 }
+		}
+	}
+	SOV_scapegoat_pick_demokrit = {
+		icon = GFX_decision_generic_police_action
+		visible = { has_country_flag = mcksp_scapegoat_in_progress NOT = { has_country_flag = mcksp_guest_gone_demokrit } }
+		available = { always = yes }
+		fire_only_once = no
+		complete_effect = {
+			clr_country_flag = mcksp_scapegoat_in_progress
+			set_country_flag = mcksp_scapegoat_committed
+			set_country_flag = mcksp_scapegoat_target_demokrit
+			country_event = { id = scapegoat_event.2 hours = 6 }
+		}
+	}
+	SOV_scapegoat_pick_gleb = {
+		icon = GFX_decision_generic_police_action
+		visible = { has_country_flag = mcksp_scapegoat_in_progress NOT = { has_country_flag = mcksp_guest_gone_gleb } }
+		available = { always = yes }
+		fire_only_once = no
+		complete_effect = {
+			clr_country_flag = mcksp_scapegoat_in_progress
+			set_country_flag = mcksp_scapegoat_committed
+			set_country_flag = mcksp_scapegoat_target_gleb
+			country_event = { id = scapegoat_event.2 hours = 6 }
+		}
+	}
+	SOV_scapegoat_pick_ivan = {
+		icon = GFX_decision_generic_police_action
+		visible = { has_country_flag = mcksp_scapegoat_in_progress NOT = { has_country_flag = mcksp_guest_gone_ivan } }
+		available = { always = yes }
+		fire_only_once = no
+		complete_effect = {
+			clr_country_flag = mcksp_scapegoat_in_progress
+			set_country_flag = mcksp_scapegoat_committed
+			set_country_flag = mcksp_scapegoat_target_ivan
+			country_event = { id = scapegoat_event.2 hours = 6 }
+		}
+	}
+	SOV_scapegoat_pick_ilya = {
+		icon = GFX_decision_generic_police_action
+		visible = { has_country_flag = mcksp_scapegoat_in_progress NOT = { has_country_flag = mcksp_guest_gone_ilya } }
+		available = { always = yes }
+		fire_only_once = no
+		complete_effect = {
+			clr_country_flag = mcksp_scapegoat_in_progress
+			set_country_flag = mcksp_scapegoat_committed
+			set_country_flag = mcksp_scapegoat_target_ilya
+			country_event = { id = scapegoat_event.2 hours = 6 }
+		}
+	}
+	SOV_scapegoat_pick_evgeny = {
+		icon = GFX_decision_generic_police_action
+		visible = { has_country_flag = mcksp_scapegoat_in_progress NOT = { has_country_flag = mcksp_guest_gone_evgeny } }
+		available = { always = yes }
+		fire_only_once = no
+		complete_effect = {
+			clr_country_flag = mcksp_scapegoat_in_progress
+			set_country_flag = mcksp_scapegoat_committed
+			set_country_flag = mcksp_scapegoat_target_evgeny
+			country_event = { id = scapegoat_event.2 hours = 6 }
+		}
+	}
+	SOV_scapegoat_pick_artem = {
+		icon = GFX_decision_generic_police_action
+		visible = { has_country_flag = mcksp_scapegoat_in_progress NOT = { has_country_flag = mcksp_guest_gone_artem } }
+		available = { always = yes }
+		fire_only_once = no
+		complete_effect = {
+			clr_country_flag = mcksp_scapegoat_in_progress
+			set_country_flag = mcksp_scapegoat_committed
+			set_country_flag = mcksp_scapegoat_target_artem
+			country_event = { id = scapegoat_event.2 hours = 6 }
+		}
+	}
+	SOV_scapegoat_pick_ilgam = {
+		icon = GFX_decision_generic_police_action
+		visible = { has_country_flag = mcksp_scapegoat_in_progress NOT = { has_country_flag = mcksp_guest_gone_ilgam } }
+		available = { always = yes }
+		fire_only_once = no
+		complete_effect = {
+			clr_country_flag = mcksp_scapegoat_in_progress
+			set_country_flag = mcksp_scapegoat_committed
+			set_country_flag = mcksp_scapegoat_target_ilgam
+			country_event = { id = scapegoat_event.2 hours = 6 }
+		}
+	}
+
+	# 2-г «Тайная партийная агитация». −15% доверия, идея на 180 дней
+	# (+0.003/день популярности всем партиям гостей). 50 ПП, КД 210 дней.
+	SOV_secret_agitation = {
+		icon = GFX_decision_generic_political_discourse
+
+		visible = {
+			has_country_flag = guests_active
+		}
+		available = {
+			NOT = { has_idea = mcksp_secret_agitation_idea }
+		}
+
+		cost = 50
+		days_remove = 210
+		fire_only_once = no
+
+		complete_effect = {
+			add_power_balance_value = {
+				id = SOV_stalin_trust_balance
+				value = -0.15
+			}
+			add_timed_idea = { idea = mcksp_secret_agitation_idea days = 140 }
+		}
+	}
+
+	# 2-д «Рапорт об успехах». +10% доверия, +10% товаров народного потребления
+	# на время действия. КД 60 дней (days_remove).
+	SOV_success_report = {
+		icon = GFX_decision_generic_form_nation
+
+		visible = {
+			has_country_flag = guests_active
+		}
+		available = {
+			always = yes
+		}
+
+		cost = 25
+		days_remove = 60
+		fire_only_once = no
+
+		modifier = {
+			consumer_goods_factor = 0.1
+		}
+
+		complete_effect = {
+			add_power_balance_value = {
+				id = SOV_stalin_trust_balance
+				value = 0.1
+			}
+		}
+	}
+
+	# 2-е «Самовольная инициатива». −10% доверия, +1.5% популярности партиям гостей.
+	SOV_unauthorized_initiative = {
+		icon = GFX_decision_generic_break_treaty
+
+		visible = {
+			has_country_flag = guests_active
+		}
+		available = {
+			always = yes
+		}
+
+		cost = 25
+		days_remove = 30
+		fire_only_once = no
+
+		complete_effect = {
+			add_power_balance_value = {
+				id = SOV_stalin_trust_balance
+				value = -0.1
+			}
+			MCKSP_initiative_popularity = yes
+		}
+	}
+}

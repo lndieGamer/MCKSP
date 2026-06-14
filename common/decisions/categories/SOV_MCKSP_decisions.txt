@@ -7,3 +7,14 @@ SOV_MCKSP_decisions_cat = {
 	priority = 10
 	visible_when_empty = no
 }
+
+# Решения баланса сил (доверие Сталина). Видны при guests_active.
+SOV_MCKSP_trust_cat = {
+	icon = generic_political_actions
+	picture = GFX_decision_cat_picture_soviet_comecon
+	allowed = {
+		tag = SOV
+	}
+	priority = 11
+	visible_when_empty = no
+}
