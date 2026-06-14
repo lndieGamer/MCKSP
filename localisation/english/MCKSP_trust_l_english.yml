@@ -23,6 +23,28 @@
  SOV_MCKSP_trust_cat: "The Leader's Trust"
  SOV_MCKSP_trust_cat_desc: "Joseph Vissarionovich watches the guests from the future closely. Every move brings us either toward his favour or toward the execution wall."
 
+ # --- DEBUG: eliminate guests (only -debug) ---
+ SOV_debug_kill_nikita: "[DEBUG] Eliminate: Nikita Iakushin"
+ SOV_debug_kill_arseny: "[DEBUG] Eliminate: Arseny Pavlov"
+ SOV_debug_kill_stepan: "[DEBUG] Eliminate: Stepan Pavlov"
+ SOV_debug_kill_demokrit: "[DEBUG] Eliminate: Demokrit Ikonomidi"
+ SOV_debug_kill_gleb: "[DEBUG] Eliminate: Gleb Rychkov"
+ SOV_debug_kill_ivan: "[DEBUG] Eliminate: Ivan Danchenko"
+ SOV_debug_kill_ilya: "[DEBUG] Eliminate: Ilya Popov"
+ SOV_debug_kill_evgeny: "[DEBUG] Eliminate: Evgeny Okeanov"
+ SOV_debug_kill_artem: "[DEBUG] Eliminate: Artem Ayusheev"
+ SOV_debug_kill_ilgam: "[DEBUG] Eliminate: Ilgam Fagamanov"
+ SOV_debug_kill_nikita_desc: "§RDebug (only -debug).§! Instantly shoots the guest via the real path: party → BANNED, bullet hole on the compass, +30% trust. No 50% RNG."
+ SOV_debug_kill_arseny_desc: "$SOV_debug_kill_nikita_desc$"
+ SOV_debug_kill_stepan_desc: "$SOV_debug_kill_nikita_desc$"
+ SOV_debug_kill_demokrit_desc: "$SOV_debug_kill_nikita_desc$"
+ SOV_debug_kill_gleb_desc: "$SOV_debug_kill_nikita_desc$"
+ SOV_debug_kill_ivan_desc: "$SOV_debug_kill_nikita_desc$"
+ SOV_debug_kill_ilya_desc: "$SOV_debug_kill_nikita_desc$"
+ SOV_debug_kill_evgeny_desc: "$SOV_debug_kill_nikita_desc$"
+ SOV_debug_kill_artem_desc: "$SOV_debug_kill_nikita_desc$"
+ SOV_debug_kill_ilgam_desc: "$SOV_debug_kill_nikita_desc$"
+
  # --- 2-a Gift from the Future ---
  SOV_gift_from_future_tt: "Grants a random next technology in one of the branches"
  SOV_gift_from_future: "Gift from the Future"

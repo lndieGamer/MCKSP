@@ -23,6 +23,28 @@
  SOV_MCKSP_trust_cat: "Доверие Вождя"
  SOV_MCKSP_trust_cat_desc: "Иосиф Виссарионович внимательно следит за гостями из будущего. Каждое наше действие приближает нас либо к его благосклонности, либо к расстрельной стене."
 
+ # --- DEBUG: устранение гостей (только -debug) ---
+ SOV_debug_kill_nikita: "[DEBUG] Устранить: Никита Якушин"
+ SOV_debug_kill_arseny: "[DEBUG] Устранить: Арсений Павлов"
+ SOV_debug_kill_stepan: "[DEBUG] Устранить: Степан Павлов"
+ SOV_debug_kill_demokrit: "[DEBUG] Устранить: Демокрит Икономиди"
+ SOV_debug_kill_gleb: "[DEBUG] Устранить: Глеб Рычков"
+ SOV_debug_kill_ivan: "[DEBUG] Устранить: Иван Данченко"
+ SOV_debug_kill_ilya: "[DEBUG] Устранить: Илья Попов"
+ SOV_debug_kill_evgeny: "[DEBUG] Устранить: Евгений Океанов"
+ SOV_debug_kill_artem: "[DEBUG] Устранить: Артём Аюшеев"
+ SOV_debug_kill_ilgam: "[DEBUG] Устранить: Ильгам Фагаманов"
+ SOV_debug_kill_nikita_desc: "§RОтладка (только -debug).§! Мгновенно расстреливает гостя по реальному пути: партия → ЗАПРЕЩЕНО, пулевое отверстие на компасе, +30% доверия. Без 50% рандома."
+ SOV_debug_kill_arseny_desc: "$SOV_debug_kill_nikita_desc$"
+ SOV_debug_kill_stepan_desc: "$SOV_debug_kill_nikita_desc$"
+ SOV_debug_kill_demokrit_desc: "$SOV_debug_kill_nikita_desc$"
+ SOV_debug_kill_gleb_desc: "$SOV_debug_kill_nikita_desc$"
+ SOV_debug_kill_ivan_desc: "$SOV_debug_kill_nikita_desc$"
+ SOV_debug_kill_ilya_desc: "$SOV_debug_kill_nikita_desc$"
+ SOV_debug_kill_evgeny_desc: "$SOV_debug_kill_nikita_desc$"
+ SOV_debug_kill_artem_desc: "$SOV_debug_kill_nikita_desc$"
+ SOV_debug_kill_ilgam_desc: "$SOV_debug_kill_nikita_desc$"
+
  # --- 2-а Подарок из будущего ---
  SOV_gift_from_future_tt: "Даёт случайную следующую технологию в одной из веток"
  SOV_gift_from_future: "Подарок из будущего"

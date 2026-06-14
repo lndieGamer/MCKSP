@@ -331,4 +331,79 @@ SOV_MCKSP_trust_cat = {
 			MCKSP_initiative_popularity = yes
 		}
 	}
+
+	# DEBUG — только в режиме -debug. Мгновенно устраняет конкретного гостя по
+	# реальному пути расстрела (MCKSP_scapegoat_resolve: retire + ЗАПРЕЩЕНО +
+	# флаг mcksp_guest_gone_<имя> → отверстие на компасе + 30% доверия). Не зависит
+	# от 50% ивента «Козёл отпущения». Видны пока гость жив.
+	SOV_debug_kill_nikita = {
+		icon = GFX_decision_generic_police_action
+		visible = { is_debug = yes has_country_flag = guests_active NOT = { has_country_flag = mcksp_guest_gone_nikita } }
+		available = { always = yes }
+		fire_only_once = no
+		complete_effect = { set_country_flag = mcksp_scapegoat_target_nikita MCKSP_scapegoat_resolve = yes }
+	}
+	SOV_debug_kill_arseny = {
+		icon = GFX_decision_generic_police_action
+		visible = { is_debug = yes has_country_flag = guests_active NOT = { has_country_flag = mcksp_guest_gone_arseny } }
+		available = { always = yes }
+		fire_only_once = no
+		complete_effect = { set_country_flag = mcksp_scapegoat_target_arseny MCKSP_scapegoat_resolve = yes }
+	}
+	SOV_debug_kill_stepan = {
+		icon = GFX_decision_generic_police_action
+		visible = { is_debug = yes has_country_flag = guests_active NOT = { has_country_flag = mcksp_guest_gone_stepan } }
+		available = { always = yes }
+		fire_only_once = no
+		complete_effect = { set_country_flag = mcksp_scapegoat_target_stepan MCKSP_scapegoat_resolve = yes }
+	}
+	SOV_debug_kill_demokrit = {
+		icon = GFX_decision_generic_police_action
+		visible = { is_debug = yes has_country_flag = guests_active NOT = { has_country_flag = mcksp_guest_gone_demokrit } }
+		available = { always = yes }
+		fire_only_once = no
+		complete_effect = { set_country_flag = mcksp_scapegoat_target_demokrit MCKSP_scapegoat_resolve = yes }
+	}
+	SOV_debug_kill_gleb = {
+		icon = GFX_decision_generic_police_action
+		visible = { is_debug = yes has_country_flag = guests_active NOT = { has_country_flag = mcksp_guest_gone_gleb } }
+		available = { always = yes }
+		fire_only_once = no
+		complete_effect = { set_country_flag = mcksp_scapegoat_target_gleb MCKSP_scapegoat_resolve = yes }
+	}
+	SOV_debug_kill_ivan = {
+		icon = GFX_decision_generic_police_action
+		visible = { is_debug = yes has_country_flag = guests_active NOT = { has_country_flag = mcksp_guest_gone_ivan } }
+		available = { always = yes }
+		fire_only_once = no
+		complete_effect = { set_country_flag = mcksp_scapegoat_target_ivan MCKSP_scapegoat_resolve = yes }
+	}
+	SOV_debug_kill_ilya = {
+		icon = GFX_decision_generic_police_action
+		visible = { is_debug = yes has_country_flag = guests_active NOT = { has_country_flag = mcksp_guest_gone_ilya } }
+		available = { always = yes }
+		fire_only_once = no
+		complete_effect = { set_country_flag = mcksp_scapegoat_target_ilya MCKSP_scapegoat_resolve = yes }
+	}
+	SOV_debug_kill_evgeny = {
+		icon = GFX_decision_generic_police_action
+		visible = { is_debug = yes has_country_flag = guests_active NOT = { has_country_flag = mcksp_guest_gone_evgeny } }
+		available = { always = yes }
+		fire_only_once = no
+		complete_effect = { set_country_flag = mcksp_scapegoat_target_evgeny MCKSP_scapegoat_resolve = yes }
+	}
+	SOV_debug_kill_artem = {
+		icon = GFX_decision_generic_police_action
+		visible = { is_debug = yes has_country_flag = guests_active NOT = { has_country_flag = mcksp_guest_gone_artem } }
+		available = { always = yes }
+		fire_only_once = no
+		complete_effect = { set_country_flag = mcksp_scapegoat_target_artem MCKSP_scapegoat_resolve = yes }
+	}
+	SOV_debug_kill_ilgam = {
+		icon = GFX_decision_generic_police_action
+		visible = { is_debug = yes has_country_flag = guests_active NOT = { has_country_flag = mcksp_guest_gone_ilgam } }
+		available = { always = yes }
+		fire_only_once = no
+		complete_effect = { set_country_flag = mcksp_scapegoat_target_ilgam MCKSP_scapegoat_resolve = yes }
+	}
 }
