@@ -2,16 +2,10 @@ SOV_MCKSP_decisions_cat = {
 	SOV_involve_army = {
 		icon = GFX_decision_generic_reorganize_irregulars
 		visible = {
-			AND = {
-				OR = {
-					has_idea = something_definetely_happened_idea 
-					has_idea = something_happened_idea 
-					has_idea = something_maybe_happened_idea 
-				}
-				OR = {
-					has_idea = guests_from_future_idea
-					has_idea = guests_from_future_weakened_idea
-				}
+			OR = {
+				has_idea = something_definetely_happened_idea
+				has_idea = something_happened_idea
+				has_idea = something_maybe_happened_idea
 			}
 		}
 		available = {
@@ -41,16 +35,10 @@ SOV_MCKSP_decisions_cat = {
 	SOV_special_forces = {
 		icon = GFX_decision_generic_reorganize_irregulars
 		visible = {
-			AND = {
-				OR = {
-					has_idea = something_definetely_happened_idea 
-					has_idea = something_happened_idea 
-					has_idea = something_maybe_happened_idea 
-				}
-				OR = {
-					has_idea = guests_from_future_idea
-					has_idea = guests_from_future_weakened_idea
-				}
+			OR = {
+				has_idea = something_definetely_happened_idea
+				has_idea = something_happened_idea
+				has_idea = something_maybe_happened_idea
 			}
 		}
 		available = {
@@ -80,16 +68,10 @@ SOV_MCKSP_decisions_cat = {
 	SOV_propaganda_speeches = {
 		icon = GFX_decision_generic_speech
 		visible = {
-			AND = {
-				OR = {
-					has_idea = something_definetely_happened_idea 
-					has_idea = something_happened_idea 
-					has_idea = something_maybe_happened_idea 
-				}
-				OR = {
-					has_idea = guests_from_future_idea
-					has_idea = guests_from_future_weakened_idea
-				}
+			OR = {
+				has_idea = something_definetely_happened_idea
+				has_idea = something_happened_idea
+				has_idea = something_maybe_happened_idea
 			}
 		}
 		available = {
@@ -113,16 +95,10 @@ SOV_MCKSP_decisions_cat = {
 	SOV_let_things_slide = {
 		icon = GFX_decision_generic_break_treaty
 		visible = {
-			AND = {
-				OR = {
-					has_idea = something_definetely_happened_idea 
-					has_idea = something_happened_idea 
-					has_idea = something_maybe_happened_idea 
-				}
-				OR = {
-					has_idea = guests_from_future_idea
-					has_idea = guests_from_future_weakened_idea
-				}
+			OR = {
+				has_idea = something_definetely_happened_idea
+				has_idea = something_happened_idea
+				has_idea = something_maybe_happened_idea
 			}
 		}
 		available = {

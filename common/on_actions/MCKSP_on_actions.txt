@@ -24,6 +24,19 @@ on_actions = {
 	# сильнее задуманного.
 	on_weekly_SOV = {
 		effect = {
+			# Допрос Сталина ждёт завершения сокрытия инцидента Б: инцидент начат,
+			# все something_*_happened сняты решениями сокрытия, допрос ещё не был.
+			if = {
+				limit = {
+					has_country_flag = mcksp_incident_started
+					NOT = { has_country_flag = mcksp_interrogation_done }
+					NOT = { has_idea = something_maybe_happened_idea }
+					NOT = { has_idea = something_happened_idea }
+					NOT = { has_idea = something_definetely_happened_idea }
+				}
+				set_country_flag = mcksp_interrogation_done
+				country_event = { id = interrogation_event.1 hours = 6 }
+			}
 			if = {
 				limit = { has_country_flag = guests_active }
 				MCKSP_recalc_cracked_throne = yes   # 1-в пересчёт тиров

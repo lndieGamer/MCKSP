@@ -57,7 +57,11 @@ country_event = {
 	option = {
 		name = start_event.3.a
 		add_ideas = something_definetely_happened_idea
-		SOV = { country_event = { days = 7 id = interrogation_event.1 } }
+		# Инцидент полностью раскрутился — вооружаем проверку допроса. Сам допрос
+		# (interrogation_event.1) больше не по таймеру: его зовёт on_weekly_SOV,
+		# когда сокрытие завершено (сняты все something_*_happened идеи).
+		# См. common/on_actions/MCKSP_on_actions.txt.
+		set_country_flag = mcksp_incident_started
 	}
 }
 

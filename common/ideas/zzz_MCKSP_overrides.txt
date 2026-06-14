@@ -1,0 +1,27 @@
+# Override vanilla-идеи home_of_revolution («Родина революции»).
+# Имя файла с zzz_ — чтобы грузиться ПОСЛЕ vanilla common/ideas/SOV.txt
+# (сортировка по имени; иначе vanilla перезапишет наш override).
+# Убрана защита от смены идеологии (drift_defence_factor = 0.5),
+# вместо неё — +10% защиты на национальной территории.
+ideas = {
+	country = {
+		home_of_revolution = {
+			removal_cost = -1
+
+			allowed = {
+				always = no # Added via focus
+			}
+
+			allowed_civil_war = {
+				has_government = communism
+			}
+
+			modifier = {
+				army_core_defence_factor = 0.1
+			}
+			rule = {
+				can_create_factions = yes
+			}
+		}
+	}
+}
