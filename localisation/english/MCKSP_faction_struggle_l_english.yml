@@ -3,8 +3,11 @@
 
  # --- Decision categories ---
  SOV_MCKSP_struggle_cat: "Struggle of Ideologies"
+ SOV_MCKSP_struggle_cat_desc: "The guests from the future have rallied into rival coalitions vying for power in the USSR. Forge alliances, promote your supporters, and lead your faction to triumph - while your rivals do the same behind your back."
  SOV_MCKSP_struggle_intro_cat: "Struggle of Ideologies"
+ SOV_MCKSP_struggle_intro_cat_desc: "Time to choose. Open the political compass and click one of the four cores - this choice decides which coalition you will lead in the coming struggle."
  SOV_MCKSP_struggle_debug_cat: "Struggle of Ideologies [DEBUG]"
+ SOV_MCKSP_struggle_debug_cat_desc: "Debug decisions for quickly testing the faction-struggle phases."
 
  # --- Phase 0 ---
  SOV_struggle_choose_faction_banner: "§RYOU MUST CHOOSE YOUR FACTION§!"
