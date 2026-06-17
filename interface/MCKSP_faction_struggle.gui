@@ -1,0 +1,265 @@
+###############################################################################
+#  MCKSP — Фракционная борьба: панель
+#  Файл: interface/MCKSP_faction_struggle.gui
+#
+#  Конвенции скопированы с MCKSP_political_compass.gui:
+#   - все окна TOP-LEVEL (engine не гейтит вложенные через scripted_gui);
+#   - кнопка-стрелка парентится к countrypoliticsview;
+#   - viewport clipping=yes + окна выезжают анимацией 300ms;
+#   - тоггл флагом SOV_factionpanel_open двумя версиями кнопки.
+#  Гейтинг — common/scripted_guis/MCKSP_faction_struggle.txt.
+#  Фон/шапка/стрелки переиспользуют спрайты компаса (без новых .dds).
+#  Бар-чарт = сегменты-оверлеи (visible по coalition_pop_*), 4 бара x 10 сегментов.
+###############################################################################
+
+guiTypes = {
+
+	# --- Своя стрелка панели (ниже стрелки компаса на politicsview) ---
+	containerWindowType = {
+		name = "MCKSP_faction_button_window_open"
+		position = { x = 540 y = 366 }
+		size = { width = 26 height = 46 }
+		clipping = no
+		buttonType = {
+			name = "MCKSP_open_factionpanel"
+			position = { x = 0 y = 0 }
+			quadTextureSprite = "GFX_MCKSP_compass_arrow_button"
+			pdx_tooltip = "MCKSP_FACTION_BUTTON_TT"
+			clicksound = click_default
+		}
+	}
+	containerWindowType = {
+		name = "MCKSP_faction_button_window_close"
+		position = { x = 540 y = 366 }
+		size = { width = 26 height = 46 }
+		clipping = no
+		buttonType = {
+			name = "MCKSP_close_factionpanel"
+			position = { x = 0 y = 0 }
+			quadTextureSprite = "GFX_MCKSP_compass_arrow_button_close"
+			pdx_tooltip = "MCKSP_FACTION_BUTTON_TT"
+			clicksound = click_close
+		}
+	}
+
+	# --- Viewport (clipping) справа от компаса ---
+	containerWindowType = {
+		name = "MCKSP_faction_viewport"
+		position = { x = 564 y = 760 }
+		size = { width = 520 height = 760 }
+		clipping = yes
+	}
+
+	# --- Окно панели (рамка/шапка). Контент фаз — отдельные top-level окна. ---
+	containerWindowType = {
+		name = "MCKSP_faction_window"
+		position      = { x = -520 y = 0 }
+		show_position = { x = 0    y = 0 }
+		show_animation_type = decelerated
+		hide_animation_type = accelerated
+		animation_time = 300
+		size = { width = 520 height = 760 }
+		show_sound = open_sub_window
+
+		background = { name = "Background" quadTextureSprite = "GFX_tiled_plain_bg" }
+
+		iconType = { name = "header_bg" spriteType = "GFX_MCKSP_compass_header_bg" position = { x = 1 y = 5 } Orientation = "UPPER_LEFT" }
+		instantTextboxType = { name = "title" position = { x = 37 y = 7 } font = "hoi_36header" text = "MCKSP_FACTION_TITLE" maxWidth = 360 maxHeight = 20 format = left }
+		buttonType = { name = "close_button" position = { x = -40 y = 7 } quadTextureSprite = "GFX_closebutton" shortcut = "ESCAPE" Orientation = "UPPER_RIGHT" clicksound = click_close pdx_tooltip = "CLOSE" }
+	}
+
+	# =========================================================================
+	# ФАЗА 0 — баннер «выберите фракцию».
+	# =========================================================================
+	containerWindowType = {
+		name = "phase0_win"
+		position = { x = -520 y = 0 } show_position = { x = 0 y = 0 }
+		show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300
+		size = { width = 520 height = 760 } clipping = no
+		instantTextboxType = { name = "p0_text" position = { x = 30 y = 170 } font = "hoi_36header" text = "MCKSP_FACTION_PHASE0_PICK" maxWidth = 460 maxHeight = 120 format = center }
+		instantTextboxType = { name = "p0_hint" position = { x = 30 y = 320 } font = "hoi_18mbs" text = "MCKSP_FACTION_PHASE0_HINT" maxWidth = 460 maxHeight = 80 format = center }
+	}
+
+	# =========================================================================
+	# ФАЗА 1 — заголовок + шапка таблицы. Строки ростера — отдельные окна ниже.
+	# =========================================================================
+	containerWindowType = {
+		name = "phase1_win"
+		position = { x = -520 y = 0 } show_position = { x = 0 y = 0 }
+		show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300
+		size = { width = 520 height = 760 } clipping = no
+		instantTextboxType = { name = "p1_title" position = { x = 37 y = 46 } font = "hoi_20b" text = "MCKSP_FACTION_PHASE1_TITLE" maxWidth = 440 maxHeight = 24 format = left }
+		instantTextboxType = { name = "h_name" position = { x = 56  y = 120 } font = "hoi_16mbs" text = "MCKSP_COL_NAME"      maxWidth = 200 format = left }
+		instantTextboxType = { name = "h_infl" position = { x = 300 y = 120 } font = "hoi_16mbs" text = "MCKSP_COL_INFLUENCE" maxWidth = 100 format = center }
+		instantTextboxType = { name = "h_att"  position = { x = 410 y = 120 } font = "hoi_16mbs" text = "MCKSP_COL_ATTITUDE"  maxWidth = 100 format = center }
+	}
+
+	# =========================================================================
+	# ФАЗА 2 — заголовок (бар-чарт = сегменты-окна + bars_labels_win ниже).
+	# =========================================================================
+	containerWindowType = {
+		name = "phase2_win"
+		position = { x = -520 y = 0 } show_position = { x = 0 y = 0 }
+		show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300
+		size = { width = 520 height = 760 } clipping = no
+		instantTextboxType = { name = "p2_title" position = { x = 37 y = 46 } font = "hoi_20b" text = "MCKSP_FACTION_PHASE2_TITLE" maxWidth = 440 maxHeight = 24 format = left }
+	}
+
+	# =========================================================================
+	# ФАЗА 3 — заголовок + статус (скелет).
+	# =========================================================================
+	containerWindowType = {
+		name = "phase3_win"
+		position = { x = -520 y = 0 } show_position = { x = 0 y = 0 }
+		show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300
+		size = { width = 520 height = 760 } clipping = no
+		instantTextboxType = { name = "p3_title" position = { x = 37 y = 46 } font = "hoi_20b" text = "MCKSP_FACTION_PHASE3_TITLE" maxWidth = 440 maxHeight = 24 format = left }
+		instantTextboxType = { name = "p3_player" position = { x = 37 y = 660 } font = "hoi_16mbs" text = "MCKSP_FACTION_PLAYER" maxWidth = 200 format = left }
+	}
+
+	# =========================================================================
+	# ФАЗА 4 — заголовок + статистика ГВ (скелет).
+	# =========================================================================
+	containerWindowType = {
+		name = "phase4_win"
+		position = { x = -520 y = 0 } show_position = { x = 0 y = 0 }
+		show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300
+		size = { width = 520 height = 760 } clipping = no
+		instantTextboxType = { name = "p4_title" position = { x = 37 y = 46 } font = "hoi_20b" text = "MCKSP_FACTION_PHASE4_TITLE" maxWidth = 440 maxHeight = 24 format = left }
+		instantTextboxType = { name = "p4_div"  position = { x = 37 y = 650 } font = "hoi_16mbs" text = "MCKSP_STAT_DIVISIONS" maxWidth = 240 format = left }
+		instantTextboxType = { name = "p4_stab" position = { x = 37 y = 672 } font = "hoi_16mbs" text = "MCKSP_STAT_STAB" maxWidth = 240 format = left }
+		instantTextboxType = { name = "p4_war"  position = { x = 37 y = 694 } font = "hoi_16mbs" text = "MCKSP_STAT_WAR" maxWidth = 240 format = left }
+	}
+
+	# =========================================================================
+	# Бар-чарт: подписи (видны фаза>1). 4 коалиции, имена снизу + % сверху.
+	# =========================================================================
+	containerWindowType = {
+		name = "bars_labels_win"
+		position = { x = -520 y = 0 } show_position = { x = 0 y = 0 }
+		show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300
+		size = { width = 520 height = 760 } clipping = no
+		instantTextboxType = { name = "lbl_ref" position = { x = 40  y = 612 } font = "hoi_16mbs" text = "MCKSP_COAL_REFORMERS"  maxWidth = 120 format = center }
+		instantTextboxType = { name = "lbl_sta" position = { x = 150 y = 612 } font = "hoi_16mbs" text = "MCKSP_COAL_STATISTS"   maxWidth = 120 format = center }
+		instantTextboxType = { name = "lbl_cen" position = { x = 260 y = 612 } font = "hoi_16mbs" text = "MCKSP_COAL_CENTRISTS"  maxWidth = 120 format = center }
+		instantTextboxType = { name = "lbl_soc" position = { x = 370 y = 612 } font = "hoi_16mbs" text = "MCKSP_COAL_SOCIALISTS" maxWidth = 120 format = center }
+		instantTextboxType = { name = "val_ref" position = { x = 40  y = 300 } font = "hoi_16mbs" text = "MCKSP_PCT_REFORMERS"  maxWidth = 120 format = center }
+		instantTextboxType = { name = "val_sta" position = { x = 150 y = 300 } font = "hoi_16mbs" text = "MCKSP_PCT_STATISTS"   maxWidth = 120 format = center }
+		instantTextboxType = { name = "val_cen" position = { x = 260 y = 300 } font = "hoi_16mbs" text = "MCKSP_PCT_CENTRISTS"  maxWidth = 120 format = center }
+		instantTextboxType = { name = "val_soc" position = { x = 370 y = 300 } font = "hoi_16mbs" text = "MCKSP_PCT_SOCIALISTS" maxWidth = 120 format = center }
+	}
+
+	# =========================================================================
+	# Ростер фазы 1: 10 строк (top-level, гейт фаза1 + жив). Символ+имя+влияние+отношение.
+	# =========================================================================
+	containerWindowType = { name = "row_nikita_win"   position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no
+		iconType = { name = "bg" position = { x = 16 y = 150 } quadTextureSprite = "GFX_MCKSP_faction_row_bg" }
+		iconType = { name = "sym" position = { x = 24 y = 158 } quadTextureSprite = "GFX_MCKSP_ideo_symbols" frame = 1 }
+		instantTextboxType = { name = "nm"   position = { x = 56 y = 156 } font = "hoi_16mbs" text = "Никита Якушин" maxWidth = 230 maxHeight = 28 format = left }
+		instantTextboxType = { name = "infl" position = { x = 300 y = 162 } font = "hoi_16mbs" text = "MCKSP_INFL_NIKITA" maxWidth = 100 format = center }
+		instantTextboxType = { name = "att"  position = { x = 410 y = 162 } font = "hoi_16mbs" text = "MCKSP_ATT_NIKITA"  maxWidth = 100 format = center } }
+	containerWindowType = { name = "row_arseny_win"   position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no
+		iconType = { name = "bg" position = { x = 16 y = 196 } quadTextureSprite = "GFX_MCKSP_faction_row_bg" }
+		iconType = { name = "sym" position = { x = 24 y = 204 } quadTextureSprite = "GFX_MCKSP_ideo_symbols" frame = 2 }
+		instantTextboxType = { name = "nm"   position = { x = 56 y = 202 } font = "hoi_16mbs" text = "Арсений Павлов" maxWidth = 230 maxHeight = 28 format = left }
+		instantTextboxType = { name = "infl" position = { x = 300 y = 208 } font = "hoi_16mbs" text = "MCKSP_INFL_ARSENY" maxWidth = 100 format = center }
+		instantTextboxType = { name = "att"  position = { x = 410 y = 208 } font = "hoi_16mbs" text = "MCKSP_ATT_ARSENY"  maxWidth = 100 format = center } }
+	containerWindowType = { name = "row_demokrit_win" position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no
+		iconType = { name = "bg" position = { x = 16 y = 242 } quadTextureSprite = "GFX_MCKSP_faction_row_bg" }
+		iconType = { name = "sym" position = { x = 24 y = 250 } quadTextureSprite = "GFX_MCKSP_ideo_symbols" frame = 3 }
+		instantTextboxType = { name = "nm"   position = { x = 56 y = 248 } font = "hoi_16mbs" text = "Демокрит Икономиди" maxWidth = 230 maxHeight = 28 format = left }
+		instantTextboxType = { name = "infl" position = { x = 300 y = 254 } font = "hoi_16mbs" text = "MCKSP_INFL_DEMOKRIT" maxWidth = 100 format = center }
+		instantTextboxType = { name = "att"  position = { x = 410 y = 254 } font = "hoi_16mbs" text = "MCKSP_ATT_DEMOKRIT"  maxWidth = 100 format = center } }
+	containerWindowType = { name = "row_gleb_win"     position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no
+		iconType = { name = "bg" position = { x = 16 y = 288 } quadTextureSprite = "GFX_MCKSP_faction_row_bg" }
+		iconType = { name = "sym" position = { x = 24 y = 296 } quadTextureSprite = "GFX_MCKSP_ideo_symbols" frame = 4 }
+		instantTextboxType = { name = "nm"   position = { x = 56 y = 294 } font = "hoi_16mbs" text = "Глеб Рычков" maxWidth = 230 maxHeight = 28 format = left }
+		instantTextboxType = { name = "infl" position = { x = 300 y = 300 } font = "hoi_16mbs" text = "MCKSP_INFL_GLEB" maxWidth = 100 format = center }
+		instantTextboxType = { name = "att"  position = { x = 410 y = 300 } font = "hoi_16mbs" text = "MCKSP_ATT_GLEB"  maxWidth = 100 format = center } }
+	containerWindowType = { name = "row_stepan_win"   position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no
+		iconType = { name = "bg" position = { x = 16 y = 334 } quadTextureSprite = "GFX_MCKSP_faction_row_bg" }
+		iconType = { name = "sym" position = { x = 24 y = 342 } quadTextureSprite = "GFX_MCKSP_ideo_symbols" frame = 5 }
+		instantTextboxType = { name = "nm"   position = { x = 56 y = 340 } font = "hoi_16mbs" text = "Степан Павлов" maxWidth = 230 maxHeight = 28 format = left }
+		instantTextboxType = { name = "infl" position = { x = 300 y = 346 } font = "hoi_16mbs" text = "MCKSP_INFL_STEPAN" maxWidth = 100 format = center }
+		instantTextboxType = { name = "att"  position = { x = 410 y = 346 } font = "hoi_16mbs" text = "MCKSP_ATT_STEPAN"  maxWidth = 100 format = center } }
+	containerWindowType = { name = "row_ivan_win"     position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no
+		iconType = { name = "bg" position = { x = 16 y = 380 } quadTextureSprite = "GFX_MCKSP_faction_row_bg" }
+		iconType = { name = "sym" position = { x = 24 y = 388 } quadTextureSprite = "GFX_MCKSP_ideo_symbols" frame = 6 }
+		instantTextboxType = { name = "nm"   position = { x = 56 y = 386 } font = "hoi_16mbs" text = "Иван Данченко" maxWidth = 230 maxHeight = 28 format = left }
+		instantTextboxType = { name = "infl" position = { x = 300 y = 392 } font = "hoi_16mbs" text = "MCKSP_INFL_IVAN" maxWidth = 100 format = center }
+		instantTextboxType = { name = "att"  position = { x = 410 y = 392 } font = "hoi_16mbs" text = "MCKSP_ATT_IVAN"  maxWidth = 100 format = center } }
+	containerWindowType = { name = "row_ilya_win"     position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no
+		iconType = { name = "bg" position = { x = 16 y = 426 } quadTextureSprite = "GFX_MCKSP_faction_row_bg" }
+		iconType = { name = "sym" position = { x = 24 y = 434 } quadTextureSprite = "GFX_MCKSP_ideo_symbols" frame = 7 }
+		instantTextboxType = { name = "nm"   position = { x = 56 y = 432 } font = "hoi_16mbs" text = "Илья Попов" maxWidth = 230 maxHeight = 28 format = left }
+		instantTextboxType = { name = "infl" position = { x = 300 y = 438 } font = "hoi_16mbs" text = "MCKSP_INFL_ILYA" maxWidth = 100 format = center }
+		instantTextboxType = { name = "att"  position = { x = 410 y = 438 } font = "hoi_16mbs" text = "MCKSP_ATT_ILYA"  maxWidth = 100 format = center } }
+	containerWindowType = { name = "row_evgeny_win"   position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no
+		iconType = { name = "bg" position = { x = 16 y = 472 } quadTextureSprite = "GFX_MCKSP_faction_row_bg" }
+		iconType = { name = "sym" position = { x = 24 y = 480 } quadTextureSprite = "GFX_MCKSP_ideo_symbols" frame = 8 }
+		instantTextboxType = { name = "nm"   position = { x = 56 y = 478 } font = "hoi_16mbs" text = "Евгений Океанов" maxWidth = 230 maxHeight = 28 format = left }
+		instantTextboxType = { name = "infl" position = { x = 300 y = 484 } font = "hoi_16mbs" text = "MCKSP_INFL_EVGENY" maxWidth = 100 format = center }
+		instantTextboxType = { name = "att"  position = { x = 410 y = 484 } font = "hoi_16mbs" text = "MCKSP_ATT_EVGENY"  maxWidth = 100 format = center } }
+	containerWindowType = { name = "row_artem_win"    position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no
+		iconType = { name = "bg" position = { x = 16 y = 518 } quadTextureSprite = "GFX_MCKSP_faction_row_bg" }
+		iconType = { name = "sym" position = { x = 24 y = 526 } quadTextureSprite = "GFX_MCKSP_ideo_symbols" frame = 9 }
+		instantTextboxType = { name = "nm"   position = { x = 56 y = 524 } font = "hoi_16mbs" text = "Артём Аюшеев" maxWidth = 230 maxHeight = 28 format = left }
+		instantTextboxType = { name = "infl" position = { x = 300 y = 530 } font = "hoi_16mbs" text = "MCKSP_INFL_ARTEM" maxWidth = 100 format = center }
+		instantTextboxType = { name = "att"  position = { x = 410 y = 530 } font = "hoi_16mbs" text = "MCKSP_ATT_ARTEM"  maxWidth = 100 format = center } }
+	containerWindowType = { name = "row_ilgam_win"    position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no
+		iconType = { name = "bg" position = { x = 16 y = 564 } quadTextureSprite = "GFX_MCKSP_faction_row_bg" }
+		iconType = { name = "sym" position = { x = 24 y = 572 } quadTextureSprite = "GFX_MCKSP_ideo_symbols" frame = 10 }
+		instantTextboxType = { name = "nm"   position = { x = 56 y = 570 } font = "hoi_16mbs" text = "Ильгам Фагаманов" maxWidth = 230 maxHeight = 28 format = left }
+		instantTextboxType = { name = "infl" position = { x = 300 y = 576 } font = "hoi_16mbs" text = "MCKSP_INFL_ILGAM" maxWidth = 100 format = center }
+		instantTextboxType = { name = "att"  position = { x = 410 y = 576 } font = "hoi_16mbs" text = "MCKSP_ATT_ILGAM"  maxWidth = 100 format = center } }
+
+	# =========================================================================
+	# Сегменты бар-чарта (top-level). 4 бара x 10 сегментов. Гейт visible:
+	# фаза>1 И coalition_pop_<core> > (k-1)*0.08. Снизу вверх: y = 600 - (k-1)*30.
+	# Цвет = frame коалиции (reformers 1 / statists 2 / centrists 3 / socialists 4).
+	# Бары X: reformers 60, statists 170, centrists 280, socialists 390.
+	# =========================================================================
+	containerWindowType = { name = "bar_reformers_seg1_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 60 y = 600 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 1 } }
+	containerWindowType = { name = "bar_reformers_seg2_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 60 y = 570 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 1 } }
+	containerWindowType = { name = "bar_reformers_seg3_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 60 y = 540 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 1 } }
+	containerWindowType = { name = "bar_reformers_seg4_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 60 y = 510 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 1 } }
+	containerWindowType = { name = "bar_reformers_seg5_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 60 y = 480 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 1 } }
+	containerWindowType = { name = "bar_reformers_seg6_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 60 y = 450 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 1 } }
+	containerWindowType = { name = "bar_reformers_seg7_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 60 y = 420 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 1 } }
+	containerWindowType = { name = "bar_reformers_seg8_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 60 y = 390 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 1 } }
+	containerWindowType = { name = "bar_reformers_seg9_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 60 y = 360 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 1 } }
+	containerWindowType = { name = "bar_reformers_seg10_win" position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 60 y = 330 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 1 } }
+
+	containerWindowType = { name = "bar_statists_seg1_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 170 y = 600 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 2 } }
+	containerWindowType = { name = "bar_statists_seg2_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 170 y = 570 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 2 } }
+	containerWindowType = { name = "bar_statists_seg3_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 170 y = 540 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 2 } }
+	containerWindowType = { name = "bar_statists_seg4_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 170 y = 510 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 2 } }
+	containerWindowType = { name = "bar_statists_seg5_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 170 y = 480 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 2 } }
+	containerWindowType = { name = "bar_statists_seg6_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 170 y = 450 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 2 } }
+	containerWindowType = { name = "bar_statists_seg7_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 170 y = 420 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 2 } }
+	containerWindowType = { name = "bar_statists_seg8_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 170 y = 390 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 2 } }
+	containerWindowType = { name = "bar_statists_seg9_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 170 y = 360 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 2 } }
+	containerWindowType = { name = "bar_statists_seg10_win" position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 170 y = 330 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 2 } }
+
+	containerWindowType = { name = "bar_centrists_seg1_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 280 y = 600 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 3 } }
+	containerWindowType = { name = "bar_centrists_seg2_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 280 y = 570 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 3 } }
+	containerWindowType = { name = "bar_centrists_seg3_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 280 y = 540 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 3 } }
+	containerWindowType = { name = "bar_centrists_seg4_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 280 y = 510 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 3 } }
+	containerWindowType = { name = "bar_centrists_seg5_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 280 y = 480 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 3 } }
+	containerWindowType = { name = "bar_centrists_seg6_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 280 y = 450 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 3 } }
+	containerWindowType = { name = "bar_centrists_seg7_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 280 y = 420 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 3 } }
+	containerWindowType = { name = "bar_centrists_seg8_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 280 y = 390 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 3 } }
+	containerWindowType = { name = "bar_centrists_seg9_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 280 y = 360 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 3 } }
+	containerWindowType = { name = "bar_centrists_seg10_win" position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 280 y = 330 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 3 } }
+
+	containerWindowType = { name = "bar_socialists_seg1_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 390 y = 600 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 4 } }
+	containerWindowType = { name = "bar_socialists_seg2_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 390 y = 570 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 4 } }
+	containerWindowType = { name = "bar_socialists_seg3_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 390 y = 540 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 4 } }
+	containerWindowType = { name = "bar_socialists_seg4_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 390 y = 510 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 4 } }
+	containerWindowType = { name = "bar_socialists_seg5_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 390 y = 480 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 4 } }
+	containerWindowType = { name = "bar_socialists_seg6_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 390 y = 450 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 4 } }
+	containerWindowType = { name = "bar_socialists_seg7_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 390 y = 420 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 4 } }
+	containerWindowType = { name = "bar_socialists_seg8_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 390 y = 390 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 4 } }
+	containerWindowType = { name = "bar_socialists_seg9_win"  position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 390 y = 360 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 4 } }
+	containerWindowType = { name = "bar_socialists_seg10_win" position = { x = -520 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated hide_animation_type = accelerated animation_time = 300 size = { width = 520 height = 760 } clipping = no iconType = { name = "seg" position = { x = 390 y = 330 } quadTextureSprite = "GFX_MCKSP_bar_seg" frame = 4 } }
+}

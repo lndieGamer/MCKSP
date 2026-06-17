@@ -38,7 +38,9 @@ on_actions = {
 				country_event = { id = interrogation_event.1 hours = 6 }
 			}
 			if = {
-				limit = { has_country_flag = guests_active }
+				# После вступления в ВКП(б) баланс доверия снят — пересчёт трона не нужен
+				# (иначе add/remove_power_balance_modifier по снятому балансу = ошибки).
+				limit = { has_country_flag = guests_active NOT = { has_country_flag = SOV_guests_in_vkpb } }
 				MCKSP_recalc_cracked_throne = yes   # 1-в пересчёт тиров
 			}
 			if = {
@@ -47,6 +49,21 @@ on_actions = {
 					has_idea = mcksp_secret_agitation_idea
 				}
 				MCKSP_agitation_tick = yes           # 2-г: +0.001/партию в неделю
+			}
+
+			# Фракционная борьба. Фаза 1 — авто-вербовка ядрами-ботами; фаза 2+ —
+			# пересчёт популярностей коалиций для бар-чарта.
+			if = {
+				limit = { has_country_flag = guests_active check_variable = { mcksp_struggle_phase = 1 } }
+				MCKSP_recruitment_tick = yes
+			}
+			if = {
+				limit = { has_country_flag = guests_active check_variable = { mcksp_struggle_phase = 2 } }
+				MCKSP_phase2_ai_tick = yes
+			}
+			if = {
+				limit = { has_country_flag = guests_active check_variable = { mcksp_struggle_phase > 1 } }
+				MCKSP_publish_coalition_pops = yes
 			}
 		}
 	}

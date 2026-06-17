@@ -76,9 +76,22 @@ scripted_gui = {
 		}
 
 		# Кнопка закрытия (X / ESC) снимает флаг.
+		# Клики по 4 ядрам работают только в фазе 0 борьбы фракций (выбор фракции).
 		effects = {
 			close_button_click = {
 				clr_country_flag = SOV_compass_open
+			}
+			hov_nikita_click = {
+				if = { limit = { check_variable = { mcksp_struggle_phase = 0 } } MCKSP_pick_faction_reformers = yes }
+			}
+			hov_evgeny_click = {
+				if = { limit = { check_variable = { mcksp_struggle_phase = 0 } } MCKSP_pick_faction_statists = yes }
+			}
+			hov_stepan_click = {
+				if = { limit = { check_variable = { mcksp_struggle_phase = 0 } } MCKSP_pick_faction_centrists = yes }
+			}
+			hov_demokrit_click = {
+				if = { limit = { check_variable = { mcksp_struggle_phase = 0 } } MCKSP_pick_faction_socialists = yes }
 			}
 		}
 	}
@@ -99,4 +112,69 @@ scripted_gui = {
 	MCKSP_bh_evgeny   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "bh_evgeny_win"   visible = { has_country_flag = SOV_compass_open has_country_flag = mcksp_guest_gone_evgeny } }
 	MCKSP_bh_artem    = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "bh_artem_win"    visible = { has_country_flag = SOV_compass_open has_country_flag = mcksp_guest_gone_artem } }
 	MCKSP_bh_ilgam    = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "bh_ilgam_win"    visible = { has_country_flag = SOV_compass_open has_country_flag = mcksp_guest_gone_ilgam } }
+
+	# =====================================================================
+	# Фракционная борьба: оверлеи компаса (перенесены сюда из
+	# MCKSP_faction_struggle.txt — cross-file parent_window_name не
+	# привязывался к MCKSP_compass_viewport, окна падали в левый верх).
+	# =====================================================================
+	# Ореолы (coalition_of==k И размер коалиции > 1)
+	MCKSP_halo_nikita_c1   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_nikita_c1_win"   visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_nikita = 1 }   check_variable = { coalition_size_1 > 1 } } }
+	MCKSP_halo_nikita_c2   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_nikita_c2_win"   visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_nikita = 2 }   check_variable = { coalition_size_2 > 1 } } }
+	MCKSP_halo_nikita_c3   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_nikita_c3_win"   visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_nikita = 3 }   check_variable = { coalition_size_3 > 1 } } }
+	MCKSP_halo_nikita_c4   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_nikita_c4_win"   visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_nikita = 4 }   check_variable = { coalition_size_4 > 1 } } }
+	MCKSP_halo_arseny_c1   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_arseny_c1_win"   visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_arseny = 1 }   check_variable = { coalition_size_1 > 1 } } }
+	MCKSP_halo_arseny_c2   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_arseny_c2_win"   visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_arseny = 2 }   check_variable = { coalition_size_2 > 1 } } }
+	MCKSP_halo_arseny_c3   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_arseny_c3_win"   visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_arseny = 3 }   check_variable = { coalition_size_3 > 1 } } }
+	MCKSP_halo_arseny_c4   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_arseny_c4_win"   visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_arseny = 4 }   check_variable = { coalition_size_4 > 1 } } }
+	MCKSP_halo_demokrit_c1 = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_demokrit_c1_win" visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_demokrit = 1 } check_variable = { coalition_size_1 > 1 } } }
+	MCKSP_halo_demokrit_c2 = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_demokrit_c2_win" visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_demokrit = 2 } check_variable = { coalition_size_2 > 1 } } }
+	MCKSP_halo_demokrit_c3 = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_demokrit_c3_win" visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_demokrit = 3 } check_variable = { coalition_size_3 > 1 } } }
+	MCKSP_halo_demokrit_c4 = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_demokrit_c4_win" visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_demokrit = 4 } check_variable = { coalition_size_4 > 1 } } }
+	MCKSP_halo_gleb_c1     = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_gleb_c1_win"     visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_gleb = 1 }     check_variable = { coalition_size_1 > 1 } } }
+	MCKSP_halo_gleb_c2     = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_gleb_c2_win"     visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_gleb = 2 }     check_variable = { coalition_size_2 > 1 } } }
+	MCKSP_halo_gleb_c3     = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_gleb_c3_win"     visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_gleb = 3 }     check_variable = { coalition_size_3 > 1 } } }
+	MCKSP_halo_gleb_c4     = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_gleb_c4_win"     visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_gleb = 4 }     check_variable = { coalition_size_4 > 1 } } }
+	MCKSP_halo_stepan_c1   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_stepan_c1_win"   visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_stepan = 1 }   check_variable = { coalition_size_1 > 1 } } }
+	MCKSP_halo_stepan_c2   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_stepan_c2_win"   visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_stepan = 2 }   check_variable = { coalition_size_2 > 1 } } }
+	MCKSP_halo_stepan_c3   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_stepan_c3_win"   visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_stepan = 3 }   check_variable = { coalition_size_3 > 1 } } }
+	MCKSP_halo_stepan_c4   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_stepan_c4_win"   visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_stepan = 4 }   check_variable = { coalition_size_4 > 1 } } }
+	MCKSP_halo_ivan_c1     = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_ivan_c1_win"     visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_ivan = 1 }     check_variable = { coalition_size_1 > 1 } } }
+	MCKSP_halo_ivan_c2     = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_ivan_c2_win"     visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_ivan = 2 }     check_variable = { coalition_size_2 > 1 } } }
+	MCKSP_halo_ivan_c3     = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_ivan_c3_win"     visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_ivan = 3 }     check_variable = { coalition_size_3 > 1 } } }
+	MCKSP_halo_ivan_c4     = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_ivan_c4_win"     visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_ivan = 4 }     check_variable = { coalition_size_4 > 1 } } }
+	MCKSP_halo_ilya_c1     = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_ilya_c1_win"     visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_ilya = 1 }     check_variable = { coalition_size_1 > 1 } } }
+	MCKSP_halo_ilya_c2     = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_ilya_c2_win"     visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_ilya = 2 }     check_variable = { coalition_size_2 > 1 } } }
+	MCKSP_halo_ilya_c3     = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_ilya_c3_win"     visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_ilya = 3 }     check_variable = { coalition_size_3 > 1 } } }
+	MCKSP_halo_ilya_c4     = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_ilya_c4_win"     visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_ilya = 4 }     check_variable = { coalition_size_4 > 1 } } }
+	MCKSP_halo_evgeny_c1   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_evgeny_c1_win"   visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_evgeny = 1 }   check_variable = { coalition_size_1 > 1 } } }
+	MCKSP_halo_evgeny_c2   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_evgeny_c2_win"   visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_evgeny = 2 }   check_variable = { coalition_size_2 > 1 } } }
+	MCKSP_halo_evgeny_c3   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_evgeny_c3_win"   visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_evgeny = 3 }   check_variable = { coalition_size_3 > 1 } } }
+	MCKSP_halo_evgeny_c4   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_evgeny_c4_win"   visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_evgeny = 4 }   check_variable = { coalition_size_4 > 1 } } }
+	MCKSP_halo_artem_c1    = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_artem_c1_win"    visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_artem = 1 }    check_variable = { coalition_size_1 > 1 } } }
+	MCKSP_halo_artem_c2    = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_artem_c2_win"    visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_artem = 2 }    check_variable = { coalition_size_2 > 1 } } }
+	MCKSP_halo_artem_c3    = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_artem_c3_win"    visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_artem = 3 }    check_variable = { coalition_size_3 > 1 } } }
+	MCKSP_halo_artem_c4    = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_artem_c4_win"    visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_artem = 4 }    check_variable = { coalition_size_4 > 1 } } }
+	MCKSP_halo_ilgam_c1    = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_ilgam_c1_win"    visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_ilgam = 1 }    check_variable = { coalition_size_1 > 1 } } }
+	MCKSP_halo_ilgam_c2    = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_ilgam_c2_win"    visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_ilgam = 2 }    check_variable = { coalition_size_2 > 1 } } }
+	MCKSP_halo_ilgam_c3    = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_ilgam_c3_win"    visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_ilgam = 3 }    check_variable = { coalition_size_3 > 1 } } }
+	MCKSP_halo_ilgam_c4    = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_ilgam_c4_win"    visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_ilgam = 4 }    check_variable = { coalition_size_4 > 1 } } }
+
+	# Флажки (ядра — с фазы 1; не-ядра — если игрок это «я»)
+	MCKSP_flag_nikita   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "flag_nikita_win"   visible = { has_country_flag = SOV_compass_open NOT = { has_country_flag = mcksp_phase_0 } } }
+	MCKSP_flag_evgeny   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "flag_evgeny_win"   visible = { has_country_flag = SOV_compass_open NOT = { has_country_flag = mcksp_phase_0 } } }
+	MCKSP_flag_stepan   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "flag_stepan_win"   visible = { has_country_flag = SOV_compass_open NOT = { has_country_flag = mcksp_phase_0 } } }
+	MCKSP_flag_demokrit = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "flag_demokrit_win" visible = { has_country_flag = SOV_compass_open NOT = { has_country_flag = mcksp_phase_0 } } }
+	MCKSP_flag_arseny   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "flag_arseny_win"   visible = { has_country_flag = SOV_compass_open check_variable = { player_self = 2 } } }
+	MCKSP_flag_gleb     = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "flag_gleb_win"     visible = { has_country_flag = SOV_compass_open check_variable = { player_self = 4 } } }
+	MCKSP_flag_ivan     = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "flag_ivan_win"     visible = { has_country_flag = SOV_compass_open check_variable = { player_self = 6 } } }
+	MCKSP_flag_ilya     = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "flag_ilya_win"     visible = { has_country_flag = SOV_compass_open check_variable = { player_self = 7 } } }
+	MCKSP_flag_artem    = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "flag_artem_win"    visible = { has_country_flag = SOV_compass_open check_variable = { player_self = 9 } } }
+	MCKSP_flag_ilgam    = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "flag_ilgam_win"    visible = { has_country_flag = SOV_compass_open check_variable = { player_self = 10 } } }
+
+	# Золотая подсветка строки ядра игрока
+	MCKSP_gold_nikita   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "gold_nikita_win"   visible = { has_country_flag = SOV_compass_open has_country_flag = SOV_player_core_reformers } }
+	MCKSP_gold_evgeny   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "gold_evgeny_win"   visible = { has_country_flag = SOV_compass_open has_country_flag = SOV_player_core_statists } }
+	MCKSP_gold_stepan   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "gold_stepan_win"   visible = { has_country_flag = SOV_compass_open has_country_flag = SOV_player_core_centrists } }
+	MCKSP_gold_demokrit = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "gold_demokrit_win" visible = { has_country_flag = SOV_compass_open has_country_flag = SOV_player_core_socialists } }
 }

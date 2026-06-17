@@ -65,6 +65,47 @@ activate_guests_system = {
 		modifier = mcksp_stalin_paranoia_drift
 	}
 	MCKSP_recalc_cracked_throne = yes
+
+	# --- Фракционная борьба: стартовое состояние (фаза 0) ---
+	# Подробности — common/scripted_effects/MCKSP_struggle_effects.txt.
+	set_variable = { mcksp_struggle_phase = 0 }
+	set_variable = { player_coalition = 0 }
+	set_variable = { player_self = 0 }
+	set_variable = { winning_coalition = 0 }
+	set_variable = { winning_leader = 0 }
+	# Членство: ядра предзаданы, остальные нейтральны.
+	set_variable = { coalition_of_nikita = 1 }
+	set_variable = { coalition_of_evgeny = 2 }
+	set_variable = { coalition_of_stepan = 3 }
+	set_variable = { coalition_of_demokrit = 4 }
+	set_variable = { coalition_of_arseny = 0 }
+	set_variable = { coalition_of_gleb = 0 }
+	set_variable = { coalition_of_ivan = 0 }
+	set_variable = { coalition_of_ilya = 0 }
+	set_variable = { coalition_of_artem = 0 }
+	set_variable = { coalition_of_ilgam = 0 }
+	set_variable = { recruit_cooldown_1 = 0 }
+	set_variable = { recruit_cooldown_2 = 0 }
+	set_variable = { recruit_cooldown_3 = 0 }
+	set_variable = { recruit_cooldown_4 = 0 }
+	set_variable = { coalition_pop_reformers = 0 }
+	set_variable = { coalition_pop_statists = 0 }
+	set_variable = { coalition_pop_centrists = 0 }
+	set_variable = { coalition_pop_socialists = 0 }
+	# Событийные сдвиги отношения (база считается от дистанции).
+	set_variable = { attitude_delta_nikita = 0 }
+	set_variable = { attitude_delta_arseny = 0 }
+	set_variable = { attitude_delta_demokrit = 0 }
+	set_variable = { attitude_delta_gleb = 0 }
+	set_variable = { attitude_delta_stepan = 0 }
+	set_variable = { attitude_delta_ivan = 0 }
+	set_variable = { attitude_delta_ilya = 0 }
+	set_variable = { attitude_delta_evgeny = 0 }
+	set_variable = { attitude_delta_artem = 0 }
+	set_variable = { attitude_delta_ilgam = 0 }
+	set_country_flag = SOV_factional_struggle_active
+	MCKSP_recompute_sizes = yes
+	MCKSP_sync_phase_flags = yes
 }
 
 # 1-в «Треснувший трон». Снимает все 13 тиров и навешивает один по текущей
@@ -411,6 +452,7 @@ MCKSP_scapegoat_resolve = {
 		set_variable = { p_ilgam = 0 }
 	}
 
+	MCKSP_sync_dead_from_coalitions = yes
 	MCKSP_scapegoat_clear_flags = yes
 }
 
@@ -484,6 +526,7 @@ MCKSP_purge_guests_effect = {
 	set_party_name = { ideology = mcksp_placeholder_ilgam long_name = MCKSP_redacted name = MCKSP_redacted }
 
 	clr_country_flag = guests_active
+	MCKSP_sync_dead_from_coalitions = yes
 
 	# Гости расстреляны — снести механику доверия и все mcksp-нацдухи/идеи.
 	# remove_power_balance убирает баланс вместе со всеми навешанными дрифтами.

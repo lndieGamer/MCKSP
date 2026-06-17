@@ -18,3 +18,47 @@ SOV_MCKSP_trust_cat = {
 	priority = 11
 	visible_when_empty = no
 }
+
+# Фракционная борьба — фазы 1..4 (видна после выбора фракции).
+SOV_MCKSP_struggle_cat = {
+	icon = generic_political_actions
+	picture = GFX_decision_cat_picture_soviet_comecon
+	allowed = {
+		tag = SOV
+	}
+	visible = {
+		has_country_flag = SOV_factional_struggle_active
+		NOT = { has_country_flag = mcksp_phase_0 }
+	}
+	priority = 12
+	visible_when_empty = no
+}
+
+# Фракционная борьба — фаза 0 (баннер «выберите фракцию»).
+SOV_MCKSP_struggle_intro_cat = {
+	icon = generic_political_actions
+	picture = GFX_decision_cat_picture_soviet_comecon
+	allowed = {
+		tag = SOV
+	}
+	visible = {
+		has_country_flag = SOV_factional_struggle_active
+		has_country_flag = mcksp_phase_0
+	}
+	priority = 13
+	visible_when_empty = no
+}
+
+# Фракционная борьба — отладка (только режим -debug).
+SOV_MCKSP_struggle_debug_cat = {
+	icon = generic_political_actions
+	picture = GFX_decision_cat_picture_soviet_comecon
+	allowed = {
+		tag = SOV
+	}
+	visible = {
+		is_debug = yes
+	}
+	priority = 99
+	visible_when_empty = no
+}

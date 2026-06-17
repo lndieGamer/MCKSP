@@ -460,6 +460,13 @@ country_event = {
 	option = {
 		name = trust_event.1.a
 		set_country_flag = SOV_guests_in_vkpb
+		# Фракционная борьба: доверие на максимуме = вступление в ВКП(б) -> фаза 3.
+		# Считаем победившую коалицию и лидера по p_<name> прямо здесь.
+		MCKSP_compute_winner = yes
+		MCKSP_struggle_enter_phase3 = yes
+		# Доверие достигло максимума — механика больше не нужна, сносим баланс
+		# (как при расстреле). Снимает баланс со всеми дрифтами/тирами трона.
+		remove_power_balance = { id = SOV_stalin_trust_balance }
 	}
 }
 

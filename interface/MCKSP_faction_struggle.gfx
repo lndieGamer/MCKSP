@@ -1,0 +1,25 @@
+###############################################################################
+#  MCKSP — Фракционная борьба: спрайты панели
+#  Файл: interface/MCKSP_faction_struggle.gfx
+#
+#  .dds рисует пользователь (пути ниже). До отрисовки движок пишет в error.log
+#  "texture not found" — это ожидаемо, логику не ломает.
+#  Фон/шапка/стрелки переиспользуют существующие спрайты компаса (без новых .dds).
+###############################################################################
+
+spriteTypes = {
+
+	# Фон строки ростера (фаза 1). 470x40.
+	spriteType = {
+		name = "GFX_MCKSP_faction_row_bg"
+		texturefile = "gfx/interface/MCKSP/faction/faction_row_bg.dds"
+	}
+
+	# Сегмент бар-чарта. 4 кадра по цвету коалиции (полоска 320x26):
+	# 1 reformers(214,83,126) 2 statists(122,28,38) 3 centrists(45,145,135) 4 socialists(224,158,38).
+	spriteType = {
+		name = "GFX_MCKSP_bar_seg"
+		texturefile = "gfx/interface/MCKSP/faction/bar_seg.dds"
+		noOfFrames = 4
+	}
+}

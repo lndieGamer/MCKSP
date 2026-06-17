@@ -87,4 +87,27 @@ spriteTypes = {
 		name = "GFX_MCKSP_bullet_hole_large"
 		texturefile = "gfx/interface/MCKSP/compass/bullet_hole_large.dds"
 	}
+
+	# --- Фракционная борьба: оверлеи коалиций на компасе ---
+	# Ореол коалиции вокруг точки-члена. 4 кадра по цвету ядра, мягкий круг
+	# ~48x48 с альфой ~40% (полоска 192x48): 1 reformers(214,83,126)
+	# 2 statists(122,28,38) 3 centrists(45,145,135) 4 socialists(224,158,38).
+	# Крупнее точки 14x14 — соседи одной коалиции сливаются в «облако».
+	spriteType = {
+		name = "GFX_MCKSP_compass_coalition_halo"
+		texturefile = "gfx/interface/MCKSP/compass/coalition_halo.dds"
+		noOfFrames = 4
+	}
+
+	# Флажок на точке (ядро + точка игрока). 16x20, A8R8G8B8 с альфой.
+	spriteType = {
+		name = "GFX_MCKSP_compass_flag"
+		texturefile = "gfx/interface/MCKSP/compass/compass_flag.dds"
+	}
+
+	# Золотая подсветка строки легенды (выбранное ядро игрока). 296x40, альфа.
+	spriteType = {
+		name = "GFX_MCKSP_legend_gold_overlay"
+		texturefile = "gfx/interface/MCKSP/compass/legend_gold_overlay.dds"
+	}
 }

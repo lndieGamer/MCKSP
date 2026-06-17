@@ -1,0 +1,1066 @@
+###############################################################################
+#  MCKSP — Фракционная борьба: движок (эффекты)
+#  Файл: common/scripted_effects/MCKSP_struggle_effects.txt
+#
+#  Константы — common/scripted_variables/MCKSP_struggle_vars.txt.
+#  Переменные состояния сеются в activate_guests_system.
+#  Нумерация гостей (player_self) = кадры компаса:
+#    1 nikita 2 arseny 3 demokrit 4 gleb 5 stepan 6 ivan 7 ilya 8 evgeny 9 artem 10 ilgam
+#  Коалиции: 1 реформисты(nikita) 2 статисты(evgeny) 3 центристы(stepan) 4 социалисты(demokrit)
+#
+#  Стиль — явное развёртывание (как MCKSP_oath_cut_* / MCKSP_scapegoat_resolve),
+#  без параметрических scripted_effect: надёжнее и единообразно с остальным модом.
+#  Ограничения HOI4: нет sqrt -> дистанции в квадрате; нет indirection по имени;
+#  temp-переменные живут в пределах одного вызова (classify -> random_list в проходе).
+###############################################################################
+
+# ----------------------------------------------------------------------------
+# Геометрия. ax/ay = точка A, bx/by = точка B (temp). Результат в mcksp_tmp_*.
+# ----------------------------------------------------------------------------
+MCKSP_calc_dist2 = {
+	set_temp_variable = { mcksp_tmp_dx = mcksp_tmp_bx }
+	subtract_from_temp_variable = { mcksp_tmp_dx = mcksp_tmp_ax }
+	set_temp_variable = { mcksp_tmp_dy = mcksp_tmp_by }
+	subtract_from_temp_variable = { mcksp_tmp_dy = mcksp_tmp_ay }
+	multiply_temp_variable = { mcksp_tmp_dx = mcksp_tmp_dx }
+	multiply_temp_variable = { mcksp_tmp_dy = mcksp_tmp_dy }
+	set_temp_variable = { mcksp_tmp_dist2 = mcksp_tmp_dx }
+	add_to_temp_variable = { mcksp_tmp_dist2 = mcksp_tmp_dy }
+}
+
+MCKSP_calc_manhattan = {
+	set_temp_variable = { mcksp_tmp_dx = mcksp_tmp_bx }
+	subtract_from_temp_variable = { mcksp_tmp_dx = mcksp_tmp_ax }
+	set_temp_variable = { mcksp_tmp_dy = mcksp_tmp_by }
+	subtract_from_temp_variable = { mcksp_tmp_dy = mcksp_tmp_ay }
+	if = { limit = { check_variable = { mcksp_tmp_dx < 0 } } multiply_temp_variable = { mcksp_tmp_dx = -1 } }
+	if = { limit = { check_variable = { mcksp_tmp_dy < 0 } } multiply_temp_variable = { mcksp_tmp_dy = -1 } }
+	set_temp_variable = { mcksp_tmp_manh = mcksp_tmp_dx }
+	add_to_temp_variable = { mcksp_tmp_manh = mcksp_tmp_dy }
+}
+
+# Координаты текущего "я" игрока -> ax/ay.
+MCKSP_load_coords_of_player = {
+	if = { limit = { check_variable = { player_self = 1 } }  set_temp_variable = { mcksp_tmp_ax = -2 }   set_temp_variable = { mcksp_tmp_ay = -5 } }
+	else_if = { limit = { check_variable = { player_self = 2 } }  set_temp_variable = { mcksp_tmp_ax = -1 }   set_temp_variable = { mcksp_tmp_ay = -4 } }
+	else_if = { limit = { check_variable = { player_self = 3 } }  set_temp_variable = { mcksp_tmp_ax = -5 } set_temp_variable = { mcksp_tmp_ay = 1 } }
+	else_if = { limit = { check_variable = { player_self = 4 } }  set_temp_variable = { mcksp_tmp_ax = 1 }     set_temp_variable = { mcksp_tmp_ay = 1 } }
+	else_if = { limit = { check_variable = { player_self = 5 } }  set_temp_variable = { mcksp_tmp_ax = 2 }   set_temp_variable = { mcksp_tmp_ay = 2 } }
+	else_if = { limit = { check_variable = { player_self = 6 } }  set_temp_variable = { mcksp_tmp_ax = 1 }     set_temp_variable = { mcksp_tmp_ay = 4 } }
+	else_if = { limit = { check_variable = { player_self = 7 } }  set_temp_variable = { mcksp_tmp_ax = 2 }     set_temp_variable = { mcksp_tmp_ay = 6 } }
+	else_if = { limit = { check_variable = { player_self = 8 } }  set_temp_variable = { mcksp_tmp_ax = 4 }   set_temp_variable = { mcksp_tmp_ay = 8 } }
+	else_if = { limit = { check_variable = { player_self = 9 } }  set_temp_variable = { mcksp_tmp_ax = -4 }    set_temp_variable = { mcksp_tmp_ay = -2 } }
+	else_if = { limit = { check_variable = { player_self = 10 } } set_temp_variable = { mcksp_tmp_ax = -3 }    set_temp_variable = { mcksp_tmp_ay = 5 } }
+}
+
+# ----------------------------------------------------------------------------
+# Классификация кандидата для активного ядра (ax/ay = коорд ядра).
+# mcksp_class_<name>: 0 недостижим/занят/мёртв, 1 достижим, 2 близкий.
+# Кандидаты — 6 не-ядер: arseny gleb ivan ilya artem ilgam.
+# ----------------------------------------------------------------------------
+MCKSP_classify_arseny = {
+	set_temp_variable = { mcksp_class_arseny = 0 }
+	if = {
+		limit = { check_variable = { coalition_of_arseny = 0 } NOT = { has_country_flag = mcksp_guest_gone_arseny } }
+		set_temp_variable = { mcksp_tmp_bx = -1 }
+		set_temp_variable = { mcksp_tmp_by = -4 }
+		MCKSP_calc_dist2 = yes
+		if = { limit = { check_variable = { mcksp_tmp_dist2 < 101 } } set_temp_variable = { mcksp_class_arseny = 1 } }
+		if = { limit = { check_variable = { mcksp_tmp_dist2 < mcksp_close_dist2 } }     set_temp_variable = { mcksp_class_arseny = 2 } }
+	}
+}
+MCKSP_classify_gleb = {
+	set_temp_variable = { mcksp_class_gleb = 0 }
+	if = {
+		limit = { check_variable = { coalition_of_gleb = 0 } NOT = { has_country_flag = mcksp_guest_gone_gleb } }
+		set_temp_variable = { mcksp_tmp_bx = 1 }
+		set_temp_variable = { mcksp_tmp_by = 1 }
+		MCKSP_calc_dist2 = yes
+		if = { limit = { check_variable = { mcksp_tmp_dist2 < 101 } } set_temp_variable = { mcksp_class_gleb = 1 } }
+		if = { limit = { check_variable = { mcksp_tmp_dist2 < mcksp_close_dist2 } }     set_temp_variable = { mcksp_class_gleb = 2 } }
+	}
+}
+MCKSP_classify_ivan = {
+	set_temp_variable = { mcksp_class_ivan = 0 }
+	if = {
+		limit = { check_variable = { coalition_of_ivan = 0 } NOT = { has_country_flag = mcksp_guest_gone_ivan } }
+		set_temp_variable = { mcksp_tmp_bx = 1 }
+		set_temp_variable = { mcksp_tmp_by = 4 }
+		MCKSP_calc_dist2 = yes
+		if = { limit = { check_variable = { mcksp_tmp_dist2 < 101 } } set_temp_variable = { mcksp_class_ivan = 1 } }
+		if = { limit = { check_variable = { mcksp_tmp_dist2 < mcksp_close_dist2 } }     set_temp_variable = { mcksp_class_ivan = 2 } }
+	}
+}
+MCKSP_classify_ilya = {
+	set_temp_variable = { mcksp_class_ilya = 0 }
+	if = {
+		limit = { check_variable = { coalition_of_ilya = 0 } NOT = { has_country_flag = mcksp_guest_gone_ilya } }
+		set_temp_variable = { mcksp_tmp_bx = 2 }
+		set_temp_variable = { mcksp_tmp_by = 6 }
+		MCKSP_calc_dist2 = yes
+		if = { limit = { check_variable = { mcksp_tmp_dist2 < 101 } } set_temp_variable = { mcksp_class_ilya = 1 } }
+		if = { limit = { check_variable = { mcksp_tmp_dist2 < mcksp_close_dist2 } }     set_temp_variable = { mcksp_class_ilya = 2 } }
+	}
+}
+MCKSP_classify_artem = {
+	set_temp_variable = { mcksp_class_artem = 0 }
+	if = {
+		limit = { check_variable = { coalition_of_artem = 0 } NOT = { has_country_flag = mcksp_guest_gone_artem } }
+		set_temp_variable = { mcksp_tmp_bx = -4 }
+		set_temp_variable = { mcksp_tmp_by = -2 }
+		MCKSP_calc_dist2 = yes
+		if = { limit = { check_variable = { mcksp_tmp_dist2 < 101 } } set_temp_variable = { mcksp_class_artem = 1 } }
+		if = { limit = { check_variable = { mcksp_tmp_dist2 < mcksp_close_dist2 } }     set_temp_variable = { mcksp_class_artem = 2 } }
+	}
+}
+MCKSP_classify_ilgam = {
+	set_temp_variable = { mcksp_class_ilgam = 0 }
+	if = {
+		limit = { check_variable = { coalition_of_ilgam = 0 } NOT = { has_country_flag = mcksp_guest_gone_ilgam } }
+		set_temp_variable = { mcksp_tmp_bx = -3 }
+		set_temp_variable = { mcksp_tmp_by = 5 }
+		MCKSP_calc_dist2 = yes
+		if = { limit = { check_variable = { mcksp_tmp_dist2 < 101 } } set_temp_variable = { mcksp_class_ilgam = 1 } }
+		if = { limit = { check_variable = { mcksp_tmp_dist2 < mcksp_close_dist2 } }     set_temp_variable = { mcksp_class_ilgam = 2 } }
+	}
+}
+MCKSP_classify_all_candidates = {
+	MCKSP_classify_arseny = yes
+	MCKSP_classify_gleb = yes
+	MCKSP_classify_ivan = yes
+	MCKSP_classify_ilya = yes
+	MCKSP_classify_artem = yes
+	MCKSP_classify_ilgam = yes
+}
+
+# ----------------------------------------------------------------------------
+# Назначение кандидата в коалицию mcksp_tmp_recruit_c (задаёт шаг ядра).
+# ----------------------------------------------------------------------------
+MCKSP_recruit_assign_arseny = {
+	set_variable = { coalition_of_arseny = mcksp_tmp_recruit_c }
+	set_country_flag = mcksp_recruit_pending_arseny
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.03 }
+	MCKSP_fire_rival_move = yes
+	MCKSP_recompute_sizes = yes
+}
+MCKSP_recruit_assign_gleb = {
+	set_variable = { coalition_of_gleb = mcksp_tmp_recruit_c }
+	set_country_flag = mcksp_recruit_pending_gleb
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.03 }
+	MCKSP_fire_rival_move = yes
+	MCKSP_recompute_sizes = yes
+}
+MCKSP_recruit_assign_ivan = {
+	set_variable = { coalition_of_ivan = mcksp_tmp_recruit_c }
+	set_country_flag = mcksp_recruit_pending_ivan
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.03 }
+	MCKSP_fire_rival_move = yes
+	MCKSP_recompute_sizes = yes
+}
+MCKSP_recruit_assign_ilya = {
+	set_variable = { coalition_of_ilya = mcksp_tmp_recruit_c }
+	set_country_flag = mcksp_recruit_pending_ilya
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.03 }
+	MCKSP_fire_rival_move = yes
+	MCKSP_recompute_sizes = yes
+}
+MCKSP_recruit_assign_artem = {
+	set_variable = { coalition_of_artem = mcksp_tmp_recruit_c }
+	set_country_flag = mcksp_recruit_pending_artem
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.03 }
+	MCKSP_fire_rival_move = yes
+	MCKSP_recompute_sizes = yes
+}
+MCKSP_recruit_assign_ilgam = {
+	set_variable = { coalition_of_ilgam = mcksp_tmp_recruit_c }
+	set_country_flag = mcksp_recruit_pending_ilgam
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.03 }
+	MCKSP_fire_rival_move = yes
+	MCKSP_recompute_sizes = yes
+}
+
+# Серый инфо-decision соперника на КД: флаг + activate_decision (иначе таймер стоит).
+MCKSP_fire_rival_move = {
+	if = { limit = { check_variable = { mcksp_tmp_recruit_c = 1 } } set_country_flag = mcksp_rival_move_1 activate_decision = SOV_struggle_rival_move_reformers }
+	else_if = { limit = { check_variable = { mcksp_tmp_recruit_c = 2 } } set_country_flag = mcksp_rival_move_2 activate_decision = SOV_struggle_rival_move_statists }
+	else_if = { limit = { check_variable = { mcksp_tmp_recruit_c = 3 } } set_country_flag = mcksp_rival_move_3 activate_decision = SOV_struggle_rival_move_centrists }
+	else_if = { limit = { check_variable = { mcksp_tmp_recruit_c = 4 } } set_country_flag = mcksp_rival_move_4 activate_decision = SOV_struggle_rival_move_socialists }
+}
+
+# Общий бросок вербовки. Вес = близость (close ->x3, reach ->x1, иначе 0) + skip.
+MCKSP_recruit_roll = {
+	random_list = {
+		10 = { modifier = { factor = 0 check_variable = { mcksp_class_arseny < 1 } } modifier = { factor = 3 check_variable = { mcksp_class_arseny > 1 } } MCKSP_recruit_assign_arseny = yes }
+		10 = { modifier = { factor = 0 check_variable = { mcksp_class_gleb < 1 } }   modifier = { factor = 3 check_variable = { mcksp_class_gleb > 1 } }   MCKSP_recruit_assign_gleb = yes }
+		10 = { modifier = { factor = 0 check_variable = { mcksp_class_ivan < 1 } }   modifier = { factor = 3 check_variable = { mcksp_class_ivan > 1 } }   MCKSP_recruit_assign_ivan = yes }
+		10 = { modifier = { factor = 0 check_variable = { mcksp_class_ilya < 1 } }   modifier = { factor = 3 check_variable = { mcksp_class_ilya > 1 } }   MCKSP_recruit_assign_ilya = yes }
+		10 = { modifier = { factor = 0 check_variable = { mcksp_class_artem < 1 } }  modifier = { factor = 3 check_variable = { mcksp_class_artem > 1 } }  MCKSP_recruit_assign_artem = yes }
+		10 = { modifier = { factor = 0 check_variable = { mcksp_class_ilgam < 1 } }  modifier = { factor = 3 check_variable = { mcksp_class_ilgam > 1 } }  MCKSP_recruit_assign_ilgam = yes }
+		25 = { }
+	}
+}
+
+# Шаг ядра C (если не коалиция игрока и КД истёк). Координаты ядра -> ax/ay.
+MCKSP_coalition_recruit_step_1 = {
+	if = {
+		limit = { NOT = { check_variable = { player_coalition = 1 } } check_variable = { recruit_cooldown_1 = 0 } }
+		set_temp_variable = { mcksp_tmp_recruit_c = 1 }
+		set_temp_variable = { mcksp_tmp_ax = -2 }
+		set_temp_variable = { mcksp_tmp_ay = -5 }
+		MCKSP_find_best_candidate = yes
+		if = { limit = { check_variable = { mcksp_tmp_best_guest > 0 } } random_list = { 70 = { MCKSP_assign_best_to_core = yes } 30 = { } } }
+		set_variable = { recruit_cooldown_1 = 6 }
+	}
+}
+MCKSP_coalition_recruit_step_2 = {
+	if = {
+		limit = { NOT = { check_variable = { player_coalition = 2 } } check_variable = { recruit_cooldown_2 = 0 } }
+		set_temp_variable = { mcksp_tmp_recruit_c = 2 }
+		set_temp_variable = { mcksp_tmp_ax = 4 }
+		set_temp_variable = { mcksp_tmp_ay = 8 }
+		MCKSP_find_best_candidate = yes
+		if = { limit = { check_variable = { mcksp_tmp_best_guest > 0 } } random_list = { 70 = { MCKSP_assign_best_to_core = yes } 30 = { } } }
+		set_variable = { recruit_cooldown_2 = 6 }
+	}
+}
+MCKSP_coalition_recruit_step_3 = {
+	if = {
+		limit = { NOT = { check_variable = { player_coalition = 3 } } check_variable = { recruit_cooldown_3 = 0 } }
+		set_temp_variable = { mcksp_tmp_recruit_c = 3 }
+		set_temp_variable = { mcksp_tmp_ax = 2 }
+		set_temp_variable = { mcksp_tmp_ay = 2 }
+		MCKSP_find_best_candidate = yes
+		if = { limit = { check_variable = { mcksp_tmp_best_guest > 0 } } random_list = { 70 = { MCKSP_assign_best_to_core = yes } 30 = { } } }
+		set_variable = { recruit_cooldown_3 = 6 }
+	}
+}
+MCKSP_coalition_recruit_step_4 = {
+	if = {
+		limit = { NOT = { check_variable = { player_coalition = 4 } } check_variable = { recruit_cooldown_4 = 0 } }
+		set_temp_variable = { mcksp_tmp_recruit_c = 4 }
+		set_temp_variable = { mcksp_tmp_ax = -5 }
+		set_temp_variable = { mcksp_tmp_ay = 1 }
+		MCKSP_find_best_candidate = yes
+		if = { limit = { check_variable = { mcksp_tmp_best_guest > 0 } } random_list = { 70 = { MCKSP_assign_best_to_core = yes } 30 = { } } }
+		set_variable = { recruit_cooldown_4 = 6 }
+	}
+}
+
+# Поиск ближайшего достижимого свободного кандидата для ядра (ax/ay = коорд ядра).
+# Результат: mcksp_tmp_best_guest (id 0=нет). Детерминированный — без хрупких
+# random_list-весов по temp (прежний баг: коалиции не формировались).
+MCKSP_find_best_candidate = {
+	set_temp_variable = { mcksp_tmp_best_dist2 = 9999 }
+	set_temp_variable = { mcksp_tmp_best_guest = 0 }
+	if = { limit = { check_variable = { coalition_of_arseny = 0 } NOT = { has_country_flag = mcksp_guest_gone_arseny } }
+		set_temp_variable = { mcksp_tmp_bx = -1 } set_temp_variable = { mcksp_tmp_by = -4 } MCKSP_calc_dist2 = yes
+		if = { limit = { check_variable = { mcksp_tmp_dist2 < 101 } check_variable = { mcksp_tmp_dist2 < mcksp_tmp_best_dist2 } } set_temp_variable = { mcksp_tmp_best_dist2 = mcksp_tmp_dist2 } set_temp_variable = { mcksp_tmp_best_guest = 2 } } }
+	if = { limit = { check_variable = { coalition_of_gleb = 0 } NOT = { has_country_flag = mcksp_guest_gone_gleb } }
+		set_temp_variable = { mcksp_tmp_bx = 1 } set_temp_variable = { mcksp_tmp_by = 1 } MCKSP_calc_dist2 = yes
+		if = { limit = { check_variable = { mcksp_tmp_dist2 < 101 } check_variable = { mcksp_tmp_dist2 < mcksp_tmp_best_dist2 } } set_temp_variable = { mcksp_tmp_best_dist2 = mcksp_tmp_dist2 } set_temp_variable = { mcksp_tmp_best_guest = 4 } } }
+	if = { limit = { check_variable = { coalition_of_ivan = 0 } NOT = { has_country_flag = mcksp_guest_gone_ivan } }
+		set_temp_variable = { mcksp_tmp_bx = 1 } set_temp_variable = { mcksp_tmp_by = 4 } MCKSP_calc_dist2 = yes
+		if = { limit = { check_variable = { mcksp_tmp_dist2 < 101 } check_variable = { mcksp_tmp_dist2 < mcksp_tmp_best_dist2 } } set_temp_variable = { mcksp_tmp_best_dist2 = mcksp_tmp_dist2 } set_temp_variable = { mcksp_tmp_best_guest = 6 } } }
+	if = { limit = { check_variable = { coalition_of_ilya = 0 } NOT = { has_country_flag = mcksp_guest_gone_ilya } }
+		set_temp_variable = { mcksp_tmp_bx = 2 } set_temp_variable = { mcksp_tmp_by = 6 } MCKSP_calc_dist2 = yes
+		if = { limit = { check_variable = { mcksp_tmp_dist2 < 101 } check_variable = { mcksp_tmp_dist2 < mcksp_tmp_best_dist2 } } set_temp_variable = { mcksp_tmp_best_dist2 = mcksp_tmp_dist2 } set_temp_variable = { mcksp_tmp_best_guest = 7 } } }
+	if = { limit = { check_variable = { coalition_of_artem = 0 } NOT = { has_country_flag = mcksp_guest_gone_artem } }
+		set_temp_variable = { mcksp_tmp_bx = -4 } set_temp_variable = { mcksp_tmp_by = -2 } MCKSP_calc_dist2 = yes
+		if = { limit = { check_variable = { mcksp_tmp_dist2 < 101 } check_variable = { mcksp_tmp_dist2 < mcksp_tmp_best_dist2 } } set_temp_variable = { mcksp_tmp_best_dist2 = mcksp_tmp_dist2 } set_temp_variable = { mcksp_tmp_best_guest = 9 } } }
+	if = { limit = { check_variable = { coalition_of_ilgam = 0 } NOT = { has_country_flag = mcksp_guest_gone_ilgam } }
+		set_temp_variable = { mcksp_tmp_bx = -3 } set_temp_variable = { mcksp_tmp_by = 5 } MCKSP_calc_dist2 = yes
+		if = { limit = { check_variable = { mcksp_tmp_dist2 < 101 } check_variable = { mcksp_tmp_dist2 < mcksp_tmp_best_dist2 } } set_temp_variable = { mcksp_tmp_best_dist2 = mcksp_tmp_dist2 } set_temp_variable = { mcksp_tmp_best_guest = 10 } } }
+}
+# Назначает найденного кандидата в коалицию mcksp_tmp_recruit_c.
+MCKSP_assign_best_to_core = {
+	if = { limit = { check_variable = { mcksp_tmp_best_guest = 2 } } MCKSP_recruit_assign_arseny = yes }
+	else_if = { limit = { check_variable = { mcksp_tmp_best_guest = 4 } } MCKSP_recruit_assign_gleb = yes }
+	else_if = { limit = { check_variable = { mcksp_tmp_best_guest = 6 } } MCKSP_recruit_assign_ivan = yes }
+	else_if = { limit = { check_variable = { mcksp_tmp_best_guest = 7 } } MCKSP_recruit_assign_ilya = yes }
+	else_if = { limit = { check_variable = { mcksp_tmp_best_guest = 9 } } MCKSP_recruit_assign_artem = yes }
+	else_if = { limit = { check_variable = { mcksp_tmp_best_guest = 10 } } MCKSP_recruit_assign_ilgam = yes }
+}
+
+# Убрать устранённых гостей из коалиций (флаг mcksp_guest_gone_<name>) -> ореол
+# пропадает, перестают считаться в размере/суммах. Звать из расстрела/чистки.
+MCKSP_sync_dead_from_coalitions = {
+	if = { limit = { has_country_flag = mcksp_guest_gone_nikita } set_variable = { coalition_of_nikita = 0 } }
+	if = { limit = { has_country_flag = mcksp_guest_gone_arseny } set_variable = { coalition_of_arseny = 0 } }
+	if = { limit = { has_country_flag = mcksp_guest_gone_demokrit } set_variable = { coalition_of_demokrit = 0 } }
+	if = { limit = { has_country_flag = mcksp_guest_gone_gleb } set_variable = { coalition_of_gleb = 0 } }
+	if = { limit = { has_country_flag = mcksp_guest_gone_stepan } set_variable = { coalition_of_stepan = 0 } }
+	if = { limit = { has_country_flag = mcksp_guest_gone_ivan } set_variable = { coalition_of_ivan = 0 } }
+	if = { limit = { has_country_flag = mcksp_guest_gone_ilya } set_variable = { coalition_of_ilya = 0 } }
+	if = { limit = { has_country_flag = mcksp_guest_gone_evgeny } set_variable = { coalition_of_evgeny = 0 } }
+	if = { limit = { has_country_flag = mcksp_guest_gone_artem } set_variable = { coalition_of_artem = 0 } }
+	if = { limit = { has_country_flag = mcksp_guest_gone_ilgam } set_variable = { coalition_of_ilgam = 0 } }
+	MCKSP_recompute_sizes = yes
+}
+
+MCKSP_decrement_cooldowns = {
+	if = { limit = { check_variable = { recruit_cooldown_1 > 0 } } subtract_from_variable = { recruit_cooldown_1 = 1 } }
+	if = { limit = { check_variable = { recruit_cooldown_2 > 0 } } subtract_from_variable = { recruit_cooldown_2 = 1 } }
+	if = { limit = { check_variable = { recruit_cooldown_3 > 0 } } subtract_from_variable = { recruit_cooldown_3 = 1 } }
+	if = { limit = { check_variable = { recruit_cooldown_4 > 0 } } subtract_from_variable = { recruit_cooldown_4 = 1 } }
+}
+
+# Размеры коалиций (для правила "ореол при >1 члене").
+MCKSP_recompute_sizes = {
+	set_variable = { coalition_size_1 = 0 }
+	set_variable = { coalition_size_2 = 0 }
+	set_variable = { coalition_size_3 = 0 }
+	set_variable = { coalition_size_4 = 0 }
+	if = { limit = { check_variable = { coalition_of_nikita = 1 } } add_to_variable = { coalition_size_1 = 1 } }
+	else_if = { limit = { check_variable = { coalition_of_nikita = 2 } } add_to_variable = { coalition_size_2 = 1 } }
+	else_if = { limit = { check_variable = { coalition_of_nikita = 3 } } add_to_variable = { coalition_size_3 = 1 } }
+	else_if = { limit = { check_variable = { coalition_of_nikita = 4 } } add_to_variable = { coalition_size_4 = 1 } }
+	if = { limit = { check_variable = { coalition_of_arseny = 1 } } add_to_variable = { coalition_size_1 = 1 } }
+	else_if = { limit = { check_variable = { coalition_of_arseny = 2 } } add_to_variable = { coalition_size_2 = 1 } }
+	else_if = { limit = { check_variable = { coalition_of_arseny = 3 } } add_to_variable = { coalition_size_3 = 1 } }
+	else_if = { limit = { check_variable = { coalition_of_arseny = 4 } } add_to_variable = { coalition_size_4 = 1 } }
+	if = { limit = { check_variable = { coalition_of_demokrit = 1 } } add_to_variable = { coalition_size_1 = 1 } }
+	else_if = { limit = { check_variable = { coalition_of_demokrit = 2 } } add_to_variable = { coalition_size_2 = 1 } }
+	else_if = { limit = { check_variable = { coalition_of_demokrit = 3 } } add_to_variable = { coalition_size_3 = 1 } }
+	else_if = { limit = { check_variable = { coalition_of_demokrit = 4 } } add_to_variable = { coalition_size_4 = 1 } }
+	if = { limit = { check_variable = { coalition_of_gleb = 1 } } add_to_variable = { coalition_size_1 = 1 } }
+	else_if = { limit = { check_variable = { coalition_of_gleb = 2 } } add_to_variable = { coalition_size_2 = 1 } }
+	else_if = { limit = { check_variable = { coalition_of_gleb = 3 } } add_to_variable = { coalition_size_3 = 1 } }
+	else_if = { limit = { check_variable = { coalition_of_gleb = 4 } } add_to_variable = { coalition_size_4 = 1 } }
+	if = { limit = { check_variable = { coalition_of_stepan = 1 } } add_to_variable = { coalition_size_1 = 1 } }
+	else_if = { limit = { check_variable = { coalition_of_stepan = 2 } } add_to_variable = { coalition_size_2 = 1 } }
+	else_if = { limit = { check_variable = { coalition_of_stepan = 3 } } add_to_variable = { coalition_size_3 = 1 } }
+	else_if = { limit = { check_variable = { coalition_of_stepan = 4 } } add_to_variable = { coalition_size_4 = 1 } }
+	if = { limit = { check_variable = { coalition_of_ivan = 1 } } add_to_variable = { coalition_size_1 = 1 } }
+	else_if = { limit = { check_variable = { coalition_of_ivan = 2 } } add_to_variable = { coalition_size_2 = 1 } }
+	else_if = { limit = { check_variable = { coalition_of_ivan = 3 } } add_to_variable = { coalition_size_3 = 1 } }
+	else_if = { limit = { check_variable = { coalition_of_ivan = 4 } } add_to_variable = { coalition_size_4 = 1 } }
+	if = { limit = { check_variable = { coalition_of_ilya = 1 } } add_to_variable = { coalition_size_1 = 1 } }
+	else_if = { limit = { check_variable = { coalition_of_ilya = 2 } } add_to_variable = { coalition_size_2 = 1 } }
+	else_if = { limit = { check_variable = { coalition_of_ilya = 3 } } add_to_variable = { coalition_size_3 = 1 } }
+	else_if = { limit = { check_variable = { coalition_of_ilya = 4 } } add_to_variable = { coalition_size_4 = 1 } }
+	if = { limit = { check_variable = { coalition_of_evgeny = 1 } } add_to_variable = { coalition_size_1 = 1 } }
+	else_if = { limit = { check_variable = { coalition_of_evgeny = 2 } } add_to_variable = { coalition_size_2 = 1 } }
+	else_if = { limit = { check_variable = { coalition_of_evgeny = 3 } } add_to_variable = { coalition_size_3 = 1 } }
+	else_if = { limit = { check_variable = { coalition_of_evgeny = 4 } } add_to_variable = { coalition_size_4 = 1 } }
+	if = { limit = { check_variable = { coalition_of_artem = 1 } } add_to_variable = { coalition_size_1 = 1 } }
+	else_if = { limit = { check_variable = { coalition_of_artem = 2 } } add_to_variable = { coalition_size_2 = 1 } }
+	else_if = { limit = { check_variable = { coalition_of_artem = 3 } } add_to_variable = { coalition_size_3 = 1 } }
+	else_if = { limit = { check_variable = { coalition_of_artem = 4 } } add_to_variable = { coalition_size_4 = 1 } }
+	if = { limit = { check_variable = { coalition_of_ilgam = 1 } } add_to_variable = { coalition_size_1 = 1 } }
+	else_if = { limit = { check_variable = { coalition_of_ilgam = 2 } } add_to_variable = { coalition_size_2 = 1 } }
+	else_if = { limit = { check_variable = { coalition_of_ilgam = 3 } } add_to_variable = { coalition_size_3 = 1 } }
+	else_if = { limit = { check_variable = { coalition_of_ilgam = 4 } } add_to_variable = { coalition_size_4 = 1 } }
+}
+
+# Конец фазы 1: нет нейтральных живых кандидатов -> в фазу 2.
+MCKSP_check_phase1_end = {
+	set_temp_variable = { mcksp_tmp_score = 0 }
+	if = { limit = { check_variable = { coalition_of_arseny = 0 } NOT = { has_country_flag = mcksp_guest_gone_arseny } } add_to_temp_variable = { mcksp_tmp_score = 1 } }
+	if = { limit = { check_variable = { coalition_of_gleb = 0 }   NOT = { has_country_flag = mcksp_guest_gone_gleb } }   add_to_temp_variable = { mcksp_tmp_score = 1 } }
+	if = { limit = { check_variable = { coalition_of_ivan = 0 }   NOT = { has_country_flag = mcksp_guest_gone_ivan } }   add_to_temp_variable = { mcksp_tmp_score = 1 } }
+	if = { limit = { check_variable = { coalition_of_ilya = 0 }   NOT = { has_country_flag = mcksp_guest_gone_ilya } }   add_to_temp_variable = { mcksp_tmp_score = 1 } }
+	if = { limit = { check_variable = { coalition_of_artem = 0 }  NOT = { has_country_flag = mcksp_guest_gone_artem } }  add_to_temp_variable = { mcksp_tmp_score = 1 } }
+	if = { limit = { check_variable = { coalition_of_ilgam = 0 }  NOT = { has_country_flag = mcksp_guest_gone_ilgam } }  add_to_temp_variable = { mcksp_tmp_score = 1 } }
+	if = { limit = { check_variable = { mcksp_tmp_score < 1 } } MCKSP_struggle_enter_phase2 = yes }
+}
+
+MCKSP_recruitment_tick = {
+	MCKSP_coalition_recruit_step_1 = yes
+	MCKSP_coalition_recruit_step_2 = yes
+	MCKSP_coalition_recruit_step_3 = yes
+	MCKSP_coalition_recruit_step_4 = yes
+	MCKSP_decrement_cooldowns = yes
+	MCKSP_recompute_sizes = yes
+	MCKSP_compute_invite_costs = yes   # цены/достижимость свежие (player_self мог сдвинуться)
+	MCKSP_check_phase1_end = yes
+}
+
+# ----------------------------------------------------------------------------
+# Конец фазы 1: лидер-таргеты. Коалиция игрока -> player_self; ИИ -> случайно
+# среди членов (fallback на ядро, если ролл попал в нечлена).
+# ----------------------------------------------------------------------------
+MCKSP_pick_leader_target_1 = {
+	if = { limit = { check_variable = { player_coalition = 1 } } set_variable = { leader_target_1 = player_self } }
+	else = {
+		set_variable = { leader_target_1 = 1 }
+		random_list = {
+			10 = { if = { limit = { check_variable = { coalition_of_nikita = 1 } }   set_variable = { leader_target_1 = 1 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_arseny = 1 } }   set_variable = { leader_target_1 = 2 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_demokrit = 1 } } set_variable = { leader_target_1 = 3 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_gleb = 1 } }     set_variable = { leader_target_1 = 4 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_stepan = 1 } }   set_variable = { leader_target_1 = 5 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_ivan = 1 } }     set_variable = { leader_target_1 = 6 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_ilya = 1 } }     set_variable = { leader_target_1 = 7 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_evgeny = 1 } }   set_variable = { leader_target_1 = 8 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_artem = 1 } }    set_variable = { leader_target_1 = 9 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_ilgam = 1 } }    set_variable = { leader_target_1 = 10 } } }
+		}
+	}
+}
+MCKSP_pick_leader_target_2 = {
+	if = { limit = { check_variable = { player_coalition = 2 } } set_variable = { leader_target_2 = player_self } }
+	else = {
+		set_variable = { leader_target_2 = 8 }
+		random_list = {
+			10 = { if = { limit = { check_variable = { coalition_of_nikita = 2 } }   set_variable = { leader_target_2 = 1 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_arseny = 2 } }   set_variable = { leader_target_2 = 2 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_demokrit = 2 } } set_variable = { leader_target_2 = 3 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_gleb = 2 } }     set_variable = { leader_target_2 = 4 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_stepan = 2 } }   set_variable = { leader_target_2 = 5 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_ivan = 2 } }     set_variable = { leader_target_2 = 6 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_ilya = 2 } }     set_variable = { leader_target_2 = 7 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_evgeny = 2 } }   set_variable = { leader_target_2 = 8 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_artem = 2 } }    set_variable = { leader_target_2 = 9 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_ilgam = 2 } }    set_variable = { leader_target_2 = 10 } } }
+		}
+	}
+}
+MCKSP_pick_leader_target_3 = {
+	if = { limit = { check_variable = { player_coalition = 3 } } set_variable = { leader_target_3 = player_self } }
+	else = {
+		set_variable = { leader_target_3 = 5 }
+		random_list = {
+			10 = { if = { limit = { check_variable = { coalition_of_nikita = 3 } }   set_variable = { leader_target_3 = 1 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_arseny = 3 } }   set_variable = { leader_target_3 = 2 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_demokrit = 3 } } set_variable = { leader_target_3 = 3 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_gleb = 3 } }     set_variable = { leader_target_3 = 4 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_stepan = 3 } }   set_variable = { leader_target_3 = 5 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_ivan = 3 } }     set_variable = { leader_target_3 = 6 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_ilya = 3 } }     set_variable = { leader_target_3 = 7 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_evgeny = 3 } }   set_variable = { leader_target_3 = 8 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_artem = 3 } }    set_variable = { leader_target_3 = 9 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_ilgam = 3 } }    set_variable = { leader_target_3 = 10 } } }
+		}
+	}
+}
+MCKSP_pick_leader_target_4 = {
+	if = { limit = { check_variable = { player_coalition = 4 } } set_variable = { leader_target_4 = player_self } }
+	else = {
+		set_variable = { leader_target_4 = 3 }
+		random_list = {
+			10 = { if = { limit = { check_variable = { coalition_of_nikita = 4 } }   set_variable = { leader_target_4 = 1 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_arseny = 4 } }   set_variable = { leader_target_4 = 2 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_demokrit = 4 } } set_variable = { leader_target_4 = 3 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_gleb = 4 } }     set_variable = { leader_target_4 = 4 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_stepan = 4 } }   set_variable = { leader_target_4 = 5 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_ivan = 4 } }     set_variable = { leader_target_4 = 6 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_ilya = 4 } }     set_variable = { leader_target_4 = 7 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_evgeny = 4 } }   set_variable = { leader_target_4 = 8 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_artem = 4 } }    set_variable = { leader_target_4 = 9 } } }
+			10 = { if = { limit = { check_variable = { coalition_of_ilgam = 4 } }    set_variable = { leader_target_4 = 10 } } }
+		}
+	}
+}
+MCKSP_pick_leader_targets = {
+	MCKSP_pick_leader_target_1 = yes
+	MCKSP_pick_leader_target_2 = yes
+	MCKSP_pick_leader_target_3 = yes
+	MCKSP_pick_leader_target_4 = yes
+}
+
+# ----------------------------------------------------------------------------
+# Победитель (сумма p_<name> по коалициям) и лидер (макс p_ в победившей).
+# ----------------------------------------------------------------------------
+MCKSP_compute_winner = {
+	set_temp_variable = { mcksp_tmp_sum1 = 0 }
+	set_temp_variable = { mcksp_tmp_sum2 = 0 }
+	set_temp_variable = { mcksp_tmp_sum3 = 0 }
+	set_temp_variable = { mcksp_tmp_sum4 = 0 }
+	if = { limit = { check_variable = { coalition_of_nikita = 1 } } add_to_temp_variable = { mcksp_tmp_sum1 = p_nikita } }
+	else_if = { limit = { check_variable = { coalition_of_nikita = 2 } } add_to_temp_variable = { mcksp_tmp_sum2 = p_nikita } }
+	else_if = { limit = { check_variable = { coalition_of_nikita = 3 } } add_to_temp_variable = { mcksp_tmp_sum3 = p_nikita } }
+	else_if = { limit = { check_variable = { coalition_of_nikita = 4 } } add_to_temp_variable = { mcksp_tmp_sum4 = p_nikita } }
+	if = { limit = { check_variable = { coalition_of_arseny = 1 } } add_to_temp_variable = { mcksp_tmp_sum1 = p_arseny } }
+	else_if = { limit = { check_variable = { coalition_of_arseny = 2 } } add_to_temp_variable = { mcksp_tmp_sum2 = p_arseny } }
+	else_if = { limit = { check_variable = { coalition_of_arseny = 3 } } add_to_temp_variable = { mcksp_tmp_sum3 = p_arseny } }
+	else_if = { limit = { check_variable = { coalition_of_arseny = 4 } } add_to_temp_variable = { mcksp_tmp_sum4 = p_arseny } }
+	if = { limit = { check_variable = { coalition_of_demokrit = 1 } } add_to_temp_variable = { mcksp_tmp_sum1 = p_demokrit } }
+	else_if = { limit = { check_variable = { coalition_of_demokrit = 2 } } add_to_temp_variable = { mcksp_tmp_sum2 = p_demokrit } }
+	else_if = { limit = { check_variable = { coalition_of_demokrit = 3 } } add_to_temp_variable = { mcksp_tmp_sum3 = p_demokrit } }
+	else_if = { limit = { check_variable = { coalition_of_demokrit = 4 } } add_to_temp_variable = { mcksp_tmp_sum4 = p_demokrit } }
+	if = { limit = { check_variable = { coalition_of_gleb = 1 } } add_to_temp_variable = { mcksp_tmp_sum1 = p_gleb } }
+	else_if = { limit = { check_variable = { coalition_of_gleb = 2 } } add_to_temp_variable = { mcksp_tmp_sum2 = p_gleb } }
+	else_if = { limit = { check_variable = { coalition_of_gleb = 3 } } add_to_temp_variable = { mcksp_tmp_sum3 = p_gleb } }
+	else_if = { limit = { check_variable = { coalition_of_gleb = 4 } } add_to_temp_variable = { mcksp_tmp_sum4 = p_gleb } }
+	if = { limit = { check_variable = { coalition_of_stepan = 1 } } add_to_temp_variable = { mcksp_tmp_sum1 = p_stepan } }
+	else_if = { limit = { check_variable = { coalition_of_stepan = 2 } } add_to_temp_variable = { mcksp_tmp_sum2 = p_stepan } }
+	else_if = { limit = { check_variable = { coalition_of_stepan = 3 } } add_to_temp_variable = { mcksp_tmp_sum3 = p_stepan } }
+	else_if = { limit = { check_variable = { coalition_of_stepan = 4 } } add_to_temp_variable = { mcksp_tmp_sum4 = p_stepan } }
+	if = { limit = { check_variable = { coalition_of_ivan = 1 } } add_to_temp_variable = { mcksp_tmp_sum1 = p_ivan } }
+	else_if = { limit = { check_variable = { coalition_of_ivan = 2 } } add_to_temp_variable = { mcksp_tmp_sum2 = p_ivan } }
+	else_if = { limit = { check_variable = { coalition_of_ivan = 3 } } add_to_temp_variable = { mcksp_tmp_sum3 = p_ivan } }
+	else_if = { limit = { check_variable = { coalition_of_ivan = 4 } } add_to_temp_variable = { mcksp_tmp_sum4 = p_ivan } }
+	if = { limit = { check_variable = { coalition_of_ilya = 1 } } add_to_temp_variable = { mcksp_tmp_sum1 = p_ilya } }
+	else_if = { limit = { check_variable = { coalition_of_ilya = 2 } } add_to_temp_variable = { mcksp_tmp_sum2 = p_ilya } }
+	else_if = { limit = { check_variable = { coalition_of_ilya = 3 } } add_to_temp_variable = { mcksp_tmp_sum3 = p_ilya } }
+	else_if = { limit = { check_variable = { coalition_of_ilya = 4 } } add_to_temp_variable = { mcksp_tmp_sum4 = p_ilya } }
+	if = { limit = { check_variable = { coalition_of_evgeny = 1 } } add_to_temp_variable = { mcksp_tmp_sum1 = p_evgeny } }
+	else_if = { limit = { check_variable = { coalition_of_evgeny = 2 } } add_to_temp_variable = { mcksp_tmp_sum2 = p_evgeny } }
+	else_if = { limit = { check_variable = { coalition_of_evgeny = 3 } } add_to_temp_variable = { mcksp_tmp_sum3 = p_evgeny } }
+	else_if = { limit = { check_variable = { coalition_of_evgeny = 4 } } add_to_temp_variable = { mcksp_tmp_sum4 = p_evgeny } }
+	if = { limit = { check_variable = { coalition_of_artem = 1 } } add_to_temp_variable = { mcksp_tmp_sum1 = p_artem } }
+	else_if = { limit = { check_variable = { coalition_of_artem = 2 } } add_to_temp_variable = { mcksp_tmp_sum2 = p_artem } }
+	else_if = { limit = { check_variable = { coalition_of_artem = 3 } } add_to_temp_variable = { mcksp_tmp_sum3 = p_artem } }
+	else_if = { limit = { check_variable = { coalition_of_artem = 4 } } add_to_temp_variable = { mcksp_tmp_sum4 = p_artem } }
+	if = { limit = { check_variable = { coalition_of_ilgam = 1 } } add_to_temp_variable = { mcksp_tmp_sum1 = p_ilgam } }
+	else_if = { limit = { check_variable = { coalition_of_ilgam = 2 } } add_to_temp_variable = { mcksp_tmp_sum2 = p_ilgam } }
+	else_if = { limit = { check_variable = { coalition_of_ilgam = 3 } } add_to_temp_variable = { mcksp_tmp_sum3 = p_ilgam } }
+	else_if = { limit = { check_variable = { coalition_of_ilgam = 4 } } add_to_temp_variable = { mcksp_tmp_sum4 = p_ilgam } }
+
+	set_variable = { winning_coalition = 1 }
+	set_temp_variable = { mcksp_tmp_best = mcksp_tmp_sum1 }
+	if = { limit = { check_variable = { mcksp_tmp_sum2 > mcksp_tmp_best } } set_variable = { winning_coalition = 2 } set_temp_variable = { mcksp_tmp_best = mcksp_tmp_sum2 } }
+	if = { limit = { check_variable = { mcksp_tmp_sum3 > mcksp_tmp_best } } set_variable = { winning_coalition = 3 } set_temp_variable = { mcksp_tmp_best = mcksp_tmp_sum3 } }
+	if = { limit = { check_variable = { mcksp_tmp_sum4 > mcksp_tmp_best } } set_variable = { winning_coalition = 4 } set_temp_variable = { mcksp_tmp_best = mcksp_tmp_sum4 } }
+	MCKSP_compute_winning_leader = yes
+}
+MCKSP_compute_winning_leader = {
+	set_temp_variable = { mcksp_tmp_pmax = -1 }
+	set_variable = { winning_leader = 0 }
+	if = { limit = { check_variable = { coalition_of_nikita = winning_coalition } check_variable = { p_nikita > mcksp_tmp_pmax } } set_temp_variable = { mcksp_tmp_pmax = p_nikita } set_variable = { winning_leader = 1 } }
+	if = { limit = { check_variable = { coalition_of_arseny = winning_coalition } check_variable = { p_arseny > mcksp_tmp_pmax } } set_temp_variable = { mcksp_tmp_pmax = p_arseny } set_variable = { winning_leader = 2 } }
+	if = { limit = { check_variable = { coalition_of_demokrit = winning_coalition } check_variable = { p_demokrit > mcksp_tmp_pmax } } set_temp_variable = { mcksp_tmp_pmax = p_demokrit } set_variable = { winning_leader = 3 } }
+	if = { limit = { check_variable = { coalition_of_gleb = winning_coalition } check_variable = { p_gleb > mcksp_tmp_pmax } } set_temp_variable = { mcksp_tmp_pmax = p_gleb } set_variable = { winning_leader = 4 } }
+	if = { limit = { check_variable = { coalition_of_stepan = winning_coalition } check_variable = { p_stepan > mcksp_tmp_pmax } } set_temp_variable = { mcksp_tmp_pmax = p_stepan } set_variable = { winning_leader = 5 } }
+	if = { limit = { check_variable = { coalition_of_ivan = winning_coalition } check_variable = { p_ivan > mcksp_tmp_pmax } } set_temp_variable = { mcksp_tmp_pmax = p_ivan } set_variable = { winning_leader = 6 } }
+	if = { limit = { check_variable = { coalition_of_ilya = winning_coalition } check_variable = { p_ilya > mcksp_tmp_pmax } } set_temp_variable = { mcksp_tmp_pmax = p_ilya } set_variable = { winning_leader = 7 } }
+	if = { limit = { check_variable = { coalition_of_evgeny = winning_coalition } check_variable = { p_evgeny > mcksp_tmp_pmax } } set_temp_variable = { mcksp_tmp_pmax = p_evgeny } set_variable = { winning_leader = 8 } }
+	if = { limit = { check_variable = { coalition_of_artem = winning_coalition } check_variable = { p_artem > mcksp_tmp_pmax } } set_temp_variable = { mcksp_tmp_pmax = p_artem } set_variable = { winning_leader = 9 } }
+	if = { limit = { check_variable = { coalition_of_ilgam = winning_coalition } check_variable = { p_ilgam > mcksp_tmp_pmax } } set_temp_variable = { mcksp_tmp_pmax = p_ilgam } set_variable = { winning_leader = 10 } }
+}
+
+# ----------------------------------------------------------------------------
+# Публикация популярности коалиций (0..1) для бар-чарта. Каждый гость добавляет
+# популярность СВОЕЙ группы в коалицию, где состоит.
+# ----------------------------------------------------------------------------
+MCKSP_publish_coalition_pops = {
+	MCKSP_recompute_sizes = yes
+	set_variable = { coalition_pop_reformers = 0 }
+	set_variable = { coalition_pop_statists = 0 }
+	set_variable = { coalition_pop_centrists = 0 }
+	set_variable = { coalition_pop_socialists = 0 }
+
+	if = { limit = { check_variable = { coalition_of_nikita = 1 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_social_liberalism } add_to_variable = { coalition_pop_reformers = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_nikita = 2 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_social_liberalism } add_to_variable = { coalition_pop_statists = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_nikita = 3 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_social_liberalism } add_to_variable = { coalition_pop_centrists = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_nikita = 4 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_social_liberalism } add_to_variable = { coalition_pop_socialists = mcksp_tmp_pop } }
+
+	if = { limit = { check_variable = { coalition_of_arseny = 1 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_liberal_humanism } add_to_variable = { coalition_pop_reformers = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_arseny = 2 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_liberal_humanism } add_to_variable = { coalition_pop_statists = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_arseny = 3 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_liberal_humanism } add_to_variable = { coalition_pop_centrists = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_arseny = 4 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_liberal_humanism } add_to_variable = { coalition_pop_socialists = mcksp_tmp_pop } }
+
+	if = { limit = { check_variable = { coalition_of_demokrit = 1 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_market_socialism } add_to_variable = { coalition_pop_reformers = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_demokrit = 2 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_market_socialism } add_to_variable = { coalition_pop_statists = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_demokrit = 3 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_market_socialism } add_to_variable = { coalition_pop_centrists = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_demokrit = 4 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_market_socialism } add_to_variable = { coalition_pop_socialists = mcksp_tmp_pop } }
+
+	if = { limit = { check_variable = { coalition_of_gleb = 1 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_pragmatic_syncretism } add_to_variable = { coalition_pop_reformers = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_gleb = 2 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_pragmatic_syncretism } add_to_variable = { coalition_pop_statists = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_gleb = 3 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_pragmatic_syncretism } add_to_variable = { coalition_pop_centrists = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_gleb = 4 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_pragmatic_syncretism } add_to_variable = { coalition_pop_socialists = mcksp_tmp_pop } }
+
+	if = { limit = { check_variable = { coalition_of_stepan = 1 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_christian_democracy } add_to_variable = { coalition_pop_reformers = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_stepan = 2 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_christian_democracy } add_to_variable = { coalition_pop_statists = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_stepan = 3 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_christian_democracy } add_to_variable = { coalition_pop_centrists = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_stepan = 4 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_christian_democracy } add_to_variable = { coalition_pop_socialists = mcksp_tmp_pop } }
+
+	if = { limit = { check_variable = { coalition_of_ivan = 1 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_scientific_progressism } add_to_variable = { coalition_pop_reformers = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_ivan = 2 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_scientific_progressism } add_to_variable = { coalition_pop_statists = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_ivan = 3 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_scientific_progressism } add_to_variable = { coalition_pop_centrists = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_ivan = 4 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_scientific_progressism } add_to_variable = { coalition_pop_socialists = mcksp_tmp_pop } }
+
+	if = { limit = { check_variable = { coalition_of_ilya = 1 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_statist_technocratism } add_to_variable = { coalition_pop_reformers = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_ilya = 2 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_statist_technocratism } add_to_variable = { coalition_pop_statists = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_ilya = 3 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_statist_technocratism } add_to_variable = { coalition_pop_centrists = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_ilya = 4 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_statist_technocratism } add_to_variable = { coalition_pop_socialists = mcksp_tmp_pop } }
+
+	if = { limit = { check_variable = { coalition_of_evgeny = 1 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_national_conservatism } add_to_variable = { coalition_pop_reformers = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_evgeny = 2 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_national_conservatism } add_to_variable = { coalition_pop_statists = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_evgeny = 3 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_national_conservatism } add_to_variable = { coalition_pop_centrists = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_evgeny = 4 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_national_conservatism } add_to_variable = { coalition_pop_socialists = mcksp_tmp_pop } }
+
+	if = { limit = { check_variable = { coalition_of_artem = 1 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_democratic_socialism } add_to_variable = { coalition_pop_reformers = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_artem = 2 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_democratic_socialism } add_to_variable = { coalition_pop_statists = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_artem = 3 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_democratic_socialism } add_to_variable = { coalition_pop_centrists = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_artem = 4 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_democratic_socialism } add_to_variable = { coalition_pop_socialists = mcksp_tmp_pop } }
+
+	if = { limit = { check_variable = { coalition_of_ilgam = 1 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_placeholder_ilgam } add_to_variable = { coalition_pop_reformers = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_ilgam = 2 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_placeholder_ilgam } add_to_variable = { coalition_pop_statists = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_ilgam = 3 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_placeholder_ilgam } add_to_variable = { coalition_pop_centrists = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_ilgam = 4 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_placeholder_ilgam } add_to_variable = { coalition_pop_socialists = mcksp_tmp_pop } }
+}
+
+# ----------------------------------------------------------------------------
+# Приглашение игрока (фаза 1). Вызывается из remove_effect решения-оффера.
+# ----------------------------------------------------------------------------
+MCKSP_invite_arseny = {
+	set_variable = { coalition_of_arseny = player_coalition }
+	clr_country_flag = mcksp_inviting_arseny
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.03 }
+	MCKSP_recompute_sizes = yes
+	MCKSP_recompute_attitudes = yes
+}
+MCKSP_invite_gleb = {
+	set_variable = { coalition_of_gleb = player_coalition }
+	clr_country_flag = mcksp_inviting_gleb
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.03 }
+	MCKSP_recompute_sizes = yes
+	MCKSP_recompute_attitudes = yes
+}
+MCKSP_invite_ivan = {
+	set_variable = { coalition_of_ivan = player_coalition }
+	clr_country_flag = mcksp_inviting_ivan
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.03 }
+	MCKSP_recompute_sizes = yes
+	MCKSP_recompute_attitudes = yes
+}
+MCKSP_invite_ilya = {
+	set_variable = { coalition_of_ilya = player_coalition }
+	clr_country_flag = mcksp_inviting_ilya
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.03 }
+	MCKSP_recompute_sizes = yes
+	MCKSP_recompute_attitudes = yes
+}
+MCKSP_invite_artem = {
+	set_variable = { coalition_of_artem = player_coalition }
+	clr_country_flag = mcksp_inviting_artem
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.03 }
+	MCKSP_recompute_sizes = yes
+	MCKSP_recompute_attitudes = yes
+}
+MCKSP_invite_ilgam = {
+	set_variable = { coalition_of_ilgam = player_coalition }
+	clr_country_flag = mcksp_inviting_ilgam
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.03 }
+	MCKSP_recompute_sizes = yes
+	MCKSP_recompute_attitudes = yes
+}
+
+# ----------------------------------------------------------------------------
+# Продвижение (фаза 2): +очко p_, +популярность из коммунизма, +доверие.
+# ----------------------------------------------------------------------------
+MCKSP_promote_nikita = {
+	add_to_variable = { p_nikita = 1 }
+	add_popularity = { ideology = mcksp_social_liberalism popularity = 0.01 }
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.02 }
+}
+MCKSP_promote_arseny = {
+	add_to_variable = { p_arseny = 1 }
+	add_popularity = { ideology = mcksp_liberal_humanism popularity = 0.01 }
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.02 }
+}
+MCKSP_promote_demokrit = {
+	add_to_variable = { p_demokrit = 1 }
+	add_popularity = { ideology = mcksp_market_socialism popularity = 0.01 }
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.02 }
+}
+MCKSP_promote_gleb = {
+	add_to_variable = { p_gleb = 1 }
+	add_popularity = { ideology = mcksp_pragmatic_syncretism popularity = 0.01 }
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.02 }
+}
+MCKSP_promote_stepan = {
+	add_to_variable = { p_stepan = 1 }
+	add_popularity = { ideology = mcksp_christian_democracy popularity = 0.01 }
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.02 }
+}
+MCKSP_promote_ivan = {
+	add_to_variable = { p_ivan = 1 }
+	add_popularity = { ideology = mcksp_scientific_progressism popularity = 0.01 }
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.02 }
+}
+MCKSP_promote_ilya = {
+	add_to_variable = { p_ilya = 1 }
+	add_popularity = { ideology = mcksp_statist_technocratism popularity = 0.01 }
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.02 }
+}
+MCKSP_promote_evgeny = {
+	add_to_variable = { p_evgeny = 1 }
+	add_popularity = { ideology = mcksp_national_conservatism popularity = 0.01 }
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.02 }
+}
+MCKSP_promote_artem = {
+	add_to_variable = { p_artem = 1 }
+	add_popularity = { ideology = mcksp_democratic_socialism popularity = 0.01 }
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.02 }
+}
+MCKSP_promote_ilgam = {
+	add_to_variable = { p_ilgam = 1 }
+	add_popularity = { ideology = mcksp_placeholder_ilgam popularity = 0.01 }
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.02 }
+}
+
+# ----------------------------------------------------------------------------
+# Клевета (фаза 2): -очко p_ (пол 0), -популярность, -доверие.
+# ----------------------------------------------------------------------------
+MCKSP_slander_nikita = {
+	subtract_from_variable = { p_nikita = 1 }
+	if = { limit = { check_variable = { p_nikita < 0 } } set_variable = { p_nikita = 0 } }
+	add_popularity = { ideology = mcksp_social_liberalism popularity = -0.01 }
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = -0.05 }
+}
+MCKSP_slander_arseny = {
+	subtract_from_variable = { p_arseny = 1 }
+	if = { limit = { check_variable = { p_arseny < 0 } } set_variable = { p_arseny = 0 } }
+	add_popularity = { ideology = mcksp_liberal_humanism popularity = -0.01 }
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = -0.05 }
+}
+MCKSP_slander_demokrit = {
+	subtract_from_variable = { p_demokrit = 1 }
+	if = { limit = { check_variable = { p_demokrit < 0 } } set_variable = { p_demokrit = 0 } }
+	add_popularity = { ideology = mcksp_market_socialism popularity = -0.01 }
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = -0.05 }
+}
+MCKSP_slander_gleb = {
+	subtract_from_variable = { p_gleb = 1 }
+	if = { limit = { check_variable = { p_gleb < 0 } } set_variable = { p_gleb = 0 } }
+	add_popularity = { ideology = mcksp_pragmatic_syncretism popularity = -0.01 }
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = -0.05 }
+}
+MCKSP_slander_stepan = {
+	subtract_from_variable = { p_stepan = 1 }
+	if = { limit = { check_variable = { p_stepan < 0 } } set_variable = { p_stepan = 0 } }
+	add_popularity = { ideology = mcksp_christian_democracy popularity = -0.01 }
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = -0.05 }
+}
+MCKSP_slander_ivan = {
+	subtract_from_variable = { p_ivan = 1 }
+	if = { limit = { check_variable = { p_ivan < 0 } } set_variable = { p_ivan = 0 } }
+	add_popularity = { ideology = mcksp_scientific_progressism popularity = -0.01 }
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = -0.05 }
+}
+MCKSP_slander_ilya = {
+	subtract_from_variable = { p_ilya = 1 }
+	if = { limit = { check_variable = { p_ilya < 0 } } set_variable = { p_ilya = 0 } }
+	add_popularity = { ideology = mcksp_statist_technocratism popularity = -0.01 }
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = -0.05 }
+}
+MCKSP_slander_evgeny = {
+	subtract_from_variable = { p_evgeny = 1 }
+	if = { limit = { check_variable = { p_evgeny < 0 } } set_variable = { p_evgeny = 0 } }
+	add_popularity = { ideology = mcksp_national_conservatism popularity = -0.01 }
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = -0.05 }
+}
+MCKSP_slander_artem = {
+	subtract_from_variable = { p_artem = 1 }
+	if = { limit = { check_variable = { p_artem < 0 } } set_variable = { p_artem = 0 } }
+	add_popularity = { ideology = mcksp_democratic_socialism popularity = -0.01 }
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = -0.05 }
+}
+MCKSP_slander_ilgam = {
+	subtract_from_variable = { p_ilgam = 1 }
+	if = { limit = { check_variable = { p_ilgam < 0 } } set_variable = { p_ilgam = 0 } }
+	add_popularity = { ideology = mcksp_placeholder_ilgam popularity = -0.01 }
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = -0.05 }
+}
+
+# ----------------------------------------------------------------------------
+# Отношение к игроку: base - dist*scale + событийная дельта (кламп +-100).
+# ----------------------------------------------------------------------------
+MCKSP_recompute_attitudes = {
+	if = {
+		limit = { check_variable = { player_self > 0 } }
+		MCKSP_load_coords_of_player = yes
+
+		set_temp_variable = { mcksp_tmp_bx = -2 } set_temp_variable = { mcksp_tmp_by = -5 } MCKSP_calc_manhattan = yes
+		set_variable = { attitude_nikita = 80 } set_temp_variable = { mcksp_tmp_cost = mcksp_tmp_manh } multiply_temp_variable = { mcksp_tmp_cost = 5 }
+		subtract_from_variable = { attitude_nikita = mcksp_tmp_cost } add_to_variable = { attitude_nikita = attitude_delta_nikita }
+		if = { limit = { check_variable = { attitude_nikita > 100 } } set_variable = { attitude_nikita = 100 } }
+		if = { limit = { check_variable = { attitude_nikita < -100 } } set_variable = { attitude_nikita = -100 } }
+
+		set_temp_variable = { mcksp_tmp_bx = -1 } set_temp_variable = { mcksp_tmp_by = -4 } MCKSP_calc_manhattan = yes
+		set_variable = { attitude_arseny = 80 } set_temp_variable = { mcksp_tmp_cost = mcksp_tmp_manh } multiply_temp_variable = { mcksp_tmp_cost = 5 }
+		subtract_from_variable = { attitude_arseny = mcksp_tmp_cost } add_to_variable = { attitude_arseny = attitude_delta_arseny }
+		if = { limit = { check_variable = { attitude_arseny > 100 } } set_variable = { attitude_arseny = 100 } }
+		if = { limit = { check_variable = { attitude_arseny < -100 } } set_variable = { attitude_arseny = -100 } }
+
+		set_temp_variable = { mcksp_tmp_bx = -5 } set_temp_variable = { mcksp_tmp_by = 1 } MCKSP_calc_manhattan = yes
+		set_variable = { attitude_demokrit = 80 } set_temp_variable = { mcksp_tmp_cost = mcksp_tmp_manh } multiply_temp_variable = { mcksp_tmp_cost = 5 }
+		subtract_from_variable = { attitude_demokrit = mcksp_tmp_cost } add_to_variable = { attitude_demokrit = attitude_delta_demokrit }
+		if = { limit = { check_variable = { attitude_demokrit > 100 } } set_variable = { attitude_demokrit = 100 } }
+		if = { limit = { check_variable = { attitude_demokrit < -100 } } set_variable = { attitude_demokrit = -100 } }
+
+		set_temp_variable = { mcksp_tmp_bx = 1 } set_temp_variable = { mcksp_tmp_by = 1 } MCKSP_calc_manhattan = yes
+		set_variable = { attitude_gleb = 80 } set_temp_variable = { mcksp_tmp_cost = mcksp_tmp_manh } multiply_temp_variable = { mcksp_tmp_cost = 5 }
+		subtract_from_variable = { attitude_gleb = mcksp_tmp_cost } add_to_variable = { attitude_gleb = attitude_delta_gleb }
+		if = { limit = { check_variable = { attitude_gleb > 100 } } set_variable = { attitude_gleb = 100 } }
+		if = { limit = { check_variable = { attitude_gleb < -100 } } set_variable = { attitude_gleb = -100 } }
+
+		set_temp_variable = { mcksp_tmp_bx = 2 } set_temp_variable = { mcksp_tmp_by = 2 } MCKSP_calc_manhattan = yes
+		set_variable = { attitude_stepan = 80 } set_temp_variable = { mcksp_tmp_cost = mcksp_tmp_manh } multiply_temp_variable = { mcksp_tmp_cost = 5 }
+		subtract_from_variable = { attitude_stepan = mcksp_tmp_cost } add_to_variable = { attitude_stepan = attitude_delta_stepan }
+		if = { limit = { check_variable = { attitude_stepan > 100 } } set_variable = { attitude_stepan = 100 } }
+		if = { limit = { check_variable = { attitude_stepan < -100 } } set_variable = { attitude_stepan = -100 } }
+
+		set_temp_variable = { mcksp_tmp_bx = 1 } set_temp_variable = { mcksp_tmp_by = 4 } MCKSP_calc_manhattan = yes
+		set_variable = { attitude_ivan = 80 } set_temp_variable = { mcksp_tmp_cost = mcksp_tmp_manh } multiply_temp_variable = { mcksp_tmp_cost = 5 }
+		subtract_from_variable = { attitude_ivan = mcksp_tmp_cost } add_to_variable = { attitude_ivan = attitude_delta_ivan }
+		if = { limit = { check_variable = { attitude_ivan > 100 } } set_variable = { attitude_ivan = 100 } }
+		if = { limit = { check_variable = { attitude_ivan < -100 } } set_variable = { attitude_ivan = -100 } }
+
+		set_temp_variable = { mcksp_tmp_bx = 2 } set_temp_variable = { mcksp_tmp_by = 6 } MCKSP_calc_manhattan = yes
+		set_variable = { attitude_ilya = 80 } set_temp_variable = { mcksp_tmp_cost = mcksp_tmp_manh } multiply_temp_variable = { mcksp_tmp_cost = 5 }
+		subtract_from_variable = { attitude_ilya = mcksp_tmp_cost } add_to_variable = { attitude_ilya = attitude_delta_ilya }
+		if = { limit = { check_variable = { attitude_ilya > 100 } } set_variable = { attitude_ilya = 100 } }
+		if = { limit = { check_variable = { attitude_ilya < -100 } } set_variable = { attitude_ilya = -100 } }
+
+		set_temp_variable = { mcksp_tmp_bx = 4 } set_temp_variable = { mcksp_tmp_by = 8 } MCKSP_calc_manhattan = yes
+		set_variable = { attitude_evgeny = 80 } set_temp_variable = { mcksp_tmp_cost = mcksp_tmp_manh } multiply_temp_variable = { mcksp_tmp_cost = 5 }
+		subtract_from_variable = { attitude_evgeny = mcksp_tmp_cost } add_to_variable = { attitude_evgeny = attitude_delta_evgeny }
+		if = { limit = { check_variable = { attitude_evgeny > 100 } } set_variable = { attitude_evgeny = 100 } }
+		if = { limit = { check_variable = { attitude_evgeny < -100 } } set_variable = { attitude_evgeny = -100 } }
+
+		set_temp_variable = { mcksp_tmp_bx = -4 } set_temp_variable = { mcksp_tmp_by = -2 } MCKSP_calc_manhattan = yes
+		set_variable = { attitude_artem = 80 } set_temp_variable = { mcksp_tmp_cost = mcksp_tmp_manh } multiply_temp_variable = { mcksp_tmp_cost = 5 }
+		subtract_from_variable = { attitude_artem = mcksp_tmp_cost } add_to_variable = { attitude_artem = attitude_delta_artem }
+		if = { limit = { check_variable = { attitude_artem > 100 } } set_variable = { attitude_artem = 100 } }
+		if = { limit = { check_variable = { attitude_artem < -100 } } set_variable = { attitude_artem = -100 } }
+
+		set_temp_variable = { mcksp_tmp_bx = -3 } set_temp_variable = { mcksp_tmp_by = 5 } MCKSP_calc_manhattan = yes
+		set_variable = { attitude_ilgam = 80 } set_temp_variable = { mcksp_tmp_cost = mcksp_tmp_manh } multiply_temp_variable = { mcksp_tmp_cost = 5 }
+		subtract_from_variable = { attitude_ilgam = mcksp_tmp_cost } add_to_variable = { attitude_ilgam = attitude_delta_ilgam }
+		if = { limit = { check_variable = { attitude_ilgam > 100 } } set_variable = { attitude_ilgam = 100 } }
+		if = { limit = { check_variable = { attitude_ilgam < -100 } } set_variable = { attitude_ilgam = -100 } }
+	}
+}
+
+# ----------------------------------------------------------------------------
+# Фаза 0: выбор фракции кликом по ядру на компасе.
+# ----------------------------------------------------------------------------
+MCKSP_pick_faction_reformers = {
+	set_variable = { player_coalition = 1 }
+	set_variable = { player_self = 1 }
+	set_country_flag = SOV_player_core_reformers
+	MCKSP_struggle_enter_phase1 = yes
+}
+MCKSP_pick_faction_statists = {
+	set_variable = { player_coalition = 2 }
+	set_variable = { player_self = 8 }
+	set_country_flag = SOV_player_core_statists
+	MCKSP_struggle_enter_phase1 = yes
+}
+MCKSP_pick_faction_centrists = {
+	set_variable = { player_coalition = 3 }
+	set_variable = { player_self = 5 }
+	set_country_flag = SOV_player_core_centrists
+	MCKSP_struggle_enter_phase1 = yes
+}
+MCKSP_pick_faction_socialists = {
+	set_variable = { player_coalition = 4 }
+	set_variable = { player_self = 3 }
+	set_country_flag = SOV_player_core_socialists
+	MCKSP_struggle_enter_phase1 = yes
+}
+
+# ----------------------------------------------------------------------------
+# Сдвиг "я" внутри своей коалиции (фаза 1). Коалиция не меняется.
+# ----------------------------------------------------------------------------
+MCKSP_set_player_self_to_nikita   = { if = { limit = { check_variable = { coalition_of_nikita = player_coalition } }   set_variable = { player_self = 1 }  MCKSP_recompute_attitudes = yes } }
+MCKSP_set_player_self_to_arseny   = { if = { limit = { check_variable = { coalition_of_arseny = player_coalition } }   set_variable = { player_self = 2 }  MCKSP_recompute_attitudes = yes } }
+MCKSP_set_player_self_to_demokrit = { if = { limit = { check_variable = { coalition_of_demokrit = player_coalition } } set_variable = { player_self = 3 }  MCKSP_recompute_attitudes = yes } }
+MCKSP_set_player_self_to_gleb     = { if = { limit = { check_variable = { coalition_of_gleb = player_coalition } }     set_variable = { player_self = 4 }  MCKSP_recompute_attitudes = yes } }
+MCKSP_set_player_self_to_stepan   = { if = { limit = { check_variable = { coalition_of_stepan = player_coalition } }   set_variable = { player_self = 5 }  MCKSP_recompute_attitudes = yes } }
+MCKSP_set_player_self_to_ivan     = { if = { limit = { check_variable = { coalition_of_ivan = player_coalition } }     set_variable = { player_self = 6 }  MCKSP_recompute_attitudes = yes } }
+MCKSP_set_player_self_to_ilya     = { if = { limit = { check_variable = { coalition_of_ilya = player_coalition } }     set_variable = { player_self = 7 }  MCKSP_recompute_attitudes = yes } }
+MCKSP_set_player_self_to_evgeny   = { if = { limit = { check_variable = { coalition_of_evgeny = player_coalition } }   set_variable = { player_self = 8 }  MCKSP_recompute_attitudes = yes } }
+MCKSP_set_player_self_to_artem    = { if = { limit = { check_variable = { coalition_of_artem = player_coalition } }    set_variable = { player_self = 9 }  MCKSP_recompute_attitudes = yes } }
+MCKSP_set_player_self_to_ilgam    = { if = { limit = { check_variable = { coalition_of_ilgam = player_coalition } }    set_variable = { player_self = 10 } MCKSP_recompute_attitudes = yes } }
+
+# ----------------------------------------------------------------------------
+# Расчёт цен приглашений (PP) и достижимости — на входе в фазу 1 и при сдвиге "я".
+# manhattan от player_self до кандидата: cost = base + step*manh.
+# ----------------------------------------------------------------------------
+MCKSP_compute_invite_costs = {
+	MCKSP_load_coords_of_player = yes
+
+	set_temp_variable = { mcksp_tmp_bx = -1 } set_temp_variable = { mcksp_tmp_by = -4 }
+	MCKSP_calc_dist2 = yes
+	if = { limit = { check_variable = { mcksp_tmp_dist2 < 101 } } set_variable = { mcksp_reachable_arseny = 1 } } else = { set_variable = { mcksp_reachable_arseny = 0 } }
+	MCKSP_calc_manhattan = yes
+	set_variable = { mcksp_invite_cost_arseny = 40 } set_temp_variable = { mcksp_tmp_cost = mcksp_tmp_manh } multiply_temp_variable = { mcksp_tmp_cost = 15 } add_to_variable = { mcksp_invite_cost_arseny = mcksp_tmp_cost }
+
+	set_temp_variable = { mcksp_tmp_bx = 1 } set_temp_variable = { mcksp_tmp_by = 1 }
+	MCKSP_calc_dist2 = yes
+	if = { limit = { check_variable = { mcksp_tmp_dist2 < 101 } } set_variable = { mcksp_reachable_gleb = 1 } } else = { set_variable = { mcksp_reachable_gleb = 0 } }
+	MCKSP_calc_manhattan = yes
+	set_variable = { mcksp_invite_cost_gleb = 40 } set_temp_variable = { mcksp_tmp_cost = mcksp_tmp_manh } multiply_temp_variable = { mcksp_tmp_cost = 15 } add_to_variable = { mcksp_invite_cost_gleb = mcksp_tmp_cost }
+
+	set_temp_variable = { mcksp_tmp_bx = 1 } set_temp_variable = { mcksp_tmp_by = 4 }
+	MCKSP_calc_dist2 = yes
+	if = { limit = { check_variable = { mcksp_tmp_dist2 < 101 } } set_variable = { mcksp_reachable_ivan = 1 } } else = { set_variable = { mcksp_reachable_ivan = 0 } }
+	MCKSP_calc_manhattan = yes
+	set_variable = { mcksp_invite_cost_ivan = 40 } set_temp_variable = { mcksp_tmp_cost = mcksp_tmp_manh } multiply_temp_variable = { mcksp_tmp_cost = 15 } add_to_variable = { mcksp_invite_cost_ivan = mcksp_tmp_cost }
+
+	set_temp_variable = { mcksp_tmp_bx = 2 } set_temp_variable = { mcksp_tmp_by = 6 }
+	MCKSP_calc_dist2 = yes
+	if = { limit = { check_variable = { mcksp_tmp_dist2 < 101 } } set_variable = { mcksp_reachable_ilya = 1 } } else = { set_variable = { mcksp_reachable_ilya = 0 } }
+	MCKSP_calc_manhattan = yes
+	set_variable = { mcksp_invite_cost_ilya = 40 } set_temp_variable = { mcksp_tmp_cost = mcksp_tmp_manh } multiply_temp_variable = { mcksp_tmp_cost = 15 } add_to_variable = { mcksp_invite_cost_ilya = mcksp_tmp_cost }
+
+	set_temp_variable = { mcksp_tmp_bx = -4 } set_temp_variable = { mcksp_tmp_by = -2 }
+	MCKSP_calc_dist2 = yes
+	if = { limit = { check_variable = { mcksp_tmp_dist2 < 101 } } set_variable = { mcksp_reachable_artem = 1 } } else = { set_variable = { mcksp_reachable_artem = 0 } }
+	MCKSP_calc_manhattan = yes
+	set_variable = { mcksp_invite_cost_artem = 40 } set_temp_variable = { mcksp_tmp_cost = mcksp_tmp_manh } multiply_temp_variable = { mcksp_tmp_cost = 15 } add_to_variable = { mcksp_invite_cost_artem = mcksp_tmp_cost }
+
+	set_temp_variable = { mcksp_tmp_bx = -3 } set_temp_variable = { mcksp_tmp_by = 5 }
+	MCKSP_calc_dist2 = yes
+	if = { limit = { check_variable = { mcksp_tmp_dist2 < 101 } } set_variable = { mcksp_reachable_ilgam = 1 } } else = { set_variable = { mcksp_reachable_ilgam = 0 } }
+	MCKSP_calc_manhattan = yes
+	set_variable = { mcksp_invite_cost_ilgam = 40 } set_temp_variable = { mcksp_tmp_cost = mcksp_tmp_manh } multiply_temp_variable = { mcksp_tmp_cost = 15 } add_to_variable = { mcksp_invite_cost_ilgam = mcksp_tmp_cost }
+}
+
+# ----------------------------------------------------------------------------
+# Переходы фаз. SOV_factional_struggle_active ставится в activate_guests_system.
+# ----------------------------------------------------------------------------
+MCKSP_struggle_enter_phase1 = {
+	set_variable = { mcksp_struggle_phase = 1 }
+	# Стартовая задержка вербовки ИИ (~6 недель ≈ 42 дня до первого сторонника).
+	set_variable = { recruit_cooldown_1 = 6 }
+	set_variable = { recruit_cooldown_2 = 6 }
+	set_variable = { recruit_cooldown_3 = 6 }
+	set_variable = { recruit_cooldown_4 = 6 }
+	MCKSP_sync_phase_flags = yes
+	MCKSP_compute_invite_costs = yes
+	MCKSP_recompute_sizes = yes
+	MCKSP_recompute_attitudes = yes
+}
+MCKSP_struggle_enter_phase2 = {
+	MCKSP_pick_leader_targets = yes
+	set_variable = { mcksp_struggle_phase = 2 }
+	# Стартовая задержка пуша лидера ИИ (~6 недель ≈ 42 дня, КД как у вербовки).
+	set_variable = { push_cooldown_1 = 6 }
+	set_variable = { push_cooldown_2 = 6 }
+	set_variable = { push_cooldown_3 = 6 }
+	set_variable = { push_cooldown_4 = 6 }
+	MCKSP_sync_phase_flags = yes
+	MCKSP_publish_coalition_pops = yes
+}
+MCKSP_struggle_enter_phase3 = {
+	set_variable = { mcksp_struggle_phase = 3 }
+	MCKSP_sync_phase_flags = yes
+	MCKSP_publish_coalition_pops = yes
+}
+MCKSP_struggle_enter_phase4 = {
+	set_variable = { mcksp_struggle_phase = 4 }
+	MCKSP_sync_phase_flags = yes
+	set_country_flag = mcksp_struggle_endgame
+	MCKSP_publish_coalition_pops = yes
+}
+
+MCKSP_sync_phase_flags = {
+	clr_country_flag = mcksp_phase_0
+	clr_country_flag = mcksp_phase_1
+	clr_country_flag = mcksp_phase_2
+	clr_country_flag = mcksp_phase_3
+	clr_country_flag = mcksp_phase_4
+	if = { limit = { check_variable = { mcksp_struggle_phase = 0 } } set_country_flag = mcksp_phase_0 }
+	else_if = { limit = { check_variable = { mcksp_struggle_phase = 1 } } set_country_flag = mcksp_phase_1 }
+	else_if = { limit = { check_variable = { mcksp_struggle_phase = 2 } } set_country_flag = mcksp_phase_2 }
+	else_if = { limit = { check_variable = { mcksp_struggle_phase = 3 } } set_country_flag = mcksp_phase_3 }
+	else_if = { limit = { check_variable = { mcksp_struggle_phase = 4 } } set_country_flag = mcksp_phase_4 }
+}
+
+# ----------------------------------------------------------------------------
+# Полный сброс борьбы в фазу 0 (DEBUG).
+# ----------------------------------------------------------------------------
+MCKSP_reset_struggle = {
+	set_variable = { mcksp_struggle_phase = 0 }
+	set_variable = { player_coalition = 0 }
+	set_variable = { player_self = 0 }
+	set_variable = { winning_coalition = 0 }
+	set_variable = { winning_leader = 0 }
+	clr_country_flag = SOV_player_core_reformers
+	clr_country_flag = SOV_player_core_statists
+	clr_country_flag = SOV_player_core_centrists
+	clr_country_flag = SOV_player_core_socialists
+	clr_country_flag = mcksp_struggle_endgame
+	set_variable = { coalition_of_nikita = 1 }
+	set_variable = { coalition_of_evgeny = 2 }
+	set_variable = { coalition_of_stepan = 3 }
+	set_variable = { coalition_of_demokrit = 4 }
+	set_variable = { coalition_of_arseny = 0 }
+	set_variable = { coalition_of_gleb = 0 }
+	set_variable = { coalition_of_ivan = 0 }
+	set_variable = { coalition_of_ilya = 0 }
+	set_variable = { coalition_of_artem = 0 }
+	set_variable = { coalition_of_ilgam = 0 }
+	set_variable = { recruit_cooldown_1 = 0 }
+	set_variable = { recruit_cooldown_2 = 0 }
+	set_variable = { recruit_cooldown_3 = 0 }
+	set_variable = { recruit_cooldown_4 = 0 }
+	MCKSP_recompute_sizes = yes
+	MCKSP_sync_phase_flags = yes
+}
+
+# ----------------------------------------------------------------------------
+# Фаза 2: ИИ-коалиции пушат своих лидер-таргетов (иначе игрок побеждает даром).
+# ~50% недель на коалицию: промоут лидера + серый инфо-decision на КД.
+# ----------------------------------------------------------------------------
+MCKSP_phase2_ai_tick = {
+	MCKSP_ai_push_coalition_1 = yes
+	MCKSP_ai_push_coalition_2 = yes
+	MCKSP_ai_push_coalition_3 = yes
+	MCKSP_ai_push_coalition_4 = yes
+	MCKSP_decrement_push_cooldowns = yes
+}
+MCKSP_decrement_push_cooldowns = {
+	if = { limit = { check_variable = { push_cooldown_1 > 0 } } subtract_from_variable = { push_cooldown_1 = 1 } }
+	if = { limit = { check_variable = { push_cooldown_2 > 0 } } subtract_from_variable = { push_cooldown_2 = 1 } }
+	if = { limit = { check_variable = { push_cooldown_3 > 0 } } subtract_from_variable = { push_cooldown_3 = 1 } }
+	if = { limit = { check_variable = { push_cooldown_4 > 0 } } subtract_from_variable = { push_cooldown_4 = 1 } }
+}
+MCKSP_ai_promote_leader = {
+	# Промоутит гостя с id = mcksp_tmp_leader (лидер-таргет коалиции).
+	if = { limit = { check_variable = { mcksp_tmp_leader = 1 } } MCKSP_promote_nikita = yes }
+	else_if = { limit = { check_variable = { mcksp_tmp_leader = 2 } } MCKSP_promote_arseny = yes }
+	else_if = { limit = { check_variable = { mcksp_tmp_leader = 3 } } MCKSP_promote_demokrit = yes }
+	else_if = { limit = { check_variable = { mcksp_tmp_leader = 4 } } MCKSP_promote_gleb = yes }
+	else_if = { limit = { check_variable = { mcksp_tmp_leader = 5 } } MCKSP_promote_stepan = yes }
+	else_if = { limit = { check_variable = { mcksp_tmp_leader = 6 } } MCKSP_promote_ivan = yes }
+	else_if = { limit = { check_variable = { mcksp_tmp_leader = 7 } } MCKSP_promote_ilya = yes }
+	else_if = { limit = { check_variable = { mcksp_tmp_leader = 8 } } MCKSP_promote_evgeny = yes }
+	else_if = { limit = { check_variable = { mcksp_tmp_leader = 9 } } MCKSP_promote_artem = yes }
+	else_if = { limit = { check_variable = { mcksp_tmp_leader = 10 } } MCKSP_promote_ilgam = yes }
+}
+MCKSP_ai_push_coalition_1 = {
+	if = {
+		limit = { NOT = { check_variable = { player_coalition = 1 } } check_variable = { push_cooldown_1 = 0 } }
+		set_temp_variable = { mcksp_tmp_leader = leader_target_1 }
+		MCKSP_ai_promote_leader = yes
+		set_country_flag = mcksp_rival_push_1
+		activate_decision = SOV_struggle_rival_push_reformers
+		set_variable = { push_cooldown_1 = 6 }
+	}
+}
+MCKSP_ai_push_coalition_2 = {
+	if = {
+		limit = { NOT = { check_variable = { player_coalition = 2 } } check_variable = { push_cooldown_2 = 0 } }
+		set_temp_variable = { mcksp_tmp_leader = leader_target_2 }
+		MCKSP_ai_promote_leader = yes
+		set_country_flag = mcksp_rival_push_2
+		activate_decision = SOV_struggle_rival_push_statists
+		set_variable = { push_cooldown_2 = 6 }
+	}
+}
+MCKSP_ai_push_coalition_3 = {
+	if = {
+		limit = { NOT = { check_variable = { player_coalition = 3 } } check_variable = { push_cooldown_3 = 0 } }
+		set_temp_variable = { mcksp_tmp_leader = leader_target_3 }
+		MCKSP_ai_promote_leader = yes
+		set_country_flag = mcksp_rival_push_3
+		activate_decision = SOV_struggle_rival_push_centrists
+		set_variable = { push_cooldown_3 = 6 }
+	}
+}
+MCKSP_ai_push_coalition_4 = {
+	if = {
+		limit = { NOT = { check_variable = { player_coalition = 4 } } check_variable = { push_cooldown_4 = 0 } }
+		set_temp_variable = { mcksp_tmp_leader = leader_target_4 }
+		MCKSP_ai_promote_leader = yes
+		set_country_flag = mcksp_rival_push_4
+		activate_decision = SOV_struggle_rival_push_socialists
+		set_variable = { push_cooldown_4 = 6 }
+	}
+}

@@ -1,0 +1,69 @@
+###############################################################################
+#  MCKSP — Фракционная борьба: статические константы
+#  Файл: common/scripted_variables/MCKSP_struggle_vars.txt
+#
+#  scripted_variables читаются как числовые токены в любом контексте
+#  (set_temp_variable, check_variable, add_popularity и т.п.). Строк/имён групп
+#  тут быть не может — связь guest-id<->группа делается if/else в эффектах.
+#
+#  КАНОНИЧЕСКАЯ нумерация гостей = кадры compass_dot_strip / ideo_symbols:
+#    1 nikita  2 arseny  3 demokrit  4 gleb  5 stepan
+#    6 ivan    7 ilya    8 evgeny    9 artem 10 ilgam
+#  Ядра коалиций: 1=реформисты(nikita) 2=статисты(evgeny) 3=центристы(stepan)
+#                 4=социалисты(demokrit).
+###############################################################################
+
+# --- Логические координаты (эко, соц) каждого гостя ---
+# Обратно из хардкод dot_<name> в interface/MCKSP_political_compass.gui:
+#   эко = (dot.x - 294) / 18 ; соц = (243 - dot.y) / 18
+mcksp_eco_nikita   = -2
+mcksp_soc_nikita   = -5
+mcksp_eco_arseny   = -1
+mcksp_soc_arseny   = -4
+mcksp_eco_demokrit = -5
+mcksp_soc_demokrit = 1
+mcksp_eco_gleb     = 1
+mcksp_soc_gleb     = 1
+mcksp_eco_stepan   = 2
+mcksp_soc_stepan   = 2
+mcksp_eco_ivan     = 1
+mcksp_soc_ivan     = 4
+mcksp_eco_ilya     = 2
+mcksp_soc_ilya     = 6
+mcksp_eco_evgeny   = 4
+mcksp_soc_evgeny   = 8
+mcksp_eco_artem    = -4
+mcksp_soc_artem    = -2
+mcksp_eco_ilgam    = -3
+mcksp_soc_ilgam    = 5
+
+# --- guest-id ядра каждой коалиции (1..4) ---
+mcksp_core_guest_1 = 1   # реформисты -> nikita
+mcksp_core_guest_2 = 8   # статисты   -> evgeny
+mcksp_core_guest_3 = 5   # центристы  -> stepan
+mcksp_core_guest_4 = 3   # социалисты -> demokrit
+
+# --- Пороги дистанции (в КВАДРАТЕ, евклид; sqrt в скрипте нет) ---
+# d^2 < reach -> точка достижима ядром; d^2 < close -> близкая (тройной вес).
+mcksp_reach_dist2_max = 101
+mcksp_close_dist2     = 17
+
+# --- Стоимость приглашений (PP): cost = base + step * манхэттен-дистанция ---
+mcksp_invite_base_pp = 40
+mcksp_invite_step_pp = 15
+
+# --- Темп/случайность авто-вербовки ---
+mcksp_recruit_cooldown = 2   # недель между попытками ядра
+
+# --- Сцепка с доверием Сталина (1% = 0.01) ---
+mcksp_trust_recruit_gain  = 0.03
+mcksp_trust_promote_gain  = 0.02
+mcksp_trust_slander_loss  = 0.05
+
+# --- Популярность: шаги продвижения/клеветы ---
+mcksp_promote_p_step   = 1      # очко в p_<name>
+mcksp_promote_pop_step = 0.01   # доля ванильной популярности (тянет из коммунизма)
+
+# --- Отношение к игроку: base - dist*scale + событийная дельта ---
+mcksp_attitude_base       = 80
+mcksp_attitude_dist_scale = 5
