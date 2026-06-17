@@ -1,0 +1,187 @@
+###############################################################################
+#  MCKSP — Фракционная борьба: scripted_localisation для текста инфо-решений
+#  Файл: common/scripted_localisation/MCKSP_struggle_scripted_loc.txt
+#
+#  Индекс гостя/коалиции (число) -> имя (локаль-ключ). Нужно, т.к. [?var] печатает
+#  только число, а в desc решений нужно имя. Работает в decision desc (ограничение
+#  «scripted_loc не работает» касается ТОЛЬКО ideology-локалей, не решений).
+#  Первый text с истинным trigger побеждает; последний (always) — фолбэк.
+#
+#  Индексы гостей: 1 nikita 2 arseny 3 demokrit 4 gleb 5 stepan 6 ivan 7 ilya
+#  8 evgeny 9 artem 10 ilgam. Коалиции: 1 реформисты 2 государственники
+#  3 центристы 4 социалисты. coalition_leader_<k> считается в MCKSP_publish_coalition_pops.
+###############################################################################
+
+defined_text = {
+	name = GetLeaderReformers
+	text = { trigger = { check_variable = { coalition_leader_1 = 1 } }  localization_key = SOV_nikita_iakushin }
+	text = { trigger = { check_variable = { coalition_leader_1 = 2 } }  localization_key = SOV_arseny_pavlov }
+	text = { trigger = { check_variable = { coalition_leader_1 = 3 } }  localization_key = SOV_demokrit_ikonomidi }
+	text = { trigger = { check_variable = { coalition_leader_1 = 4 } }  localization_key = SOV_gleb_rychkov }
+	text = { trigger = { check_variable = { coalition_leader_1 = 5 } }  localization_key = SOV_stepan_pavlov }
+	text = { trigger = { check_variable = { coalition_leader_1 = 6 } }  localization_key = SOV_ivan_danchenko }
+	text = { trigger = { check_variable = { coalition_leader_1 = 7 } }  localization_key = SOV_ilya_popov }
+	text = { trigger = { check_variable = { coalition_leader_1 = 8 } }  localization_key = SOV_evgeny_okeanov }
+	text = { trigger = { check_variable = { coalition_leader_1 = 9 } }  localization_key = SOV_artem_ayusheev }
+	text = { trigger = { check_variable = { coalition_leader_1 = 10 } } localization_key = SOV_ilgam_fagamanov }
+	text = { trigger = { always = yes } localization_key = MCKSP_coal_empty }
+}
+
+defined_text = {
+	name = GetLeaderStatists
+	text = { trigger = { check_variable = { coalition_leader_2 = 1 } }  localization_key = SOV_nikita_iakushin }
+	text = { trigger = { check_variable = { coalition_leader_2 = 2 } }  localization_key = SOV_arseny_pavlov }
+	text = { trigger = { check_variable = { coalition_leader_2 = 3 } }  localization_key = SOV_demokrit_ikonomidi }
+	text = { trigger = { check_variable = { coalition_leader_2 = 4 } }  localization_key = SOV_gleb_rychkov }
+	text = { trigger = { check_variable = { coalition_leader_2 = 5 } }  localization_key = SOV_stepan_pavlov }
+	text = { trigger = { check_variable = { coalition_leader_2 = 6 } }  localization_key = SOV_ivan_danchenko }
+	text = { trigger = { check_variable = { coalition_leader_2 = 7 } }  localization_key = SOV_ilya_popov }
+	text = { trigger = { check_variable = { coalition_leader_2 = 8 } }  localization_key = SOV_evgeny_okeanov }
+	text = { trigger = { check_variable = { coalition_leader_2 = 9 } }  localization_key = SOV_artem_ayusheev }
+	text = { trigger = { check_variable = { coalition_leader_2 = 10 } } localization_key = SOV_ilgam_fagamanov }
+	text = { trigger = { always = yes } localization_key = MCKSP_coal_empty }
+}
+
+defined_text = {
+	name = GetLeaderCentrists
+	text = { trigger = { check_variable = { coalition_leader_3 = 1 } }  localization_key = SOV_nikita_iakushin }
+	text = { trigger = { check_variable = { coalition_leader_3 = 2 } }  localization_key = SOV_arseny_pavlov }
+	text = { trigger = { check_variable = { coalition_leader_3 = 3 } }  localization_key = SOV_demokrit_ikonomidi }
+	text = { trigger = { check_variable = { coalition_leader_3 = 4 } }  localization_key = SOV_gleb_rychkov }
+	text = { trigger = { check_variable = { coalition_leader_3 = 5 } }  localization_key = SOV_stepan_pavlov }
+	text = { trigger = { check_variable = { coalition_leader_3 = 6 } }  localization_key = SOV_ivan_danchenko }
+	text = { trigger = { check_variable = { coalition_leader_3 = 7 } }  localization_key = SOV_ilya_popov }
+	text = { trigger = { check_variable = { coalition_leader_3 = 8 } }  localization_key = SOV_evgeny_okeanov }
+	text = { trigger = { check_variable = { coalition_leader_3 = 9 } }  localization_key = SOV_artem_ayusheev }
+	text = { trigger = { check_variable = { coalition_leader_3 = 10 } } localization_key = SOV_ilgam_fagamanov }
+	text = { trigger = { always = yes } localization_key = MCKSP_coal_empty }
+}
+
+defined_text = {
+	name = GetLeaderSocialists
+	text = { trigger = { check_variable = { coalition_leader_4 = 1 } }  localization_key = SOV_nikita_iakushin }
+	text = { trigger = { check_variable = { coalition_leader_4 = 2 } }  localization_key = SOV_arseny_pavlov }
+	text = { trigger = { check_variable = { coalition_leader_4 = 3 } }  localization_key = SOV_demokrit_ikonomidi }
+	text = { trigger = { check_variable = { coalition_leader_4 = 4 } }  localization_key = SOV_gleb_rychkov }
+	text = { trigger = { check_variable = { coalition_leader_4 = 5 } }  localization_key = SOV_stepan_pavlov }
+	text = { trigger = { check_variable = { coalition_leader_4 = 6 } }  localization_key = SOV_ivan_danchenko }
+	text = { trigger = { check_variable = { coalition_leader_4 = 7 } }  localization_key = SOV_ilya_popov }
+	text = { trigger = { check_variable = { coalition_leader_4 = 8 } }  localization_key = SOV_evgeny_okeanov }
+	text = { trigger = { check_variable = { coalition_leader_4 = 9 } }  localization_key = SOV_artem_ayusheev }
+	text = { trigger = { check_variable = { coalition_leader_4 = 10 } } localization_key = SOV_ilgam_fagamanov }
+	text = { trigger = { always = yes } localization_key = MCKSP_coal_empty }
+}
+
+defined_text = {
+	name = GetWinningLeader
+	text = { trigger = { check_variable = { winning_leader = 1 } }  localization_key = SOV_nikita_iakushin }
+	text = { trigger = { check_variable = { winning_leader = 2 } }  localization_key = SOV_arseny_pavlov }
+	text = { trigger = { check_variable = { winning_leader = 3 } }  localization_key = SOV_demokrit_ikonomidi }
+	text = { trigger = { check_variable = { winning_leader = 4 } }  localization_key = SOV_gleb_rychkov }
+	text = { trigger = { check_variable = { winning_leader = 5 } }  localization_key = SOV_stepan_pavlov }
+	text = { trigger = { check_variable = { winning_leader = 6 } }  localization_key = SOV_ivan_danchenko }
+	text = { trigger = { check_variable = { winning_leader = 7 } }  localization_key = SOV_ilya_popov }
+	text = { trigger = { check_variable = { winning_leader = 8 } }  localization_key = SOV_evgeny_okeanov }
+	text = { trigger = { check_variable = { winning_leader = 9 } }  localization_key = SOV_artem_ayusheev }
+	text = { trigger = { check_variable = { winning_leader = 10 } } localization_key = SOV_ilgam_fagamanov }
+	text = { trigger = { always = yes } localization_key = MCKSP_coal_empty }
+}
+
+defined_text = {
+	name = GetPlayerCoalition
+	text = { trigger = { check_variable = { player_coalition = 1 } } localization_key = MCKSP_COAL_REFORMERS }
+	text = { trigger = { check_variable = { player_coalition = 2 } } localization_key = MCKSP_COAL_STATISTS }
+	text = { trigger = { check_variable = { player_coalition = 3 } } localization_key = MCKSP_COAL_CENTRISTS }
+	text = { trigger = { check_variable = { player_coalition = 4 } } localization_key = MCKSP_COAL_SOCIALISTS }
+	text = { trigger = { always = yes } localization_key = MCKSP_coal_neutral }
+}
+
+defined_text = {
+	name = GetWinningCoalition
+	text = { trigger = { check_variable = { winning_coalition = 1 } } localization_key = MCKSP_COAL_REFORMERS }
+	text = { trigger = { check_variable = { winning_coalition = 2 } } localization_key = MCKSP_COAL_STATISTS }
+	text = { trigger = { check_variable = { winning_coalition = 3 } } localization_key = MCKSP_COAL_CENTRISTS }
+	text = { trigger = { check_variable = { winning_coalition = 4 } } localization_key = MCKSP_COAL_SOCIALISTS }
+	text = { trigger = { always = yes } localization_key = MCKSP_coal_empty }
+}
+
+defined_text = {
+	name = GetCoalOfNikita
+	text = { trigger = { check_variable = { coalition_of_nikita = 1 } } localization_key = MCKSP_COAL_REFORMERS }
+	text = { trigger = { check_variable = { coalition_of_nikita = 2 } } localization_key = MCKSP_COAL_STATISTS }
+	text = { trigger = { check_variable = { coalition_of_nikita = 3 } } localization_key = MCKSP_COAL_CENTRISTS }
+	text = { trigger = { check_variable = { coalition_of_nikita = 4 } } localization_key = MCKSP_COAL_SOCIALISTS }
+	text = { trigger = { always = yes } localization_key = MCKSP_coal_neutral }
+}
+defined_text = {
+	name = GetCoalOfArseny
+	text = { trigger = { check_variable = { coalition_of_arseny = 1 } } localization_key = MCKSP_COAL_REFORMERS }
+	text = { trigger = { check_variable = { coalition_of_arseny = 2 } } localization_key = MCKSP_COAL_STATISTS }
+	text = { trigger = { check_variable = { coalition_of_arseny = 3 } } localization_key = MCKSP_COAL_CENTRISTS }
+	text = { trigger = { check_variable = { coalition_of_arseny = 4 } } localization_key = MCKSP_COAL_SOCIALISTS }
+	text = { trigger = { always = yes } localization_key = MCKSP_coal_neutral }
+}
+defined_text = {
+	name = GetCoalOfDemokrit
+	text = { trigger = { check_variable = { coalition_of_demokrit = 1 } } localization_key = MCKSP_COAL_REFORMERS }
+	text = { trigger = { check_variable = { coalition_of_demokrit = 2 } } localization_key = MCKSP_COAL_STATISTS }
+	text = { trigger = { check_variable = { coalition_of_demokrit = 3 } } localization_key = MCKSP_COAL_CENTRISTS }
+	text = { trigger = { check_variable = { coalition_of_demokrit = 4 } } localization_key = MCKSP_COAL_SOCIALISTS }
+	text = { trigger = { always = yes } localization_key = MCKSP_coal_neutral }
+}
+defined_text = {
+	name = GetCoalOfGleb
+	text = { trigger = { check_variable = { coalition_of_gleb = 1 } } localization_key = MCKSP_COAL_REFORMERS }
+	text = { trigger = { check_variable = { coalition_of_gleb = 2 } } localization_key = MCKSP_COAL_STATISTS }
+	text = { trigger = { check_variable = { coalition_of_gleb = 3 } } localization_key = MCKSP_COAL_CENTRISTS }
+	text = { trigger = { check_variable = { coalition_of_gleb = 4 } } localization_key = MCKSP_COAL_SOCIALISTS }
+	text = { trigger = { always = yes } localization_key = MCKSP_coal_neutral }
+}
+defined_text = {
+	name = GetCoalOfStepan
+	text = { trigger = { check_variable = { coalition_of_stepan = 1 } } localization_key = MCKSP_COAL_REFORMERS }
+	text = { trigger = { check_variable = { coalition_of_stepan = 2 } } localization_key = MCKSP_COAL_STATISTS }
+	text = { trigger = { check_variable = { coalition_of_stepan = 3 } } localization_key = MCKSP_COAL_CENTRISTS }
+	text = { trigger = { check_variable = { coalition_of_stepan = 4 } } localization_key = MCKSP_COAL_SOCIALISTS }
+	text = { trigger = { always = yes } localization_key = MCKSP_coal_neutral }
+}
+defined_text = {
+	name = GetCoalOfIvan
+	text = { trigger = { check_variable = { coalition_of_ivan = 1 } } localization_key = MCKSP_COAL_REFORMERS }
+	text = { trigger = { check_variable = { coalition_of_ivan = 2 } } localization_key = MCKSP_COAL_STATISTS }
+	text = { trigger = { check_variable = { coalition_of_ivan = 3 } } localization_key = MCKSP_COAL_CENTRISTS }
+	text = { trigger = { check_variable = { coalition_of_ivan = 4 } } localization_key = MCKSP_COAL_SOCIALISTS }
+	text = { trigger = { always = yes } localization_key = MCKSP_coal_neutral }
+}
+defined_text = {
+	name = GetCoalOfIlya
+	text = { trigger = { check_variable = { coalition_of_ilya = 1 } } localization_key = MCKSP_COAL_REFORMERS }
+	text = { trigger = { check_variable = { coalition_of_ilya = 2 } } localization_key = MCKSP_COAL_STATISTS }
+	text = { trigger = { check_variable = { coalition_of_ilya = 3 } } localization_key = MCKSP_COAL_CENTRISTS }
+	text = { trigger = { check_variable = { coalition_of_ilya = 4 } } localization_key = MCKSP_COAL_SOCIALISTS }
+	text = { trigger = { always = yes } localization_key = MCKSP_coal_neutral }
+}
+defined_text = {
+	name = GetCoalOfEvgeny
+	text = { trigger = { check_variable = { coalition_of_evgeny = 1 } } localization_key = MCKSP_COAL_REFORMERS }
+	text = { trigger = { check_variable = { coalition_of_evgeny = 2 } } localization_key = MCKSP_COAL_STATISTS }
+	text = { trigger = { check_variable = { coalition_of_evgeny = 3 } } localization_key = MCKSP_COAL_CENTRISTS }
+	text = { trigger = { check_variable = { coalition_of_evgeny = 4 } } localization_key = MCKSP_COAL_SOCIALISTS }
+	text = { trigger = { always = yes } localization_key = MCKSP_coal_neutral }
+}
+defined_text = {
+	name = GetCoalOfArtem
+	text = { trigger = { check_variable = { coalition_of_artem = 1 } } localization_key = MCKSP_COAL_REFORMERS }
+	text = { trigger = { check_variable = { coalition_of_artem = 2 } } localization_key = MCKSP_COAL_STATISTS }
+	text = { trigger = { check_variable = { coalition_of_artem = 3 } } localization_key = MCKSP_COAL_CENTRISTS }
+	text = { trigger = { check_variable = { coalition_of_artem = 4 } } localization_key = MCKSP_COAL_SOCIALISTS }
+	text = { trigger = { always = yes } localization_key = MCKSP_coal_neutral }
+}
+defined_text = {
+	name = GetCoalOfIlgam
+	text = { trigger = { check_variable = { coalition_of_ilgam = 1 } } localization_key = MCKSP_COAL_REFORMERS }
+	text = { trigger = { check_variable = { coalition_of_ilgam = 2 } } localization_key = MCKSP_COAL_STATISTS }
+	text = { trigger = { check_variable = { coalition_of_ilgam = 3 } } localization_key = MCKSP_COAL_CENTRISTS }
+	text = { trigger = { check_variable = { coalition_of_ilgam = 4 } } localization_key = MCKSP_COAL_SOCIALISTS }
+	text = { trigger = { always = yes } localization_key = MCKSP_coal_neutral }
+}

@@ -17,7 +17,16 @@
       "Read(//c/Program Files \\(x86\\)/Steam/steamapps/common/**)",
       "Read(//c/Program Files/Steam/steamapps/common/**)",
       "Read(//d/Steam/steamapps/common/**)",
-      "Read(//e/SteamLibrary/steamapps/common/Hearts of Iron IV/common/bop//**)"
+      "Read(//e/SteamLibrary/steamapps/common/Hearts of Iron IV/common/bop//**)",
+      "mcp__rhoiscribe__discover_hoi4_environment",
+      "mcp__rhoiscribe__validate_hoi4_project",
+      "mcp__rhoiscribe__repair_hoi4_project",
+      "mcp__rhoiscribe__classify_error_log",
+      "mcp__rhoiscribe__search_hoi4_knowledge"
     ]
-  }
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "rhoiscribe"
+  ]
 }

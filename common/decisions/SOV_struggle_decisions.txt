@@ -32,6 +32,37 @@ SOV_MCKSP_struggle_intro_cat = {
 SOV_MCKSP_struggle_cat = {
 
 	# -------------------------------------------------------------------------
+	# ИНФО-СВОДКИ (неклибельные: available=no, cost=0). Текст в name/desc через
+	# [?var] и scripted_loc (GetLeader*/GetCoalOf*). Питаются coalition_pop_*/
+	# coalition_size_*/coalition_leader_*/p_*/attitude_*. priority высокий — сверху.
+	# Заменяют удалённую панель MCKSP_faction_struggle.* (членство — на компасе).
+	# -------------------------------------------------------------------------
+	SOV_struggle_info_coalitions = {
+		icon = GFX_decision_generic_political_discourse
+		visible = { has_country_flag = SOV_factional_struggle_active check_variable = { mcksp_struggle_phase > 1 } }
+		available = { always = no }
+		cost = 0
+		fire_only_once = no
+		priority = 2000
+	}
+	SOV_struggle_info_roster = {
+		icon = GFX_decision_generic_political_discourse
+		visible = { has_country_flag = mcksp_phase_1 }
+		available = { always = no }
+		cost = 0
+		fire_only_once = no
+		priority = 1999
+	}
+	SOV_struggle_info_status = {
+		icon = GFX_decision_generic_political_discourse
+		visible = { OR = { has_country_flag = mcksp_phase_3 has_country_flag = mcksp_phase_4 } }
+		available = { always = no }
+		cost = 0
+		fire_only_once = no
+		priority = 1998
+	}
+
+	# -------------------------------------------------------------------------
 	# ФАЗА 1 — приглашения игрока (6 вербуемых). Цена PP растёт с дистанцией.
 	# Списание — переменной в complete_effect; назначение — в remove_effect
 	# (days_remove = «оффер в полёте», как серые ходы ИИ).

@@ -27,7 +27,7 @@ spriteTypes = {
 	# 00_ideologies.txt. Размер кадра ~14x14.
 	#   1=СДС 214,83,126  Никита    6=АТ «УМА» 52,162,224 Иван
 	#   2=ЛГС 150,125,200 Арсений   7=СГП 55,88,130       Илья
-	#   3=НЭС 224,158,38  Демокрит  8=РДС 122,28,38       Евгений
+	#   3=НЭС 224,158,38  Демокрит  8=РДС 120,72,40       Евгений (коричневый)
 	#   4=БС  130,132,138 Глеб      9=Прогресс 180,200,60 Артём
 	#   5=ХДС 45,145,135  Степан    10=ПФ 170,170,170 (placeholder) Ильгам
 	spriteType = {
@@ -91,7 +91,7 @@ spriteTypes = {
 	# --- Фракционная борьба: оверлеи коалиций на компасе ---
 	# Ореол коалиции вокруг точки-члена. 4 кадра по цвету ядра, мягкий круг
 	# ~48x48 с альфой ~40% (полоска 192x48): 1 reformers(214,83,126)
-	# 2 statists(122,28,38) 3 centrists(45,145,135) 4 socialists(224,158,38).
+	# 2 statists(120,72,40 коричневый) 3 centrists(45,145,135) 4 socialists(224,158,38).
 	# Крупнее точки 14x14 — соседи одной коалиции сливаются в «облако».
 	spriteType = {
 		name = "GFX_MCKSP_compass_coalition_halo"
@@ -109,5 +109,28 @@ spriteTypes = {
 	spriteType = {
 		name = "GFX_MCKSP_legend_gold_overlay"
 		texturefile = "gfx/interface/MCKSP/compass/legend_gold_overlay.dds"
+	}
+
+	# Пульс-ореол на 4 ядрах в фазе 0 — подсказка «кликни ядро, чтобы выбрать
+	# фракцию». Зацикленный анимированный glow (mask=texture=один файл).
+	# Рисует пользователь: мягкий радиальный ореол ~36x36, светлый центр →
+	# прозрачные края, A8R8G8B8. Пульсация — через animation-блок (blend add,
+	# looping). До отрисовки .dds — «texture not found» в логе, не фатально.
+	spriteType = {
+		name = "GFX_MCKSP_core_pulse"
+		texturefile = "gfx/interface/MCKSP/compass/core_pulse.dds"
+		noOfFrames = 1
+		animation = {
+			animationmaskfile    = "gfx/interface/MCKSP/compass/core_pulse.dds"
+			animationtexturefile = "gfx/interface/MCKSP/compass/core_pulse.dds"
+			animationrotation    = 0.0
+			animationlooping     = yes
+			animationtime        = 1.2
+			animationdelay       = 0.0
+			animationblendmode   = "add"
+			animationtype        = "fixed"
+			animationrotationoffset = { x = 0.0 y = 0.0 }
+			animationtexturescale   = { x = 1.0 y = 1.0 }
+		}
 	}
 }

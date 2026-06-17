@@ -589,6 +589,61 @@ MCKSP_publish_coalition_pops = {
 	else_if = { limit = { check_variable = { coalition_of_ilgam = 2 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_placeholder_ilgam } add_to_variable = { coalition_pop_statists = mcksp_tmp_pop } }
 	else_if = { limit = { check_variable = { coalition_of_ilgam = 3 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_placeholder_ilgam } add_to_variable = { coalition_pop_centrists = mcksp_tmp_pop } }
 	else_if = { limit = { check_variable = { coalition_of_ilgam = 4 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_placeholder_ilgam } add_to_variable = { coalition_pop_socialists = mcksp_tmp_pop } }
+
+	# Текущий лидер каждой коалиции = член с макс p_ (для текста инфо-решений).
+	# Индексы гостей: 1 nikita 2 arseny 3 demokrit 4 gleb 5 stepan 6 ivan 7 ilya
+	# 8 evgeny 9 artem 10 ilgam. mcksp_tmp_lead = бегущий максимум (старт -1, p_>=0).
+	set_variable = { coalition_leader_1 = 0 }
+	set_temp_variable = { mcksp_tmp_lead = -1 }
+	if = { limit = { check_variable = { coalition_of_nikita = 1 }   check_variable = { p_nikita > mcksp_tmp_lead } }   set_temp_variable = { mcksp_tmp_lead = p_nikita }   set_variable = { coalition_leader_1 = 1 } }
+	if = { limit = { check_variable = { coalition_of_arseny = 1 }   check_variable = { p_arseny > mcksp_tmp_lead } }   set_temp_variable = { mcksp_tmp_lead = p_arseny }   set_variable = { coalition_leader_1 = 2 } }
+	if = { limit = { check_variable = { coalition_of_demokrit = 1 } check_variable = { p_demokrit > mcksp_tmp_lead } } set_temp_variable = { mcksp_tmp_lead = p_demokrit } set_variable = { coalition_leader_1 = 3 } }
+	if = { limit = { check_variable = { coalition_of_gleb = 1 }     check_variable = { p_gleb > mcksp_tmp_lead } }     set_temp_variable = { mcksp_tmp_lead = p_gleb }     set_variable = { coalition_leader_1 = 4 } }
+	if = { limit = { check_variable = { coalition_of_stepan = 1 }   check_variable = { p_stepan > mcksp_tmp_lead } }   set_temp_variable = { mcksp_tmp_lead = p_stepan }   set_variable = { coalition_leader_1 = 5 } }
+	if = { limit = { check_variable = { coalition_of_ivan = 1 }     check_variable = { p_ivan > mcksp_tmp_lead } }     set_temp_variable = { mcksp_tmp_lead = p_ivan }     set_variable = { coalition_leader_1 = 6 } }
+	if = { limit = { check_variable = { coalition_of_ilya = 1 }     check_variable = { p_ilya > mcksp_tmp_lead } }     set_temp_variable = { mcksp_tmp_lead = p_ilya }     set_variable = { coalition_leader_1 = 7 } }
+	if = { limit = { check_variable = { coalition_of_evgeny = 1 }   check_variable = { p_evgeny > mcksp_tmp_lead } }   set_temp_variable = { mcksp_tmp_lead = p_evgeny }   set_variable = { coalition_leader_1 = 8 } }
+	if = { limit = { check_variable = { coalition_of_artem = 1 }    check_variable = { p_artem > mcksp_tmp_lead } }    set_temp_variable = { mcksp_tmp_lead = p_artem }    set_variable = { coalition_leader_1 = 9 } }
+	if = { limit = { check_variable = { coalition_of_ilgam = 1 }    check_variable = { p_ilgam > mcksp_tmp_lead } }    set_temp_variable = { mcksp_tmp_lead = p_ilgam }    set_variable = { coalition_leader_1 = 10 } }
+
+	set_variable = { coalition_leader_2 = 0 }
+	set_temp_variable = { mcksp_tmp_lead = -1 }
+	if = { limit = { check_variable = { coalition_of_nikita = 2 }   check_variable = { p_nikita > mcksp_tmp_lead } }   set_temp_variable = { mcksp_tmp_lead = p_nikita }   set_variable = { coalition_leader_2 = 1 } }
+	if = { limit = { check_variable = { coalition_of_arseny = 2 }   check_variable = { p_arseny > mcksp_tmp_lead } }   set_temp_variable = { mcksp_tmp_lead = p_arseny }   set_variable = { coalition_leader_2 = 2 } }
+	if = { limit = { check_variable = { coalition_of_demokrit = 2 } check_variable = { p_demokrit > mcksp_tmp_lead } } set_temp_variable = { mcksp_tmp_lead = p_demokrit } set_variable = { coalition_leader_2 = 3 } }
+	if = { limit = { check_variable = { coalition_of_gleb = 2 }     check_variable = { p_gleb > mcksp_tmp_lead } }     set_temp_variable = { mcksp_tmp_lead = p_gleb }     set_variable = { coalition_leader_2 = 4 } }
+	if = { limit = { check_variable = { coalition_of_stepan = 2 }   check_variable = { p_stepan > mcksp_tmp_lead } }   set_temp_variable = { mcksp_tmp_lead = p_stepan }   set_variable = { coalition_leader_2 = 5 } }
+	if = { limit = { check_variable = { coalition_of_ivan = 2 }     check_variable = { p_ivan > mcksp_tmp_lead } }     set_temp_variable = { mcksp_tmp_lead = p_ivan }     set_variable = { coalition_leader_2 = 6 } }
+	if = { limit = { check_variable = { coalition_of_ilya = 2 }     check_variable = { p_ilya > mcksp_tmp_lead } }     set_temp_variable = { mcksp_tmp_lead = p_ilya }     set_variable = { coalition_leader_2 = 7 } }
+	if = { limit = { check_variable = { coalition_of_evgeny = 2 }   check_variable = { p_evgeny > mcksp_tmp_lead } }   set_temp_variable = { mcksp_tmp_lead = p_evgeny }   set_variable = { coalition_leader_2 = 8 } }
+	if = { limit = { check_variable = { coalition_of_artem = 2 }    check_variable = { p_artem > mcksp_tmp_lead } }    set_temp_variable = { mcksp_tmp_lead = p_artem }    set_variable = { coalition_leader_2 = 9 } }
+	if = { limit = { check_variable = { coalition_of_ilgam = 2 }    check_variable = { p_ilgam > mcksp_tmp_lead } }    set_temp_variable = { mcksp_tmp_lead = p_ilgam }    set_variable = { coalition_leader_2 = 10 } }
+
+	set_variable = { coalition_leader_3 = 0 }
+	set_temp_variable = { mcksp_tmp_lead = -1 }
+	if = { limit = { check_variable = { coalition_of_nikita = 3 }   check_variable = { p_nikita > mcksp_tmp_lead } }   set_temp_variable = { mcksp_tmp_lead = p_nikita }   set_variable = { coalition_leader_3 = 1 } }
+	if = { limit = { check_variable = { coalition_of_arseny = 3 }   check_variable = { p_arseny > mcksp_tmp_lead } }   set_temp_variable = { mcksp_tmp_lead = p_arseny }   set_variable = { coalition_leader_3 = 2 } }
+	if = { limit = { check_variable = { coalition_of_demokrit = 3 } check_variable = { p_demokrit > mcksp_tmp_lead } } set_temp_variable = { mcksp_tmp_lead = p_demokrit } set_variable = { coalition_leader_3 = 3 } }
+	if = { limit = { check_variable = { coalition_of_gleb = 3 }     check_variable = { p_gleb > mcksp_tmp_lead } }     set_temp_variable = { mcksp_tmp_lead = p_gleb }     set_variable = { coalition_leader_3 = 4 } }
+	if = { limit = { check_variable = { coalition_of_stepan = 3 }   check_variable = { p_stepan > mcksp_tmp_lead } }   set_temp_variable = { mcksp_tmp_lead = p_stepan }   set_variable = { coalition_leader_3 = 5 } }
+	if = { limit = { check_variable = { coalition_of_ivan = 3 }     check_variable = { p_ivan > mcksp_tmp_lead } }     set_temp_variable = { mcksp_tmp_lead = p_ivan }     set_variable = { coalition_leader_3 = 6 } }
+	if = { limit = { check_variable = { coalition_of_ilya = 3 }     check_variable = { p_ilya > mcksp_tmp_lead } }     set_temp_variable = { mcksp_tmp_lead = p_ilya }     set_variable = { coalition_leader_3 = 7 } }
+	if = { limit = { check_variable = { coalition_of_evgeny = 3 }   check_variable = { p_evgeny > mcksp_tmp_lead } }   set_temp_variable = { mcksp_tmp_lead = p_evgeny }   set_variable = { coalition_leader_3 = 8 } }
+	if = { limit = { check_variable = { coalition_of_artem = 3 }    check_variable = { p_artem > mcksp_tmp_lead } }    set_temp_variable = { mcksp_tmp_lead = p_artem }    set_variable = { coalition_leader_3 = 9 } }
+	if = { limit = { check_variable = { coalition_of_ilgam = 3 }    check_variable = { p_ilgam > mcksp_tmp_lead } }    set_temp_variable = { mcksp_tmp_lead = p_ilgam }    set_variable = { coalition_leader_3 = 10 } }
+
+	set_variable = { coalition_leader_4 = 0 }
+	set_temp_variable = { mcksp_tmp_lead = -1 }
+	if = { limit = { check_variable = { coalition_of_nikita = 4 }   check_variable = { p_nikita > mcksp_tmp_lead } }   set_temp_variable = { mcksp_tmp_lead = p_nikita }   set_variable = { coalition_leader_4 = 1 } }
+	if = { limit = { check_variable = { coalition_of_arseny = 4 }   check_variable = { p_arseny > mcksp_tmp_lead } }   set_temp_variable = { mcksp_tmp_lead = p_arseny }   set_variable = { coalition_leader_4 = 2 } }
+	if = { limit = { check_variable = { coalition_of_demokrit = 4 } check_variable = { p_demokrit > mcksp_tmp_lead } } set_temp_variable = { mcksp_tmp_lead = p_demokrit } set_variable = { coalition_leader_4 = 3 } }
+	if = { limit = { check_variable = { coalition_of_gleb = 4 }     check_variable = { p_gleb > mcksp_tmp_lead } }     set_temp_variable = { mcksp_tmp_lead = p_gleb }     set_variable = { coalition_leader_4 = 4 } }
+	if = { limit = { check_variable = { coalition_of_stepan = 4 }   check_variable = { p_stepan > mcksp_tmp_lead } }   set_temp_variable = { mcksp_tmp_lead = p_stepan }   set_variable = { coalition_leader_4 = 5 } }
+	if = { limit = { check_variable = { coalition_of_ivan = 4 }     check_variable = { p_ivan > mcksp_tmp_lead } }     set_temp_variable = { mcksp_tmp_lead = p_ivan }     set_variable = { coalition_leader_4 = 6 } }
+	if = { limit = { check_variable = { coalition_of_ilya = 4 }     check_variable = { p_ilya > mcksp_tmp_lead } }     set_temp_variable = { mcksp_tmp_lead = p_ilya }     set_variable = { coalition_leader_4 = 7 } }
+	if = { limit = { check_variable = { coalition_of_evgeny = 4 }   check_variable = { p_evgeny > mcksp_tmp_lead } }   set_temp_variable = { mcksp_tmp_lead = p_evgeny }   set_variable = { coalition_leader_4 = 8 } }
+	if = { limit = { check_variable = { coalition_of_artem = 4 }    check_variable = { p_artem > mcksp_tmp_lead } }    set_temp_variable = { mcksp_tmp_lead = p_artem }    set_variable = { coalition_leader_4 = 9 } }
+	if = { limit = { check_variable = { coalition_of_ilgam = 4 }    check_variable = { p_ilgam > mcksp_tmp_lead } }    set_temp_variable = { mcksp_tmp_lead = p_ilgam }    set_variable = { coalition_leader_4 = 10 } }
 }
 
 # ----------------------------------------------------------------------------

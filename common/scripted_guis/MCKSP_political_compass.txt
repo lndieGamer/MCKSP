@@ -114,9 +114,9 @@ scripted_gui = {
 	MCKSP_bh_ilgam    = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "bh_ilgam_win"    visible = { has_country_flag = SOV_compass_open has_country_flag = mcksp_guest_gone_ilgam } }
 
 	# =====================================================================
-	# Фракционная борьба: оверлеи компаса (перенесены сюда из
-	# MCKSP_faction_struggle.txt — cross-file parent_window_name не
-	# привязывался к MCKSP_compass_viewport, окна падали в левый верх).
+	# Фракционная борьба: оверлеи компаса живут здесь (НЕ в отдельном файле) —
+	# cross-file parent_window_name к MCKSP_compass_viewport не привязывался,
+	# окна падали в левый верх. Окна объявлены в MCKSP_political_compass.gui.
 	# =====================================================================
 	# Ореолы (coalition_of==k И размер коалиции > 1)
 	MCKSP_halo_nikita_c1   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "halo_nikita_c1_win"   visible = { has_country_flag = SOV_compass_open check_variable = { coalition_of_nikita = 1 }   check_variable = { coalition_size_1 > 1 } } }
@@ -177,4 +177,11 @@ scripted_gui = {
 	MCKSP_gold_evgeny   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "gold_evgeny_win"   visible = { has_country_flag = SOV_compass_open has_country_flag = SOV_player_core_statists } }
 	MCKSP_gold_stepan   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "gold_stepan_win"   visible = { has_country_flag = SOV_compass_open has_country_flag = SOV_player_core_centrists } }
 	MCKSP_gold_demokrit = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "gold_demokrit_win" visible = { has_country_flag = SOV_compass_open has_country_flag = SOV_player_core_socialists } }
+
+	# Пульс на 4 ядрах — подсказка «кликни ядро» в фазе 0 (4 кликабельных ядра
+	# среди 10 точек неотличимы без подсветки). Гаснет при выходе из фазы 0.
+	MCKSP_pulse_nikita   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "pulse_nikita_win"   visible = { has_country_flag = SOV_compass_open has_country_flag = mcksp_phase_0 NOT = { has_country_flag = mcksp_guest_gone_nikita } } }
+	MCKSP_pulse_evgeny   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "pulse_evgeny_win"   visible = { has_country_flag = SOV_compass_open has_country_flag = mcksp_phase_0 NOT = { has_country_flag = mcksp_guest_gone_evgeny } } }
+	MCKSP_pulse_stepan   = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "pulse_stepan_win"   visible = { has_country_flag = SOV_compass_open has_country_flag = mcksp_phase_0 NOT = { has_country_flag = mcksp_guest_gone_stepan } } }
+	MCKSP_pulse_demokrit = { context_type = player_context parent_window_name = "MCKSP_compass_viewport" window_name = "pulse_demokrit_win" visible = { has_country_flag = SOV_compass_open has_country_flag = mcksp_phase_0 NOT = { has_country_flag = mcksp_guest_gone_demokrit } } }
 }

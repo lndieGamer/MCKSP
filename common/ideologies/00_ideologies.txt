@@ -455,7 +455,7 @@ ideologies = {
 		types = {
 			mcksp_national_conservatism_t = { can_be_randomly_selected = no }
 		}
-		color = { 122 28 38 }
+		color = { 120 72 40 }
 		war_impact_on_world_tension = 0.25
 		faction_impact_on_world_tension = 0.1
 		rules = {
