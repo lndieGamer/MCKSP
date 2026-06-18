@@ -26,26 +26,12 @@ SOV_MCKSP_struggle_cat = {
 	allowed = {
 		tag = SOV
 	}
+	# Видна во ВСЕХ фазах (0..4) — единая вкладка; баннер фазы 0 и решения фаз 1+ гейтятся
+	# каждое своей фазой. (Раньше фаза 0 жила в отдельной intro_cat = вторая вкладка.)
 	visible = {
 		has_country_flag = SOV_factional_struggle_active
-		NOT = { has_country_flag = mcksp_phase_0 }
 	}
 	priority = 12
-	visible_when_empty = no
-}
-
-# Фракционная борьба — фаза 0 (баннер «выберите фракцию»).
-SOV_MCKSP_struggle_intro_cat = {
-	icon = generic_political_actions
-	picture = GFX_decision_cat_picture_soviet_comecon
-	allowed = {
-		tag = SOV
-	}
-	visible = {
-		has_country_flag = SOV_factional_struggle_active
-		has_country_flag = mcksp_phase_0
-	}
-	priority = 13
 	visible_when_empty = no
 }
 

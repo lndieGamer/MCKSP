@@ -34,7 +34,7 @@
  SOV_debug_kill_evgeny: "[DEBUG] Устранить: Евгений Океанов"
  SOV_debug_kill_artem: "[DEBUG] Устранить: Артём Аюшеев"
  SOV_debug_kill_ilgam: "[DEBUG] Устранить: Ильгам Фагаманов"
- SOV_debug_kill_nikita_desc: "§RОтладка (только -debug).§! Мгновенно расстреливает гостя по реальному пути: партия → ЗАПРЕЩЕНО, пулевое отверстие на компасе, +30% доверия. Без 50% рандома."
+ SOV_debug_kill_nikita_desc: "§RОтладка (только -debug).§! Мгновенно расстреливает гостя по реальному пути: партия -> ЗАПРЕЩЕНО, пулевое отверстие на компасе, +30% доверия. Без 50% рандома."
  SOV_debug_kill_arseny_desc: "$SOV_debug_kill_nikita_desc$"
  SOV_debug_kill_stepan_desc: "$SOV_debug_kill_nikita_desc$"
  SOV_debug_kill_demokrit_desc: "$SOV_debug_kill_nikita_desc$"

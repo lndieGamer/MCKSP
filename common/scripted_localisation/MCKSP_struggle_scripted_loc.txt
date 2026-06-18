@@ -185,3 +185,76 @@ defined_text = {
 	text = { trigger = { check_variable = { coalition_of_ilgam = 4 } } localization_key = MCKSP_COAL_SOCIALISTS }
 	text = { trigger = { always = yes } localization_key = MCKSP_coal_neutral }
 }
+
+# --- Имя спорного гостя (контест, struggle_event.1) по mcksp_contest_guest ---
+defined_text = {
+	name = GetContestGuestName
+	text = { trigger = { check_variable = { mcksp_contest_guest = 1 } }  localization_key = SOV_nikita_iakushin }
+	text = { trigger = { check_variable = { mcksp_contest_guest = 2 } }  localization_key = SOV_arseny_pavlov }
+	text = { trigger = { check_variable = { mcksp_contest_guest = 3 } }  localization_key = SOV_demokrit_ikonomidi }
+	text = { trigger = { check_variable = { mcksp_contest_guest = 4 } }  localization_key = SOV_gleb_rychkov }
+	text = { trigger = { check_variable = { mcksp_contest_guest = 5 } }  localization_key = SOV_stepan_pavlov }
+	text = { trigger = { check_variable = { mcksp_contest_guest = 6 } }  localization_key = SOV_ivan_danchenko }
+	text = { trigger = { check_variable = { mcksp_contest_guest = 7 } }  localization_key = SOV_ilya_popov }
+	text = { trigger = { check_variable = { mcksp_contest_guest = 8 } }  localization_key = SOV_evgeny_okeanov }
+	text = { trigger = { check_variable = { mcksp_contest_guest = 9 } }  localization_key = SOV_artem_ayusheev }
+	text = { trigger = { check_variable = { mcksp_contest_guest = 10 } } localization_key = SOV_ilgam_fagamanov }
+	text = { trigger = { always = yes } localization_key = MCKSP_coal_empty }
+}
+# --- Коалиция, удерживающая спорного гостя, по mcksp_contest_coalition ---
+defined_text = {
+	name = GetContestCoal
+	text = { trigger = { check_variable = { mcksp_contest_coalition = 1 } } localization_key = MCKSP_COAL_REFORMERS }
+	text = { trigger = { check_variable = { mcksp_contest_coalition = 2 } } localization_key = MCKSP_COAL_STATISTS }
+	text = { trigger = { check_variable = { mcksp_contest_coalition = 3 } } localization_key = MCKSP_COAL_CENTRISTS }
+	text = { trigger = { check_variable = { mcksp_contest_coalition = 4 } } localization_key = MCKSP_COAL_SOCIALISTS }
+	text = { trigger = { always = yes } localization_key = MCKSP_coal_empty }
+}
+# --- Имя вступившего гостя (оповещение .2) по mcksp_join_guest ---
+defined_text = {
+	name = GetJoinGuestName
+	text = { trigger = { check_variable = { mcksp_join_guest = 1 } }  localization_key = SOV_nikita_iakushin }
+	text = { trigger = { check_variable = { mcksp_join_guest = 2 } }  localization_key = SOV_arseny_pavlov }
+	text = { trigger = { check_variable = { mcksp_join_guest = 3 } }  localization_key = SOV_demokrit_ikonomidi }
+	text = { trigger = { check_variable = { mcksp_join_guest = 4 } }  localization_key = SOV_gleb_rychkov }
+	text = { trigger = { check_variable = { mcksp_join_guest = 5 } }  localization_key = SOV_stepan_pavlov }
+	text = { trigger = { check_variable = { mcksp_join_guest = 6 } }  localization_key = SOV_ivan_danchenko }
+	text = { trigger = { check_variable = { mcksp_join_guest = 7 } }  localization_key = SOV_ilya_popov }
+	text = { trigger = { check_variable = { mcksp_join_guest = 8 } }  localization_key = SOV_evgeny_okeanov }
+	text = { trigger = { check_variable = { mcksp_join_guest = 9 } }  localization_key = SOV_artem_ayusheev }
+	text = { trigger = { check_variable = { mcksp_join_guest = 10 } } localization_key = SOV_ilgam_fagamanov }
+	text = { trigger = { always = yes } localization_key = MCKSP_coal_empty }
+}
+# --- Коалиция вступления (оповещения .2/.3) по mcksp_join_coalition ---
+defined_text = {
+	name = GetJoinCoal
+	text = { trigger = { check_variable = { mcksp_join_coalition = 1 } } localization_key = MCKSP_COAL_REFORMERS }
+	text = { trigger = { check_variable = { mcksp_join_coalition = 2 } } localization_key = MCKSP_COAL_STATISTS }
+	text = { trigger = { check_variable = { mcksp_join_coalition = 3 } } localization_key = MCKSP_COAL_CENTRISTS }
+	text = { trigger = { check_variable = { mcksp_join_coalition = 4 } } localization_key = MCKSP_COAL_SOCIALISTS }
+	text = { trigger = { always = yes } localization_key = MCKSP_coal_empty }
+}
+
+# --- Клевета: случайный глагол (mcksp_slander_verb 1..4) + цвет имени по коалиции ---
+defined_text = { name = GetSlanderVerb_nikita   text = { trigger = { check_variable = { mcksp_sverb_nikita = 1 } } localization_key = mcksp_slander_verb_1 }   text = { trigger = { check_variable = { mcksp_sverb_nikita = 2 } } localization_key = mcksp_slander_verb_2 }   text = { trigger = { check_variable = { mcksp_sverb_nikita = 4 } } localization_key = mcksp_slander_verb_4 }   text = { trigger = { always = yes } localization_key = mcksp_slander_verb_3 } }
+defined_text = { name = GetSlanderVerb_arseny   text = { trigger = { check_variable = { mcksp_sverb_arseny = 1 } } localization_key = mcksp_slander_verb_1 }   text = { trigger = { check_variable = { mcksp_sverb_arseny = 2 } } localization_key = mcksp_slander_verb_2 }   text = { trigger = { check_variable = { mcksp_sverb_arseny = 4 } } localization_key = mcksp_slander_verb_4 }   text = { trigger = { always = yes } localization_key = mcksp_slander_verb_3 } }
+defined_text = { name = GetSlanderVerb_demokrit text = { trigger = { check_variable = { mcksp_sverb_demokrit = 1 } } localization_key = mcksp_slander_verb_1 } text = { trigger = { check_variable = { mcksp_sverb_demokrit = 2 } } localization_key = mcksp_slander_verb_2 } text = { trigger = { check_variable = { mcksp_sverb_demokrit = 4 } } localization_key = mcksp_slander_verb_4 } text = { trigger = { always = yes } localization_key = mcksp_slander_verb_3 } }
+defined_text = { name = GetSlanderVerb_gleb     text = { trigger = { check_variable = { mcksp_sverb_gleb = 1 } } localization_key = mcksp_slander_verb_1 }     text = { trigger = { check_variable = { mcksp_sverb_gleb = 2 } } localization_key = mcksp_slander_verb_2 }     text = { trigger = { check_variable = { mcksp_sverb_gleb = 4 } } localization_key = mcksp_slander_verb_4 }     text = { trigger = { always = yes } localization_key = mcksp_slander_verb_3 } }
+defined_text = { name = GetSlanderVerb_stepan   text = { trigger = { check_variable = { mcksp_sverb_stepan = 1 } } localization_key = mcksp_slander_verb_1 }   text = { trigger = { check_variable = { mcksp_sverb_stepan = 2 } } localization_key = mcksp_slander_verb_2 }   text = { trigger = { check_variable = { mcksp_sverb_stepan = 4 } } localization_key = mcksp_slander_verb_4 }   text = { trigger = { always = yes } localization_key = mcksp_slander_verb_3 } }
+defined_text = { name = GetSlanderVerb_ivan     text = { trigger = { check_variable = { mcksp_sverb_ivan = 1 } } localization_key = mcksp_slander_verb_1 }     text = { trigger = { check_variable = { mcksp_sverb_ivan = 2 } } localization_key = mcksp_slander_verb_2 }     text = { trigger = { check_variable = { mcksp_sverb_ivan = 4 } } localization_key = mcksp_slander_verb_4 }     text = { trigger = { always = yes } localization_key = mcksp_slander_verb_3 } }
+defined_text = { name = GetSlanderVerb_ilya     text = { trigger = { check_variable = { mcksp_sverb_ilya = 1 } } localization_key = mcksp_slander_verb_1 }     text = { trigger = { check_variable = { mcksp_sverb_ilya = 2 } } localization_key = mcksp_slander_verb_2 }     text = { trigger = { check_variable = { mcksp_sverb_ilya = 4 } } localization_key = mcksp_slander_verb_4 }     text = { trigger = { always = yes } localization_key = mcksp_slander_verb_3 } }
+defined_text = { name = GetSlanderVerb_evgeny   text = { trigger = { check_variable = { mcksp_sverb_evgeny = 1 } } localization_key = mcksp_slander_verb_1 }   text = { trigger = { check_variable = { mcksp_sverb_evgeny = 2 } } localization_key = mcksp_slander_verb_2 }   text = { trigger = { check_variable = { mcksp_sverb_evgeny = 4 } } localization_key = mcksp_slander_verb_4 }   text = { trigger = { always = yes } localization_key = mcksp_slander_verb_3 } }
+defined_text = { name = GetSlanderVerb_artem    text = { trigger = { check_variable = { mcksp_sverb_artem = 1 } } localization_key = mcksp_slander_verb_1 }    text = { trigger = { check_variable = { mcksp_sverb_artem = 2 } } localization_key = mcksp_slander_verb_2 }    text = { trigger = { check_variable = { mcksp_sverb_artem = 4 } } localization_key = mcksp_slander_verb_4 }    text = { trigger = { always = yes } localization_key = mcksp_slander_verb_3 } }
+defined_text = { name = GetSlanderVerb_ilgam    text = { trigger = { check_variable = { mcksp_sverb_ilgam = 1 } } localization_key = mcksp_slander_verb_1 }    text = { trigger = { check_variable = { mcksp_sverb_ilgam = 2 } } localization_key = mcksp_slander_verb_2 }    text = { trigger = { check_variable = { mcksp_sverb_ilgam = 4 } } localization_key = mcksp_slander_verb_4 }    text = { trigger = { always = yes } localization_key = mcksp_slander_verb_3 } }
+# Возвращает loc-ключ со стартовым §-кодом цвета коалиции гостя (_0 = без цвета). Имя и §!
+# стоят в самом решении: "[GetSlanderVerb] [GetCoalColorOf_<g>]<Имя>§!".
+defined_text = { name = GetCoalColorOf_nikita   text = { trigger = { check_variable = { coalition_of_nikita = 1 } } localization_key = mcksp_coalcol_1 }   text = { trigger = { check_variable = { coalition_of_nikita = 2 } } localization_key = mcksp_coalcol_2 }   text = { trigger = { check_variable = { coalition_of_nikita = 3 } } localization_key = mcksp_coalcol_3 }   text = { trigger = { check_variable = { coalition_of_nikita = 4 } } localization_key = mcksp_coalcol_4 }   text = { trigger = { always = yes } localization_key = mcksp_coalcol_0 } }
+defined_text = { name = GetCoalColorOf_arseny   text = { trigger = { check_variable = { coalition_of_arseny = 1 } } localization_key = mcksp_coalcol_1 }   text = { trigger = { check_variable = { coalition_of_arseny = 2 } } localization_key = mcksp_coalcol_2 }   text = { trigger = { check_variable = { coalition_of_arseny = 3 } } localization_key = mcksp_coalcol_3 }   text = { trigger = { check_variable = { coalition_of_arseny = 4 } } localization_key = mcksp_coalcol_4 }   text = { trigger = { always = yes } localization_key = mcksp_coalcol_0 } }
+defined_text = { name = GetCoalColorOf_demokrit text = { trigger = { check_variable = { coalition_of_demokrit = 1 } } localization_key = mcksp_coalcol_1 } text = { trigger = { check_variable = { coalition_of_demokrit = 2 } } localization_key = mcksp_coalcol_2 } text = { trigger = { check_variable = { coalition_of_demokrit = 3 } } localization_key = mcksp_coalcol_3 } text = { trigger = { check_variable = { coalition_of_demokrit = 4 } } localization_key = mcksp_coalcol_4 } text = { trigger = { always = yes } localization_key = mcksp_coalcol_0 } }
+defined_text = { name = GetCoalColorOf_gleb     text = { trigger = { check_variable = { coalition_of_gleb = 1 } } localization_key = mcksp_coalcol_1 }     text = { trigger = { check_variable = { coalition_of_gleb = 2 } } localization_key = mcksp_coalcol_2 }     text = { trigger = { check_variable = { coalition_of_gleb = 3 } } localization_key = mcksp_coalcol_3 }     text = { trigger = { check_variable = { coalition_of_gleb = 4 } } localization_key = mcksp_coalcol_4 }     text = { trigger = { always = yes } localization_key = mcksp_coalcol_0 } }
+defined_text = { name = GetCoalColorOf_stepan   text = { trigger = { check_variable = { coalition_of_stepan = 1 } } localization_key = mcksp_coalcol_1 }   text = { trigger = { check_variable = { coalition_of_stepan = 2 } } localization_key = mcksp_coalcol_2 }   text = { trigger = { check_variable = { coalition_of_stepan = 3 } } localization_key = mcksp_coalcol_3 }   text = { trigger = { check_variable = { coalition_of_stepan = 4 } } localization_key = mcksp_coalcol_4 }   text = { trigger = { always = yes } localization_key = mcksp_coalcol_0 } }
+defined_text = { name = GetCoalColorOf_ivan     text = { trigger = { check_variable = { coalition_of_ivan = 1 } } localization_key = mcksp_coalcol_1 }     text = { trigger = { check_variable = { coalition_of_ivan = 2 } } localization_key = mcksp_coalcol_2 }     text = { trigger = { check_variable = { coalition_of_ivan = 3 } } localization_key = mcksp_coalcol_3 }     text = { trigger = { check_variable = { coalition_of_ivan = 4 } } localization_key = mcksp_coalcol_4 }     text = { trigger = { always = yes } localization_key = mcksp_coalcol_0 } }
+defined_text = { name = GetCoalColorOf_ilya     text = { trigger = { check_variable = { coalition_of_ilya = 1 } } localization_key = mcksp_coalcol_1 }     text = { trigger = { check_variable = { coalition_of_ilya = 2 } } localization_key = mcksp_coalcol_2 }     text = { trigger = { check_variable = { coalition_of_ilya = 3 } } localization_key = mcksp_coalcol_3 }     text = { trigger = { check_variable = { coalition_of_ilya = 4 } } localization_key = mcksp_coalcol_4 }     text = { trigger = { always = yes } localization_key = mcksp_coalcol_0 } }
+defined_text = { name = GetCoalColorOf_evgeny   text = { trigger = { check_variable = { coalition_of_evgeny = 1 } } localization_key = mcksp_coalcol_1 }   text = { trigger = { check_variable = { coalition_of_evgeny = 2 } } localization_key = mcksp_coalcol_2 }   text = { trigger = { check_variable = { coalition_of_evgeny = 3 } } localization_key = mcksp_coalcol_3 }   text = { trigger = { check_variable = { coalition_of_evgeny = 4 } } localization_key = mcksp_coalcol_4 }   text = { trigger = { always = yes } localization_key = mcksp_coalcol_0 } }
+defined_text = { name = GetCoalColorOf_artem    text = { trigger = { check_variable = { coalition_of_artem = 1 } } localization_key = mcksp_coalcol_1 }    text = { trigger = { check_variable = { coalition_of_artem = 2 } } localization_key = mcksp_coalcol_2 }    text = { trigger = { check_variable = { coalition_of_artem = 3 } } localization_key = mcksp_coalcol_3 }    text = { trigger = { check_variable = { coalition_of_artem = 4 } } localization_key = mcksp_coalcol_4 }    text = { trigger = { always = yes } localization_key = mcksp_coalcol_0 } }
+defined_text = { name = GetCoalColorOf_ilgam    text = { trigger = { check_variable = { coalition_of_ilgam = 1 } } localization_key = mcksp_coalcol_1 }    text = { trigger = { check_variable = { coalition_of_ilgam = 2 } } localization_key = mcksp_coalcol_2 }    text = { trigger = { check_variable = { coalition_of_ilgam = 3 } } localization_key = mcksp_coalcol_3 }    text = { trigger = { check_variable = { coalition_of_ilgam = 4 } } localization_key = mcksp_coalcol_4 }    text = { trigger = { always = yes } localization_key = mcksp_coalcol_0 } }

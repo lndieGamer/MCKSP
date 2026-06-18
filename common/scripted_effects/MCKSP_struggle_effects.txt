@@ -140,51 +140,358 @@ MCKSP_recruit_assign_arseny = {
 	set_variable = { coalition_of_arseny = mcksp_tmp_recruit_c }
 	set_country_flag = mcksp_recruit_pending_arseny
 	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.03 }
-	MCKSP_fire_rival_move = yes
 	MCKSP_recompute_sizes = yes
+	MCKSP_mark_instant_arseny = yes
+	MCKSP_announce_join_arseny = yes
 }
 MCKSP_recruit_assign_gleb = {
 	set_variable = { coalition_of_gleb = mcksp_tmp_recruit_c }
 	set_country_flag = mcksp_recruit_pending_gleb
 	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.03 }
-	MCKSP_fire_rival_move = yes
 	MCKSP_recompute_sizes = yes
+	MCKSP_mark_instant_gleb = yes
+	MCKSP_announce_join_gleb = yes
 }
 MCKSP_recruit_assign_ivan = {
 	set_variable = { coalition_of_ivan = mcksp_tmp_recruit_c }
 	set_country_flag = mcksp_recruit_pending_ivan
 	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.03 }
-	MCKSP_fire_rival_move = yes
 	MCKSP_recompute_sizes = yes
+	MCKSP_mark_instant_ivan = yes
+	MCKSP_announce_join_ivan = yes
 }
 MCKSP_recruit_assign_ilya = {
 	set_variable = { coalition_of_ilya = mcksp_tmp_recruit_c }
 	set_country_flag = mcksp_recruit_pending_ilya
 	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.03 }
-	MCKSP_fire_rival_move = yes
 	MCKSP_recompute_sizes = yes
+	MCKSP_mark_instant_ilya = yes
+	MCKSP_announce_join_ilya = yes
 }
 MCKSP_recruit_assign_artem = {
 	set_variable = { coalition_of_artem = mcksp_tmp_recruit_c }
 	set_country_flag = mcksp_recruit_pending_artem
 	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.03 }
-	MCKSP_fire_rival_move = yes
 	MCKSP_recompute_sizes = yes
+	MCKSP_mark_instant_artem = yes
+	MCKSP_announce_join_artem = yes
 }
 MCKSP_recruit_assign_ilgam = {
 	set_variable = { coalition_of_ilgam = mcksp_tmp_recruit_c }
 	set_country_flag = mcksp_recruit_pending_ilgam
 	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.03 }
-	MCKSP_fire_rival_move = yes
+	MCKSP_recompute_sizes = yes
+	MCKSP_mark_instant_ilgam = yes
+	MCKSP_announce_join_ilgam = yes
+}
+
+# ----------------------------------------------------------------------------
+# Дуализм появления ореолов коалиций. Если коалиция пополнилась ПОКА панель открыта
+# (игрок смотрит) — ореол появляется мгновенно на месте (instant-окна), а не выезжает.
+# Флаг mcksp_halo_instant_<гость> метит «мгновенный» ореол; чистится при открытии/
+# закрытии панели (scripted_gui MCKSP_political_compass.txt) -> следующий вызов панели
+# снова даёт выезд. Зовётся из обоих путей вступления: вербовка ИИ и приглашение игрока.
+# ----------------------------------------------------------------------------
+MCKSP_clear_halo_instant_flags = {
+	clr_country_flag = mcksp_halo_instant_nikita
+	clr_country_flag = mcksp_halo_instant_arseny
+	clr_country_flag = mcksp_halo_instant_demokrit
+	clr_country_flag = mcksp_halo_instant_gleb
+	clr_country_flag = mcksp_halo_instant_stepan
+	clr_country_flag = mcksp_halo_instant_ivan
+	clr_country_flag = mcksp_halo_instant_ilya
+	clr_country_flag = mcksp_halo_instant_evgeny
+	clr_country_flag = mcksp_halo_instant_artem
+	clr_country_flag = mcksp_halo_instant_ilgam
+	clr_country_flag = mcksp_self_instant_nikita
+	clr_country_flag = mcksp_self_instant_arseny
+	clr_country_flag = mcksp_self_instant_demokrit
+	clr_country_flag = mcksp_self_instant_gleb
+	clr_country_flag = mcksp_self_instant_stepan
+	clr_country_flag = mcksp_self_instant_ivan
+	clr_country_flag = mcksp_self_instant_ilya
+	clr_country_flag = mcksp_self_instant_evgeny
+	clr_country_flag = mcksp_self_instant_artem
+	clr_country_flag = mcksp_self_instant_ilgam
+}
+# Метит флаги/золото игрока «мгновенными» при выборе фракции: 4 флага ядер + золото
+# своего ядра появляются сразу (игрок кликнул на компасе — панель открыта), без выезда.
+MCKSP_mark_self_instant_cores = {
+	if = {
+		limit = { has_country_flag = SOV_compass_open }
+		set_country_flag = mcksp_self_instant_nikita
+		set_country_flag = mcksp_self_instant_evgeny
+		set_country_flag = mcksp_self_instant_stepan
+		set_country_flag = mcksp_self_instant_demokrit
+	}
+}
+# Если коалиция, в которую вступили (mcksp_tmp_joined_c), стала размера 2 — ореол её
+# ЯДРА появляется впервые, метим ядро мгновенным (иначе ядро выехало бы в одиночку).
+MCKSP_halo_instant_after_join = {
+	if = { limit = { check_variable = { mcksp_tmp_joined_c = 1 } check_variable = { coalition_size_1 = 2 } } set_country_flag = mcksp_halo_instant_nikita }
+	else_if = { limit = { check_variable = { mcksp_tmp_joined_c = 2 } check_variable = { coalition_size_2 = 2 } } set_country_flag = mcksp_halo_instant_evgeny }
+	else_if = { limit = { check_variable = { mcksp_tmp_joined_c = 3 } check_variable = { coalition_size_3 = 2 } } set_country_flag = mcksp_halo_instant_stepan }
+	else_if = { limit = { check_variable = { mcksp_tmp_joined_c = 4 } check_variable = { coalition_size_4 = 2 } } set_country_flag = mcksp_halo_instant_demokrit }
+}
+# По одному на вербуемого гостя. Метит мгновенным только если панель открыта (игрок
+# смотрит); иначе ореол появится выездом при следующем открытии панели.
+MCKSP_mark_instant_arseny = { if = { limit = { has_country_flag = SOV_compass_open } set_country_flag = mcksp_halo_instant_arseny set_temp_variable = { mcksp_tmp_joined_c = coalition_of_arseny } MCKSP_halo_instant_after_join = yes } }
+MCKSP_mark_instant_gleb   = { if = { limit = { has_country_flag = SOV_compass_open } set_country_flag = mcksp_halo_instant_gleb   set_temp_variable = { mcksp_tmp_joined_c = coalition_of_gleb }   MCKSP_halo_instant_after_join = yes } }
+MCKSP_mark_instant_ivan   = { if = { limit = { has_country_flag = SOV_compass_open } set_country_flag = mcksp_halo_instant_ivan   set_temp_variable = { mcksp_tmp_joined_c = coalition_of_ivan }   MCKSP_halo_instant_after_join = yes } }
+MCKSP_mark_instant_ilya   = { if = { limit = { has_country_flag = SOV_compass_open } set_country_flag = mcksp_halo_instant_ilya   set_temp_variable = { mcksp_tmp_joined_c = coalition_of_ilya }   MCKSP_halo_instant_after_join = yes } }
+MCKSP_mark_instant_artem  = { if = { limit = { has_country_flag = SOV_compass_open } set_country_flag = mcksp_halo_instant_artem  set_temp_variable = { mcksp_tmp_joined_c = coalition_of_artem }  MCKSP_halo_instant_after_join = yes } }
+MCKSP_mark_instant_ilgam  = { if = { limit = { has_country_flag = SOV_compass_open } set_country_flag = mcksp_halo_instant_ilgam  set_temp_variable = { mcksp_tmp_joined_c = coalition_of_ilgam }  MCKSP_halo_instant_after_join = yes } }
+
+# ============================================================================
+# Событийные оповещения о вступлении / формировании коалиции (struggle_event.2/.3).
+# Зовётся из обоих путей join (MCKSP_recruit_assign_<g> ИИ + MCKSP_invite_<g> игрок),
+# рядом с MCKSP_mark_instant_<g>. mcksp_join_guest = индекс гостя (как в компасе),
+# mcksp_join_coalition = его коалиция. struggle_event.3 — если коалиция стала размера 2.
+# ============================================================================
+# ОЧЕРЕДЬ оповещений (по одному ивенту за раз, mcksp_join_in_progress). Иначе при
+# синхронной вербовке несколько country_event'ов читают ОБЩИЕ mcksp_join_* уже затёртыми
+# -> «съедаются». announce ставит в очередь (joinpending_<g> / formedpending_<k>) + drain.
+# Приоритет в drain: сперва «коалиция сформирована» (.3), потом «гость вступил» (.2).
+MCKSP_announce_join_arseny = { set_country_flag = mcksp_joinpending_arseny set_variable = { mcksp_joincoal_arseny = coalition_of_arseny } set_temp_variable = { mcksp_tmp_jc = coalition_of_arseny } MCKSP_mark_formed_pending = yes MCKSP_join_drain = yes }
+MCKSP_announce_join_gleb   = { set_country_flag = mcksp_joinpending_gleb   set_variable = { mcksp_joincoal_gleb = coalition_of_gleb }     set_temp_variable = { mcksp_tmp_jc = coalition_of_gleb }   MCKSP_mark_formed_pending = yes MCKSP_join_drain = yes }
+MCKSP_announce_join_ivan   = { set_country_flag = mcksp_joinpending_ivan   set_variable = { mcksp_joincoal_ivan = coalition_of_ivan }     set_temp_variable = { mcksp_tmp_jc = coalition_of_ivan }   MCKSP_mark_formed_pending = yes MCKSP_join_drain = yes }
+MCKSP_announce_join_ilya   = { set_country_flag = mcksp_joinpending_ilya   set_variable = { mcksp_joincoal_ilya = coalition_of_ilya }     set_temp_variable = { mcksp_tmp_jc = coalition_of_ilya }   MCKSP_mark_formed_pending = yes MCKSP_join_drain = yes }
+MCKSP_announce_join_artem  = { set_country_flag = mcksp_joinpending_artem  set_variable = { mcksp_joincoal_artem = coalition_of_artem }   set_temp_variable = { mcksp_tmp_jc = coalition_of_artem }  MCKSP_mark_formed_pending = yes MCKSP_join_drain = yes }
+MCKSP_announce_join_ilgam  = { set_country_flag = mcksp_joinpending_ilgam  set_variable = { mcksp_joincoal_ilgam = coalition_of_ilgam }   set_temp_variable = { mcksp_tmp_jc = coalition_of_ilgam }  MCKSP_mark_formed_pending = yes MCKSP_join_drain = yes }
+# Если коалиция mcksp_tmp_jc только что стала размера 2 — отметить её «сформированной» в очередь.
+MCKSP_mark_formed_pending = {
+	if = { limit = { check_variable = { mcksp_tmp_jc = 1 } check_variable = { coalition_size_1 = 2 } } set_country_flag = mcksp_formedpending_1 }
+	else_if = { limit = { check_variable = { mcksp_tmp_jc = 2 } check_variable = { coalition_size_2 = 2 } } set_country_flag = mcksp_formedpending_2 }
+	else_if = { limit = { check_variable = { mcksp_tmp_jc = 3 } check_variable = { coalition_size_3 = 2 } } set_country_flag = mcksp_formedpending_3 }
+	else_if = { limit = { check_variable = { mcksp_tmp_jc = 4 } check_variable = { coalition_size_4 = 2 } } set_country_flag = mcksp_formedpending_4 }
+}
+MCKSP_join_drain = {
+	if = {
+		limit = { NOT = { has_country_flag = mcksp_join_in_progress } }
+		if = { limit = { has_country_flag = mcksp_formedpending_1 } set_variable = { mcksp_join_coalition = 1 } set_country_flag = mcksp_join_in_progress country_event = { id = struggle_event.3 hours = 2 } }
+		else_if = { limit = { has_country_flag = mcksp_formedpending_2 } set_variable = { mcksp_join_coalition = 2 } set_country_flag = mcksp_join_in_progress country_event = { id = struggle_event.3 hours = 2 } }
+		else_if = { limit = { has_country_flag = mcksp_formedpending_3 } set_variable = { mcksp_join_coalition = 3 } set_country_flag = mcksp_join_in_progress country_event = { id = struggle_event.3 hours = 2 } }
+		else_if = { limit = { has_country_flag = mcksp_formedpending_4 } set_variable = { mcksp_join_coalition = 4 } set_country_flag = mcksp_join_in_progress country_event = { id = struggle_event.3 hours = 2 } }
+		else_if = { limit = { has_country_flag = mcksp_joinpending_arseny } set_variable = { mcksp_join_guest = 2 }  set_variable = { mcksp_join_coalition = mcksp_joincoal_arseny } set_country_flag = mcksp_join_in_progress country_event = { id = struggle_event.2 hours = 2 } }
+		else_if = { limit = { has_country_flag = mcksp_joinpending_gleb }   set_variable = { mcksp_join_guest = 4 }  set_variable = { mcksp_join_coalition = mcksp_joincoal_gleb }   set_country_flag = mcksp_join_in_progress country_event = { id = struggle_event.2 hours = 2 } }
+		else_if = { limit = { has_country_flag = mcksp_joinpending_ivan }   set_variable = { mcksp_join_guest = 6 }  set_variable = { mcksp_join_coalition = mcksp_joincoal_ivan }   set_country_flag = mcksp_join_in_progress country_event = { id = struggle_event.2 hours = 2 } }
+		else_if = { limit = { has_country_flag = mcksp_joinpending_ilya }   set_variable = { mcksp_join_guest = 7 }  set_variable = { mcksp_join_coalition = mcksp_joincoal_ilya }   set_country_flag = mcksp_join_in_progress country_event = { id = struggle_event.2 hours = 2 } }
+		else_if = { limit = { has_country_flag = mcksp_joinpending_artem }  set_variable = { mcksp_join_guest = 9 }  set_variable = { mcksp_join_coalition = mcksp_joincoal_artem }  set_country_flag = mcksp_join_in_progress country_event = { id = struggle_event.2 hours = 2 } }
+		else_if = { limit = { has_country_flag = mcksp_joinpending_ilgam }  set_variable = { mcksp_join_guest = 10 } set_variable = { mcksp_join_coalition = mcksp_joincoal_ilgam }  set_country_flag = mcksp_join_in_progress country_event = { id = struggle_event.2 hours = 2 } }
+	}
+}
+# Снять обработанный пункт очереди (зовётся из опций ивентов .2/.3) -> drain следующий.
+MCKSP_join_clear_resolved_guest = {
+	if = { limit = { check_variable = { mcksp_join_guest = 2 } }  clr_country_flag = mcksp_joinpending_arseny }
+	else_if = { limit = { check_variable = { mcksp_join_guest = 4 } }  clr_country_flag = mcksp_joinpending_gleb }
+	else_if = { limit = { check_variable = { mcksp_join_guest = 6 } }  clr_country_flag = mcksp_joinpending_ivan }
+	else_if = { limit = { check_variable = { mcksp_join_guest = 7 } }  clr_country_flag = mcksp_joinpending_ilya }
+	else_if = { limit = { check_variable = { mcksp_join_guest = 9 } }  clr_country_flag = mcksp_joinpending_artem }
+	else_if = { limit = { check_variable = { mcksp_join_guest = 10 } } clr_country_flag = mcksp_joinpending_ilgam }
+}
+MCKSP_join_clear_resolved_formed = {
+	if = { limit = { check_variable = { mcksp_join_coalition = 1 } } clr_country_flag = mcksp_formedpending_1 }
+	else_if = { limit = { check_variable = { mcksp_join_coalition = 2 } } clr_country_flag = mcksp_formedpending_2 }
+	else_if = { limit = { check_variable = { mcksp_join_coalition = 3 } } clr_country_flag = mcksp_formedpending_3 }
+	else_if = { limit = { check_variable = { mcksp_join_coalition = 4 } } clr_country_flag = mcksp_formedpending_4 }
+}
+
+# ============================================================================
+# Контест (struggle_event.1): спор при одновременной вербовке (телеграф ИИ + приглашение).
+# Очередь MCKSP_contest_drain ставит mcksp_contest_guest (индекс) + шлёт ивент.
+# Группа партии гостя/игрока — по канон-индексу (1..10). Популярность = ВАНИЛЬНАЯ
+# (party_popularity@<группа>) через add_popularity с ПЕРЕМЕННОЙ-дельтой (var:mcksp_tmp_pop).
+# set_party_popularity в HOI4 1.16 НЕ существует — только add_popularity (как promote/slander).
+# ============================================================================
+# Пополам ванильную популярность партии-группы текущего «я» игрока.
+MCKSP_contest_pop_halve_player = {
+	if = { limit = { check_variable = { player_self = 1 } }  set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_social_liberalism }   multiply_temp_variable = { mcksp_tmp_pop = -0.5 } add_popularity = { ideology = mcksp_social_liberalism popularity = var:mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { player_self = 2 } }  set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_liberal_humanism }    multiply_temp_variable = { mcksp_tmp_pop = -0.5 } add_popularity = { ideology = mcksp_liberal_humanism popularity = var:mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { player_self = 3 } }  set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_market_socialism }    multiply_temp_variable = { mcksp_tmp_pop = -0.5 } add_popularity = { ideology = mcksp_market_socialism popularity = var:mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { player_self = 4 } }  set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_pragmatic_syncretism } multiply_temp_variable = { mcksp_tmp_pop = -0.5 } add_popularity = { ideology = mcksp_pragmatic_syncretism popularity = var:mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { player_self = 5 } }  set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_christian_democracy }   multiply_temp_variable = { mcksp_tmp_pop = -0.5 } add_popularity = { ideology = mcksp_christian_democracy popularity = var:mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { player_self = 6 } }  set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_scientific_progressism } multiply_temp_variable = { mcksp_tmp_pop = -0.5 } add_popularity = { ideology = mcksp_scientific_progressism popularity = var:mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { player_self = 7 } }  set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_statist_technocratism } multiply_temp_variable = { mcksp_tmp_pop = -0.5 } add_popularity = { ideology = mcksp_statist_technocratism popularity = var:mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { player_self = 8 } }  set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_national_conservatism } multiply_temp_variable = { mcksp_tmp_pop = -0.5 } add_popularity = { ideology = mcksp_national_conservatism popularity = var:mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { player_self = 9 } }  set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_democratic_socialism }  multiply_temp_variable = { mcksp_tmp_pop = -0.5 } add_popularity = { ideology = mcksp_democratic_socialism popularity = var:mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { player_self = 10 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_placeholder_ilgam }   multiply_temp_variable = { mcksp_tmp_pop = -0.5 } add_popularity = { ideology = mcksp_placeholder_ilgam popularity = var:mcksp_tmp_pop } }
+}
+# Удвоить ванильную популярность партии-группы спорного гостя (mcksp_contest_guest).
+MCKSP_contest_pop_double_target = {
+	if = { limit = { check_variable = { mcksp_contest_guest = 1 } }  set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_social_liberalism }   add_popularity = { ideology = mcksp_social_liberalism popularity = var:mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { mcksp_contest_guest = 2 } }  set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_liberal_humanism }    add_popularity = { ideology = mcksp_liberal_humanism popularity = var:mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { mcksp_contest_guest = 3 } }  set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_market_socialism }    add_popularity = { ideology = mcksp_market_socialism popularity = var:mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { mcksp_contest_guest = 4 } }  set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_pragmatic_syncretism } add_popularity = { ideology = mcksp_pragmatic_syncretism popularity = var:mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { mcksp_contest_guest = 5 } }  set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_christian_democracy }   add_popularity = { ideology = mcksp_christian_democracy popularity = var:mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { mcksp_contest_guest = 6 } }  set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_scientific_progressism } add_popularity = { ideology = mcksp_scientific_progressism popularity = var:mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { mcksp_contest_guest = 7 } }  set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_statist_technocratism } add_popularity = { ideology = mcksp_statist_technocratism popularity = var:mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { mcksp_contest_guest = 8 } }  set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_national_conservatism } add_popularity = { ideology = mcksp_national_conservatism popularity = var:mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { mcksp_contest_guest = 9 } }  set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_democratic_socialism }  add_popularity = { ideology = mcksp_democratic_socialism popularity = var:mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { mcksp_contest_guest = 10 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_placeholder_ilgam }   add_popularity = { ideology = mcksp_placeholder_ilgam popularity = var:mcksp_tmp_pop } }
+}
+# +0.02 к ванильной популярности партии-группы игрока (опция «ничего не делать»).
+MCKSP_contest_pop_add2_player = {
+	if = { limit = { check_variable = { player_self = 1 } }  add_popularity = { ideology = mcksp_social_liberalism popularity = 0.02 } }
+	else_if = { limit = { check_variable = { player_self = 2 } }  add_popularity = { ideology = mcksp_liberal_humanism popularity = 0.02 } }
+	else_if = { limit = { check_variable = { player_self = 3 } }  add_popularity = { ideology = mcksp_market_socialism popularity = 0.02 } }
+	else_if = { limit = { check_variable = { player_self = 4 } }  add_popularity = { ideology = mcksp_pragmatic_syncretism popularity = 0.02 } }
+	else_if = { limit = { check_variable = { player_self = 5 } }  add_popularity = { ideology = mcksp_christian_democracy popularity = 0.02 } }
+	else_if = { limit = { check_variable = { player_self = 6 } }  add_popularity = { ideology = mcksp_scientific_progressism popularity = 0.02 } }
+	else_if = { limit = { check_variable = { player_self = 7 } }  add_popularity = { ideology = mcksp_statist_technocratism popularity = 0.02 } }
+	else_if = { limit = { check_variable = { player_self = 8 } }  add_popularity = { ideology = mcksp_national_conservatism popularity = 0.02 } }
+	else_if = { limit = { check_variable = { player_self = 9 } }  add_popularity = { ideology = mcksp_democratic_socialism popularity = 0.02 } }
+	else_if = { limit = { check_variable = { player_self = 10 } } add_popularity = { ideology = mcksp_placeholder_ilgam popularity = 0.02 } }
+}
+# Перевести спорного гостя в коалицию игрока (компромисс: ИИ его «скипает»).
+MCKSP_contest_move_target_to_player = {
+	if = { limit = { check_variable = { mcksp_contest_guest = 2 } }  set_variable = { coalition_of_arseny = player_coalition } }
+	else_if = { limit = { check_variable = { mcksp_contest_guest = 4 } }  set_variable = { coalition_of_gleb = player_coalition } }
+	else_if = { limit = { check_variable = { mcksp_contest_guest = 6 } }  set_variable = { coalition_of_ivan = player_coalition } }
+	else_if = { limit = { check_variable = { mcksp_contest_guest = 7 } }  set_variable = { coalition_of_ilya = player_coalition } }
+	else_if = { limit = { check_variable = { mcksp_contest_guest = 9 } }  set_variable = { coalition_of_artem = player_coalition } }
+	else_if = { limit = { check_variable = { mcksp_contest_guest = 10 } } set_variable = { coalition_of_ilgam = player_coalition } }
+}
+# Компромисс: игрок жертвует половину своей поп., поп. спорного удваивается, гость
+# переходит к игроку (ИИ скипает). +доверие (как обычная вербовка).
+MCKSP_contest_compromise = {
+	MCKSP_contest_pop_halve_player = yes
+	MCKSP_contest_pop_double_target = yes
+	MCKSP_contest_move_target_to_player = yes
+	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.03 }
+	MCKSP_recompute_sizes = yes
+	MCKSP_contest_mark_instant_moved = yes
+	MCKSP_recompute_attitudes = yes
+	MCKSP_publish_coalition_pops = yes
+}
+# Перетянутый компромиссом гость появляется на компасе МГНОВЕННО (не выезжает слева),
+# если панель открыта. Reuse MCKSP_mark_instant_<g> (читает coalition_of = player_coalition).
+MCKSP_contest_mark_instant_moved = {
+	if = { limit = { check_variable = { mcksp_contest_guest = 2 } }  MCKSP_mark_instant_arseny = yes }
+	else_if = { limit = { check_variable = { mcksp_contest_guest = 4 } }  MCKSP_mark_instant_gleb = yes }
+	else_if = { limit = { check_variable = { mcksp_contest_guest = 6 } }  MCKSP_mark_instant_ivan = yes }
+	else_if = { limit = { check_variable = { mcksp_contest_guest = 7 } }  MCKSP_mark_instant_ilya = yes }
+	else_if = { limit = { check_variable = { mcksp_contest_guest = 9 } }  MCKSP_mark_instant_artem = yes }
+	else_if = { limit = { check_variable = { mcksp_contest_guest = 10 } } MCKSP_mark_instant_ilgam = yes }
+}
+# Ничего не делать: +2% поп. игроку, гость остаётся у ИИ-вербовщика.
+MCKSP_contest_donothing = {
+	MCKSP_contest_pop_add2_player = yes
+	MCKSP_contest_assign_to_recruiter = yes
+	MCKSP_publish_coalition_pops = yes
+}
+# Отдать спорного гостя (mcksp_contest_guest) коалиции-вербовщику (mcksp_contest_coalition),
+# если он сейчас свободен (путь приглашения — ИИ отложил назначение). Если уже в коалиции
+# (путь отдельного решения-контеста) — guard coalition_of=0 ложен, остаётся как есть.
+MCKSP_contest_assign_to_recruiter = {
+	if = { limit = { check_variable = { mcksp_contest_guest = 2 }  check_variable = { coalition_of_arseny = 0 } }  set_variable = { coalition_of_arseny = mcksp_contest_coalition } }
+	else_if = { limit = { check_variable = { mcksp_contest_guest = 4 }  check_variable = { coalition_of_gleb = 0 } }    set_variable = { coalition_of_gleb = mcksp_contest_coalition } }
+	else_if = { limit = { check_variable = { mcksp_contest_guest = 6 }  check_variable = { coalition_of_ivan = 0 } }    set_variable = { coalition_of_ivan = mcksp_contest_coalition } }
+	else_if = { limit = { check_variable = { mcksp_contest_guest = 7 }  check_variable = { coalition_of_ilya = 0 } }    set_variable = { coalition_of_ilya = mcksp_contest_coalition } }
+	else_if = { limit = { check_variable = { mcksp_contest_guest = 9 }  check_variable = { coalition_of_artem = 0 } }   set_variable = { coalition_of_artem = mcksp_contest_coalition } }
+	else_if = { limit = { check_variable = { mcksp_contest_guest = 10 } check_variable = { coalition_of_ilgam = 0 } }   set_variable = { coalition_of_ilgam = mcksp_contest_coalition } }
 	MCKSP_recompute_sizes = yes
 }
 
-# Серый инфо-decision соперника на КД: флаг + activate_decision (иначе таймер стоит).
-MCKSP_fire_rival_move = {
-	if = { limit = { check_variable = { mcksp_tmp_recruit_c = 1 } } set_country_flag = mcksp_rival_move_1 activate_decision = SOV_struggle_rival_move_reformers }
-	else_if = { limit = { check_variable = { mcksp_tmp_recruit_c = 2 } } set_country_flag = mcksp_rival_move_2 activate_decision = SOV_struggle_rival_move_statists }
-	else_if = { limit = { check_variable = { mcksp_tmp_recruit_c = 3 } } set_country_flag = mcksp_rival_move_3 activate_decision = SOV_struggle_rival_move_centrists }
-	else_if = { limit = { check_variable = { mcksp_tmp_recruit_c = 4 } } set_country_flag = mcksp_rival_move_4 activate_decision = SOV_struggle_rival_move_socialists }
+# ============================================================================
+# ТЕЛЕГРАФ ИИ-вербовки + очередь контеста (Сценарий 2, путь приглашения).
+# ИИ выбирает цель в НАЧАЛЕ таймера решения (mcksp_being_recruited_<g> + recruit_target_C
+# + mcksp_recruiter_<g>), назначает в КОНЦЕ (MCKSP_ai_resolve_C), если не оспорена.
+# Игрок, пригласив УЖЕ вербуемого гостя -> contested; по завершении приглашения ->
+# очередь (MCKSP_contest_drain) -> struggle_event.1 по одному (mcksp_contest_in_progress).
+# ============================================================================
+MCKSP_mark_being_recruited = {
+	if = { limit = { check_variable = { mcksp_tmp_best_guest = 2 } }  set_country_flag = mcksp_being_recruited_arseny set_variable = { mcksp_recruiter_arseny = mcksp_tmp_recruit_c } }
+	else_if = { limit = { check_variable = { mcksp_tmp_best_guest = 4 } }  set_country_flag = mcksp_being_recruited_gleb  set_variable = { mcksp_recruiter_gleb = mcksp_tmp_recruit_c } }
+	else_if = { limit = { check_variable = { mcksp_tmp_best_guest = 6 } }  set_country_flag = mcksp_being_recruited_ivan  set_variable = { mcksp_recruiter_ivan = mcksp_tmp_recruit_c } }
+	else_if = { limit = { check_variable = { mcksp_tmp_best_guest = 7 } }  set_country_flag = mcksp_being_recruited_ilya  set_variable = { mcksp_recruiter_ilya = mcksp_tmp_recruit_c } }
+	else_if = { limit = { check_variable = { mcksp_tmp_best_guest = 9 } }  set_country_flag = mcksp_being_recruited_artem set_variable = { mcksp_recruiter_artem = mcksp_tmp_recruit_c } }
+	else_if = { limit = { check_variable = { mcksp_tmp_best_guest = 10 } } set_country_flag = mcksp_being_recruited_ilgam set_variable = { mcksp_recruiter_ilgam = mcksp_tmp_recruit_c } }
+}
+MCKSP_clr_being_recruited = {
+	if = { limit = { check_variable = { mcksp_tmp_best_guest = 2 } }  clr_country_flag = mcksp_being_recruited_arseny }
+	else_if = { limit = { check_variable = { mcksp_tmp_best_guest = 4 } }  clr_country_flag = mcksp_being_recruited_gleb }
+	else_if = { limit = { check_variable = { mcksp_tmp_best_guest = 6 } }  clr_country_flag = mcksp_being_recruited_ivan }
+	else_if = { limit = { check_variable = { mcksp_tmp_best_guest = 7 } }  clr_country_flag = mcksp_being_recruited_ilya }
+	else_if = { limit = { check_variable = { mcksp_tmp_best_guest = 9 } }  clr_country_flag = mcksp_being_recruited_artem }
+	else_if = { limit = { check_variable = { mcksp_tmp_best_guest = 10 } } clr_country_flag = mcksp_being_recruited_ilgam }
+}
+# Назначить цель ИИ в коалицию mcksp_tmp_recruit_c, если свободна И НЕ оспорена (иначе
+# пропуск — решит ивент-контест по завершении приглашения игрока).
+MCKSP_ai_assign_target = {
+	if = { limit = { check_variable = { mcksp_tmp_best_guest = 2 }  check_variable = { coalition_of_arseny = 0 } NOT = { has_country_flag = mcksp_contested_arseny } } MCKSP_recruit_assign_arseny = yes }
+	else_if = { limit = { check_variable = { mcksp_tmp_best_guest = 4 }  check_variable = { coalition_of_gleb = 0 } NOT = { has_country_flag = mcksp_contested_gleb } }   MCKSP_recruit_assign_gleb = yes }
+	else_if = { limit = { check_variable = { mcksp_tmp_best_guest = 6 }  check_variable = { coalition_of_ivan = 0 } NOT = { has_country_flag = mcksp_contested_ivan } }   MCKSP_recruit_assign_ivan = yes }
+	else_if = { limit = { check_variable = { mcksp_tmp_best_guest = 7 }  check_variable = { coalition_of_ilya = 0 } NOT = { has_country_flag = mcksp_contested_ilya } }   MCKSP_recruit_assign_ilya = yes }
+	else_if = { limit = { check_variable = { mcksp_tmp_best_guest = 9 }  check_variable = { coalition_of_artem = 0 } NOT = { has_country_flag = mcksp_contested_artem } }  MCKSP_recruit_assign_artem = yes }
+	else_if = { limit = { check_variable = { mcksp_tmp_best_guest = 10 } check_variable = { coalition_of_ilgam = 0 } NOT = { has_country_flag = mcksp_contested_ilgam } } MCKSP_recruit_assign_ilgam = yes }
+}
+MCKSP_ai_pick_target_1 = {
+	set_variable = { recruit_target_1 = 0 }
+	if = {
+		limit = { has_country_flag = mcksp_phase_1 NOT = { check_variable = { player_coalition = 1 } } NOT = { has_country_flag = mcksp_recruit_pool_empty } }
+		set_temp_variable = { mcksp_tmp_recruit_c = 1 }
+		set_temp_variable = { mcksp_tmp_ax = -2 } set_temp_variable = { mcksp_tmp_ay = -5 }
+		MCKSP_find_best_candidate = yes
+		if = { limit = { check_variable = { mcksp_tmp_best_guest > 0 } } set_variable = { recruit_target_1 = mcksp_tmp_best_guest } MCKSP_mark_being_recruited = yes }
+	}
+}
+MCKSP_ai_pick_target_2 = {
+	set_variable = { recruit_target_2 = 0 }
+	if = {
+		limit = { has_country_flag = mcksp_phase_1 NOT = { check_variable = { player_coalition = 2 } } NOT = { has_country_flag = mcksp_recruit_pool_empty } }
+		set_temp_variable = { mcksp_tmp_recruit_c = 2 }
+		set_temp_variable = { mcksp_tmp_ax = 4 } set_temp_variable = { mcksp_tmp_ay = 8 }
+		MCKSP_find_best_candidate = yes
+		if = { limit = { check_variable = { mcksp_tmp_best_guest > 0 } } set_variable = { recruit_target_2 = mcksp_tmp_best_guest } MCKSP_mark_being_recruited = yes }
+	}
+}
+MCKSP_ai_pick_target_3 = {
+	set_variable = { recruit_target_3 = 0 }
+	if = {
+		limit = { has_country_flag = mcksp_phase_1 NOT = { check_variable = { player_coalition = 3 } } NOT = { has_country_flag = mcksp_recruit_pool_empty } }
+		set_temp_variable = { mcksp_tmp_recruit_c = 3 }
+		set_temp_variable = { mcksp_tmp_ax = 2 } set_temp_variable = { mcksp_tmp_ay = 2 }
+		MCKSP_find_best_candidate = yes
+		if = { limit = { check_variable = { mcksp_tmp_best_guest > 0 } } set_variable = { recruit_target_3 = mcksp_tmp_best_guest } MCKSP_mark_being_recruited = yes }
+	}
+}
+MCKSP_ai_pick_target_4 = {
+	set_variable = { recruit_target_4 = 0 }
+	if = {
+		limit = { has_country_flag = mcksp_phase_1 NOT = { check_variable = { player_coalition = 4 } } NOT = { has_country_flag = mcksp_recruit_pool_empty } }
+		set_temp_variable = { mcksp_tmp_recruit_c = 4 }
+		set_temp_variable = { mcksp_tmp_ax = -5 } set_temp_variable = { mcksp_tmp_ay = 1 }
+		MCKSP_find_best_candidate = yes
+		if = { limit = { check_variable = { mcksp_tmp_best_guest > 0 } } set_variable = { recruit_target_4 = mcksp_tmp_best_guest } MCKSP_mark_being_recruited = yes }
+	}
+}
+MCKSP_ai_resolve_1 = { if = { limit = { check_variable = { recruit_target_1 > 0 } } set_temp_variable = { mcksp_tmp_recruit_c = 1 } set_temp_variable = { mcksp_tmp_best_guest = recruit_target_1 } MCKSP_clr_being_recruited = yes MCKSP_ai_assign_target = yes set_variable = { recruit_target_1 = 0 } } }
+MCKSP_ai_resolve_2 = { if = { limit = { check_variable = { recruit_target_2 > 0 } } set_temp_variable = { mcksp_tmp_recruit_c = 2 } set_temp_variable = { mcksp_tmp_best_guest = recruit_target_2 } MCKSP_clr_being_recruited = yes MCKSP_ai_assign_target = yes set_variable = { recruit_target_2 = 0 } } }
+MCKSP_ai_resolve_3 = { if = { limit = { check_variable = { recruit_target_3 > 0 } } set_temp_variable = { mcksp_tmp_recruit_c = 3 } set_temp_variable = { mcksp_tmp_best_guest = recruit_target_3 } MCKSP_clr_being_recruited = yes MCKSP_ai_assign_target = yes set_variable = { recruit_target_3 = 0 } } }
+MCKSP_ai_resolve_4 = { if = { limit = { check_variable = { recruit_target_4 > 0 } } set_temp_variable = { mcksp_tmp_recruit_c = 4 } set_temp_variable = { mcksp_tmp_best_guest = recruit_target_4 } MCKSP_clr_being_recruited = yes MCKSP_ai_assign_target = yes set_variable = { recruit_target_4 = 0 } } }
+# Очередь контеста: один ивент за раз (mcksp_contest_in_progress). Берёт первого
+# помеченного mcksp_contested_<g> и шлёт ивент. Флаг contested СНИМАЕТСЯ только при
+# РАЗРЕШЕНИИ ивента (MCKSP_contest_clear_resolved) — иначе ИИ мог бы забрать гостя в
+# окне между показом ивента и ответом игрока, а очередь потеряла бы пункт.
+MCKSP_contest_drain = {
+	if = {
+		limit = { NOT = { has_country_flag = mcksp_contest_in_progress } }
+		if = { limit = { has_country_flag = mcksp_contested_arseny } set_variable = { mcksp_contest_guest = 2 }  set_variable = { mcksp_contest_coalition = mcksp_recruiter_arseny } set_country_flag = mcksp_contest_in_progress country_event = { id = struggle_event.1 hours = 2 } }
+		else_if = { limit = { has_country_flag = mcksp_contested_gleb } set_variable = { mcksp_contest_guest = 4 }  set_variable = { mcksp_contest_coalition = mcksp_recruiter_gleb } set_country_flag = mcksp_contest_in_progress country_event = { id = struggle_event.1 hours = 2 } }
+		else_if = { limit = { has_country_flag = mcksp_contested_ivan } set_variable = { mcksp_contest_guest = 6 }  set_variable = { mcksp_contest_coalition = mcksp_recruiter_ivan } set_country_flag = mcksp_contest_in_progress country_event = { id = struggle_event.1 hours = 2 } }
+		else_if = { limit = { has_country_flag = mcksp_contested_ilya } set_variable = { mcksp_contest_guest = 7 }  set_variable = { mcksp_contest_coalition = mcksp_recruiter_ilya } set_country_flag = mcksp_contest_in_progress country_event = { id = struggle_event.1 hours = 2 } }
+		else_if = { limit = { has_country_flag = mcksp_contested_artem } set_variable = { mcksp_contest_guest = 9 }  set_variable = { mcksp_contest_coalition = mcksp_recruiter_artem } set_country_flag = mcksp_contest_in_progress country_event = { id = struggle_event.1 hours = 2 } }
+		else_if = { limit = { has_country_flag = mcksp_contested_ilgam } set_variable = { mcksp_contest_guest = 10 } set_variable = { mcksp_contest_coalition = mcksp_recruiter_ilgam } set_country_flag = mcksp_contest_in_progress country_event = { id = struggle_event.1 hours = 2 } }
+	}
+}
+# Снять флаг contested с разрешённого гостя (mcksp_contest_guest) — зовётся из опций ивента.
+MCKSP_contest_clear_resolved = {
+	if = { limit = { check_variable = { mcksp_contest_guest = 2 } }  clr_country_flag = mcksp_contested_arseny }
+	else_if = { limit = { check_variable = { mcksp_contest_guest = 4 } }  clr_country_flag = mcksp_contested_gleb }
+	else_if = { limit = { check_variable = { mcksp_contest_guest = 6 } }  clr_country_flag = mcksp_contested_ivan }
+	else_if = { limit = { check_variable = { mcksp_contest_guest = 7 } }  clr_country_flag = mcksp_contested_ilya }
+	else_if = { limit = { check_variable = { mcksp_contest_guest = 9 } }  clr_country_flag = mcksp_contested_artem }
+	else_if = { limit = { check_variable = { mcksp_contest_guest = 10 } } clr_country_flag = mcksp_contested_ilgam }
 }
 
 # Общий бросок вербовки. Вес = близость (close ->x3, reach ->x1, иначе 0) + skip.
@@ -200,49 +507,48 @@ MCKSP_recruit_roll = {
 	}
 }
 
-# Шаг ядра C (если не коалиция игрока и КД истёк). Координаты ядра -> ax/ay.
-MCKSP_coalition_recruit_step_1 = {
+# Вербовка ядром коалиции C своего ближайшего достижимого свободного гостя.
+# Темп задаёт таймер решения SOV_struggle_rival_move_* (days_remove = 42), НЕ КД-тик:
+# решения активируются одновременно в enter_phase1 -> 4 ядра вербуют синхронно.
+# Координаты ядра -> ax/ay. Гость берётся детерминированно (ближайший), без random.
+MCKSP_recruit_for_coalition_1 = {
 	if = {
-		limit = { NOT = { check_variable = { player_coalition = 1 } } check_variable = { recruit_cooldown_1 = 0 } }
+		limit = { has_country_flag = mcksp_phase_1 NOT = { check_variable = { player_coalition = 1 } } NOT = { has_country_flag = mcksp_recruit_pool_empty } }
 		set_temp_variable = { mcksp_tmp_recruit_c = 1 }
 		set_temp_variable = { mcksp_tmp_ax = -2 }
 		set_temp_variable = { mcksp_tmp_ay = -5 }
 		MCKSP_find_best_candidate = yes
-		if = { limit = { check_variable = { mcksp_tmp_best_guest > 0 } } random_list = { 70 = { MCKSP_assign_best_to_core = yes } 30 = { } } }
-		set_variable = { recruit_cooldown_1 = 6 }
+		if = { limit = { check_variable = { mcksp_tmp_best_guest > 0 } } MCKSP_assign_best_to_core = yes }
 	}
 }
-MCKSP_coalition_recruit_step_2 = {
+MCKSP_recruit_for_coalition_2 = {
 	if = {
-		limit = { NOT = { check_variable = { player_coalition = 2 } } check_variable = { recruit_cooldown_2 = 0 } }
+		limit = { has_country_flag = mcksp_phase_1 NOT = { check_variable = { player_coalition = 2 } } NOT = { has_country_flag = mcksp_recruit_pool_empty } }
 		set_temp_variable = { mcksp_tmp_recruit_c = 2 }
 		set_temp_variable = { mcksp_tmp_ax = 4 }
 		set_temp_variable = { mcksp_tmp_ay = 8 }
 		MCKSP_find_best_candidate = yes
-		if = { limit = { check_variable = { mcksp_tmp_best_guest > 0 } } random_list = { 70 = { MCKSP_assign_best_to_core = yes } 30 = { } } }
-		set_variable = { recruit_cooldown_2 = 6 }
+		if = { limit = { check_variable = { mcksp_tmp_best_guest > 0 } } MCKSP_assign_best_to_core = yes }
 	}
 }
-MCKSP_coalition_recruit_step_3 = {
+MCKSP_recruit_for_coalition_3 = {
 	if = {
-		limit = { NOT = { check_variable = { player_coalition = 3 } } check_variable = { recruit_cooldown_3 = 0 } }
+		limit = { has_country_flag = mcksp_phase_1 NOT = { check_variable = { player_coalition = 3 } } NOT = { has_country_flag = mcksp_recruit_pool_empty } }
 		set_temp_variable = { mcksp_tmp_recruit_c = 3 }
 		set_temp_variable = { mcksp_tmp_ax = 2 }
 		set_temp_variable = { mcksp_tmp_ay = 2 }
 		MCKSP_find_best_candidate = yes
-		if = { limit = { check_variable = { mcksp_tmp_best_guest > 0 } } random_list = { 70 = { MCKSP_assign_best_to_core = yes } 30 = { } } }
-		set_variable = { recruit_cooldown_3 = 6 }
+		if = { limit = { check_variable = { mcksp_tmp_best_guest > 0 } } MCKSP_assign_best_to_core = yes }
 	}
 }
-MCKSP_coalition_recruit_step_4 = {
+MCKSP_recruit_for_coalition_4 = {
 	if = {
-		limit = { NOT = { check_variable = { player_coalition = 4 } } check_variable = { recruit_cooldown_4 = 0 } }
+		limit = { has_country_flag = mcksp_phase_1 NOT = { check_variable = { player_coalition = 4 } } NOT = { has_country_flag = mcksp_recruit_pool_empty } }
 		set_temp_variable = { mcksp_tmp_recruit_c = 4 }
 		set_temp_variable = { mcksp_tmp_ax = -5 }
 		set_temp_variable = { mcksp_tmp_ay = 1 }
 		MCKSP_find_best_candidate = yes
-		if = { limit = { check_variable = { mcksp_tmp_best_guest > 0 } } random_list = { 70 = { MCKSP_assign_best_to_core = yes } 30 = { } } }
-		set_variable = { recruit_cooldown_4 = 6 }
+		if = { limit = { check_variable = { mcksp_tmp_best_guest > 0 } } MCKSP_assign_best_to_core = yes }
 	}
 }
 
@@ -252,22 +558,22 @@ MCKSP_coalition_recruit_step_4 = {
 MCKSP_find_best_candidate = {
 	set_temp_variable = { mcksp_tmp_best_dist2 = 9999 }
 	set_temp_variable = { mcksp_tmp_best_guest = 0 }
-	if = { limit = { check_variable = { coalition_of_arseny = 0 } NOT = { has_country_flag = mcksp_guest_gone_arseny } }
+	if = { limit = { check_variable = { coalition_of_arseny = 0 } NOT = { has_country_flag = mcksp_guest_gone_arseny } NOT = { has_country_flag = mcksp_inviting_arseny } NOT = { has_country_flag = mcksp_being_recruited_arseny } }
 		set_temp_variable = { mcksp_tmp_bx = -1 } set_temp_variable = { mcksp_tmp_by = -4 } MCKSP_calc_dist2 = yes
 		if = { limit = { check_variable = { mcksp_tmp_dist2 < 101 } check_variable = { mcksp_tmp_dist2 < mcksp_tmp_best_dist2 } } set_temp_variable = { mcksp_tmp_best_dist2 = mcksp_tmp_dist2 } set_temp_variable = { mcksp_tmp_best_guest = 2 } } }
-	if = { limit = { check_variable = { coalition_of_gleb = 0 } NOT = { has_country_flag = mcksp_guest_gone_gleb } }
+	if = { limit = { check_variable = { coalition_of_gleb = 0 } NOT = { has_country_flag = mcksp_guest_gone_gleb } NOT = { has_country_flag = mcksp_inviting_gleb } NOT = { has_country_flag = mcksp_being_recruited_gleb } }
 		set_temp_variable = { mcksp_tmp_bx = 1 } set_temp_variable = { mcksp_tmp_by = 1 } MCKSP_calc_dist2 = yes
 		if = { limit = { check_variable = { mcksp_tmp_dist2 < 101 } check_variable = { mcksp_tmp_dist2 < mcksp_tmp_best_dist2 } } set_temp_variable = { mcksp_tmp_best_dist2 = mcksp_tmp_dist2 } set_temp_variable = { mcksp_tmp_best_guest = 4 } } }
-	if = { limit = { check_variable = { coalition_of_ivan = 0 } NOT = { has_country_flag = mcksp_guest_gone_ivan } }
+	if = { limit = { check_variable = { coalition_of_ivan = 0 } NOT = { has_country_flag = mcksp_guest_gone_ivan } NOT = { has_country_flag = mcksp_inviting_ivan } NOT = { has_country_flag = mcksp_being_recruited_ivan } }
 		set_temp_variable = { mcksp_tmp_bx = 1 } set_temp_variable = { mcksp_tmp_by = 4 } MCKSP_calc_dist2 = yes
 		if = { limit = { check_variable = { mcksp_tmp_dist2 < 101 } check_variable = { mcksp_tmp_dist2 < mcksp_tmp_best_dist2 } } set_temp_variable = { mcksp_tmp_best_dist2 = mcksp_tmp_dist2 } set_temp_variable = { mcksp_tmp_best_guest = 6 } } }
-	if = { limit = { check_variable = { coalition_of_ilya = 0 } NOT = { has_country_flag = mcksp_guest_gone_ilya } }
+	if = { limit = { check_variable = { coalition_of_ilya = 0 } NOT = { has_country_flag = mcksp_guest_gone_ilya } NOT = { has_country_flag = mcksp_inviting_ilya } NOT = { has_country_flag = mcksp_being_recruited_ilya } }
 		set_temp_variable = { mcksp_tmp_bx = 2 } set_temp_variable = { mcksp_tmp_by = 6 } MCKSP_calc_dist2 = yes
 		if = { limit = { check_variable = { mcksp_tmp_dist2 < 101 } check_variable = { mcksp_tmp_dist2 < mcksp_tmp_best_dist2 } } set_temp_variable = { mcksp_tmp_best_dist2 = mcksp_tmp_dist2 } set_temp_variable = { mcksp_tmp_best_guest = 7 } } }
-	if = { limit = { check_variable = { coalition_of_artem = 0 } NOT = { has_country_flag = mcksp_guest_gone_artem } }
+	if = { limit = { check_variable = { coalition_of_artem = 0 } NOT = { has_country_flag = mcksp_guest_gone_artem } NOT = { has_country_flag = mcksp_inviting_artem } NOT = { has_country_flag = mcksp_being_recruited_artem } }
 		set_temp_variable = { mcksp_tmp_bx = -4 } set_temp_variable = { mcksp_tmp_by = -2 } MCKSP_calc_dist2 = yes
 		if = { limit = { check_variable = { mcksp_tmp_dist2 < 101 } check_variable = { mcksp_tmp_dist2 < mcksp_tmp_best_dist2 } } set_temp_variable = { mcksp_tmp_best_dist2 = mcksp_tmp_dist2 } set_temp_variable = { mcksp_tmp_best_guest = 9 } } }
-	if = { limit = { check_variable = { coalition_of_ilgam = 0 } NOT = { has_country_flag = mcksp_guest_gone_ilgam } }
+	if = { limit = { check_variable = { coalition_of_ilgam = 0 } NOT = { has_country_flag = mcksp_guest_gone_ilgam } NOT = { has_country_flag = mcksp_inviting_ilgam } NOT = { has_country_flag = mcksp_being_recruited_ilgam } }
 		set_temp_variable = { mcksp_tmp_bx = -3 } set_temp_variable = { mcksp_tmp_by = 5 } MCKSP_calc_dist2 = yes
 		if = { limit = { check_variable = { mcksp_tmp_dist2 < 101 } check_variable = { mcksp_tmp_dist2 < mcksp_tmp_best_dist2 } } set_temp_variable = { mcksp_tmp_best_dist2 = mcksp_tmp_dist2 } set_temp_variable = { mcksp_tmp_best_guest = 10 } } }
 }
@@ -295,13 +601,6 @@ MCKSP_sync_dead_from_coalitions = {
 	if = { limit = { has_country_flag = mcksp_guest_gone_artem } set_variable = { coalition_of_artem = 0 } }
 	if = { limit = { has_country_flag = mcksp_guest_gone_ilgam } set_variable = { coalition_of_ilgam = 0 } }
 	MCKSP_recompute_sizes = yes
-}
-
-MCKSP_decrement_cooldowns = {
-	if = { limit = { check_variable = { recruit_cooldown_1 > 0 } } subtract_from_variable = { recruit_cooldown_1 = 1 } }
-	if = { limit = { check_variable = { recruit_cooldown_2 > 0 } } subtract_from_variable = { recruit_cooldown_2 = 1 } }
-	if = { limit = { check_variable = { recruit_cooldown_3 > 0 } } subtract_from_variable = { recruit_cooldown_3 = 1 } }
-	if = { limit = { check_variable = { recruit_cooldown_4 > 0 } } subtract_from_variable = { recruit_cooldown_4 = 1 } }
 }
 
 # Размеры коалиций (для правила "ореол при >1 члене").
@@ -361,16 +660,13 @@ MCKSP_check_phase1_end = {
 	if = { limit = { check_variable = { coalition_of_ilya = 0 }   NOT = { has_country_flag = mcksp_guest_gone_ilya } }   add_to_temp_variable = { mcksp_tmp_score = 1 } }
 	if = { limit = { check_variable = { coalition_of_artem = 0 }  NOT = { has_country_flag = mcksp_guest_gone_artem } }  add_to_temp_variable = { mcksp_tmp_score = 1 } }
 	if = { limit = { check_variable = { coalition_of_ilgam = 0 }  NOT = { has_country_flag = mcksp_guest_gone_ilgam } }  add_to_temp_variable = { mcksp_tmp_score = 1 } }
-	if = { limit = { check_variable = { mcksp_tmp_score < 1 } } MCKSP_struggle_enter_phase2 = yes }
+	# Пул пуст -> флаг скипа ИИ-решений (их remove_effect станет no-op) + переход в фазу 2.
+	if = { limit = { check_variable = { mcksp_tmp_score < 1 } } set_country_flag = mcksp_recruit_pool_empty MCKSP_struggle_enter_phase2 = yes }
 }
 
+# Еженедельный тик фазы 1: вербовку гонят таймеры решений соперников (их remove_effect),
+# здесь только свежие цены приглашений игрока и проверка конца фазы.
 MCKSP_recruitment_tick = {
-	MCKSP_coalition_recruit_step_1 = yes
-	MCKSP_coalition_recruit_step_2 = yes
-	MCKSP_coalition_recruit_step_3 = yes
-	MCKSP_coalition_recruit_step_4 = yes
-	MCKSP_decrement_cooldowns = yes
-	MCKSP_recompute_sizes = yes
 	MCKSP_compute_invite_costs = yes   # цены/достижимость свежие (player_self мог сдвинуться)
 	MCKSP_check_phase1_end = yes
 }
@@ -650,46 +946,82 @@ MCKSP_publish_coalition_pops = {
 # Приглашение игрока (фаза 1). Вызывается из remove_effect решения-оффера.
 # ----------------------------------------------------------------------------
 MCKSP_invite_arseny = {
-	set_variable = { coalition_of_arseny = player_coalition }
 	clr_country_flag = mcksp_inviting_arseny
-	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.03 }
-	MCKSP_recompute_sizes = yes
-	MCKSP_recompute_attitudes = yes
+	if = { limit = { has_country_flag = mcksp_contested_arseny } MCKSP_contest_drain = yes }
+	else_if = {
+		limit = { check_variable = { coalition_of_arseny = 0 } }
+		set_variable = { coalition_of_arseny = player_coalition }
+		add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.03 }
+		MCKSP_recompute_sizes = yes
+		MCKSP_recompute_attitudes = yes
+		MCKSP_mark_instant_arseny = yes
+		MCKSP_announce_join_arseny = yes
+	}
 }
 MCKSP_invite_gleb = {
-	set_variable = { coalition_of_gleb = player_coalition }
 	clr_country_flag = mcksp_inviting_gleb
-	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.03 }
-	MCKSP_recompute_sizes = yes
-	MCKSP_recompute_attitudes = yes
+	if = { limit = { has_country_flag = mcksp_contested_gleb } MCKSP_contest_drain = yes }
+	else_if = {
+		limit = { check_variable = { coalition_of_gleb = 0 } }
+		set_variable = { coalition_of_gleb = player_coalition }
+		add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.03 }
+		MCKSP_recompute_sizes = yes
+		MCKSP_recompute_attitudes = yes
+		MCKSP_mark_instant_gleb = yes
+		MCKSP_announce_join_gleb = yes
+	}
 }
 MCKSP_invite_ivan = {
-	set_variable = { coalition_of_ivan = player_coalition }
 	clr_country_flag = mcksp_inviting_ivan
-	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.03 }
-	MCKSP_recompute_sizes = yes
-	MCKSP_recompute_attitudes = yes
+	if = { limit = { has_country_flag = mcksp_contested_ivan } MCKSP_contest_drain = yes }
+	else_if = {
+		limit = { check_variable = { coalition_of_ivan = 0 } }
+		set_variable = { coalition_of_ivan = player_coalition }
+		add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.03 }
+		MCKSP_recompute_sizes = yes
+		MCKSP_recompute_attitudes = yes
+		MCKSP_mark_instant_ivan = yes
+		MCKSP_announce_join_ivan = yes
+	}
 }
 MCKSP_invite_ilya = {
-	set_variable = { coalition_of_ilya = player_coalition }
 	clr_country_flag = mcksp_inviting_ilya
-	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.03 }
-	MCKSP_recompute_sizes = yes
-	MCKSP_recompute_attitudes = yes
+	if = { limit = { has_country_flag = mcksp_contested_ilya } MCKSP_contest_drain = yes }
+	else_if = {
+		limit = { check_variable = { coalition_of_ilya = 0 } }
+		set_variable = { coalition_of_ilya = player_coalition }
+		add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.03 }
+		MCKSP_recompute_sizes = yes
+		MCKSP_recompute_attitudes = yes
+		MCKSP_mark_instant_ilya = yes
+		MCKSP_announce_join_ilya = yes
+	}
 }
 MCKSP_invite_artem = {
-	set_variable = { coalition_of_artem = player_coalition }
 	clr_country_flag = mcksp_inviting_artem
-	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.03 }
-	MCKSP_recompute_sizes = yes
-	MCKSP_recompute_attitudes = yes
+	if = { limit = { has_country_flag = mcksp_contested_artem } MCKSP_contest_drain = yes }
+	else_if = {
+		limit = { check_variable = { coalition_of_artem = 0 } }
+		set_variable = { coalition_of_artem = player_coalition }
+		add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.03 }
+		MCKSP_recompute_sizes = yes
+		MCKSP_recompute_attitudes = yes
+		MCKSP_mark_instant_artem = yes
+		MCKSP_announce_join_artem = yes
+	}
 }
 MCKSP_invite_ilgam = {
-	set_variable = { coalition_of_ilgam = player_coalition }
 	clr_country_flag = mcksp_inviting_ilgam
-	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.03 }
-	MCKSP_recompute_sizes = yes
-	MCKSP_recompute_attitudes = yes
+	if = { limit = { has_country_flag = mcksp_contested_ilgam } MCKSP_contest_drain = yes }
+	else_if = {
+		limit = { check_variable = { coalition_of_ilgam = 0 } }
+		set_variable = { coalition_of_ilgam = player_coalition }
+		add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.03 }
+		MCKSP_recompute_sizes = yes
+		MCKSP_recompute_attitudes = yes
+		MCKSP_mark_instant_ilgam = yes
+		MCKSP_announce_join_ilgam = yes
+	}
 }
 
 # ----------------------------------------------------------------------------
@@ -888,39 +1220,43 @@ MCKSP_pick_faction_reformers = {
 	set_variable = { player_self = 1 }
 	set_country_flag = SOV_player_core_reformers
 	MCKSP_struggle_enter_phase1 = yes
+	MCKSP_mark_self_instant_cores = yes
 }
 MCKSP_pick_faction_statists = {
 	set_variable = { player_coalition = 2 }
 	set_variable = { player_self = 8 }
 	set_country_flag = SOV_player_core_statists
 	MCKSP_struggle_enter_phase1 = yes
+	MCKSP_mark_self_instant_cores = yes
 }
 MCKSP_pick_faction_centrists = {
 	set_variable = { player_coalition = 3 }
 	set_variable = { player_self = 5 }
 	set_country_flag = SOV_player_core_centrists
 	MCKSP_struggle_enter_phase1 = yes
+	MCKSP_mark_self_instant_cores = yes
 }
 MCKSP_pick_faction_socialists = {
 	set_variable = { player_coalition = 4 }
 	set_variable = { player_self = 3 }
 	set_country_flag = SOV_player_core_socialists
 	MCKSP_struggle_enter_phase1 = yes
+	MCKSP_mark_self_instant_cores = yes
 }
 
 # ----------------------------------------------------------------------------
 # Сдвиг "я" внутри своей коалиции (фаза 1). Коалиция не меняется.
 # ----------------------------------------------------------------------------
 MCKSP_set_player_self_to_nikita   = { if = { limit = { check_variable = { coalition_of_nikita = player_coalition } }   set_variable = { player_self = 1 }  MCKSP_recompute_attitudes = yes } }
-MCKSP_set_player_self_to_arseny   = { if = { limit = { check_variable = { coalition_of_arseny = player_coalition } }   set_variable = { player_self = 2 }  MCKSP_recompute_attitudes = yes } }
+MCKSP_set_player_self_to_arseny   = { if = { limit = { check_variable = { coalition_of_arseny = player_coalition } }   set_variable = { player_self = 2 }  MCKSP_recompute_attitudes = yes if = { limit = { has_country_flag = SOV_compass_open } set_country_flag = mcksp_self_instant_arseny } } }
 MCKSP_set_player_self_to_demokrit = { if = { limit = { check_variable = { coalition_of_demokrit = player_coalition } } set_variable = { player_self = 3 }  MCKSP_recompute_attitudes = yes } }
-MCKSP_set_player_self_to_gleb     = { if = { limit = { check_variable = { coalition_of_gleb = player_coalition } }     set_variable = { player_self = 4 }  MCKSP_recompute_attitudes = yes } }
+MCKSP_set_player_self_to_gleb     = { if = { limit = { check_variable = { coalition_of_gleb = player_coalition } }     set_variable = { player_self = 4 }  MCKSP_recompute_attitudes = yes if = { limit = { has_country_flag = SOV_compass_open } set_country_flag = mcksp_self_instant_gleb } } }
 MCKSP_set_player_self_to_stepan   = { if = { limit = { check_variable = { coalition_of_stepan = player_coalition } }   set_variable = { player_self = 5 }  MCKSP_recompute_attitudes = yes } }
-MCKSP_set_player_self_to_ivan     = { if = { limit = { check_variable = { coalition_of_ivan = player_coalition } }     set_variable = { player_self = 6 }  MCKSP_recompute_attitudes = yes } }
-MCKSP_set_player_self_to_ilya     = { if = { limit = { check_variable = { coalition_of_ilya = player_coalition } }     set_variable = { player_self = 7 }  MCKSP_recompute_attitudes = yes } }
+MCKSP_set_player_self_to_ivan     = { if = { limit = { check_variable = { coalition_of_ivan = player_coalition } }     set_variable = { player_self = 6 }  MCKSP_recompute_attitudes = yes if = { limit = { has_country_flag = SOV_compass_open } set_country_flag = mcksp_self_instant_ivan } } }
+MCKSP_set_player_self_to_ilya     = { if = { limit = { check_variable = { coalition_of_ilya = player_coalition } }     set_variable = { player_self = 7 }  MCKSP_recompute_attitudes = yes if = { limit = { has_country_flag = SOV_compass_open } set_country_flag = mcksp_self_instant_ilya } } }
 MCKSP_set_player_self_to_evgeny   = { if = { limit = { check_variable = { coalition_of_evgeny = player_coalition } }   set_variable = { player_self = 8 }  MCKSP_recompute_attitudes = yes } }
-MCKSP_set_player_self_to_artem    = { if = { limit = { check_variable = { coalition_of_artem = player_coalition } }    set_variable = { player_self = 9 }  MCKSP_recompute_attitudes = yes } }
-MCKSP_set_player_self_to_ilgam    = { if = { limit = { check_variable = { coalition_of_ilgam = player_coalition } }    set_variable = { player_self = 10 } MCKSP_recompute_attitudes = yes } }
+MCKSP_set_player_self_to_artem    = { if = { limit = { check_variable = { coalition_of_artem = player_coalition } }    set_variable = { player_self = 9 }  MCKSP_recompute_attitudes = yes if = { limit = { has_country_flag = SOV_compass_open } set_country_flag = mcksp_self_instant_artem } } }
+MCKSP_set_player_self_to_ilgam    = { if = { limit = { check_variable = { coalition_of_ilgam = player_coalition } }    set_variable = { player_self = 10 } MCKSP_recompute_attitudes = yes if = { limit = { has_country_flag = SOV_compass_open } set_country_flag = mcksp_self_instant_ilgam } } }
 
 # ----------------------------------------------------------------------------
 # Расчёт цен приглашений (PP) и достижимости — на входе в фазу 1 и при сдвиге "я".
@@ -971,37 +1307,48 @@ MCKSP_compute_invite_costs = {
 # ----------------------------------------------------------------------------
 MCKSP_struggle_enter_phase1 = {
 	set_variable = { mcksp_struggle_phase = 1 }
-	# Стартовая задержка вербовки ИИ (~6 недель ≈ 42 дня до первого сторонника).
-	set_variable = { recruit_cooldown_1 = 6 }
-	set_variable = { recruit_cooldown_2 = 6 }
-	set_variable = { recruit_cooldown_3 = 6 }
-	set_variable = { recruit_cooldown_4 = 6 }
 	MCKSP_sync_phase_flags = yes
 	MCKSP_compute_invite_costs = yes
 	MCKSP_recompute_sizes = yes
 	MCKSP_recompute_attitudes = yes
+	# Запуск таймеров авто-вербовки ИИ: активируем решения 3 коалиций-соперников
+	# (кроме коалиции игрока). Все стартуют одновременно (days_remove = 42) -> ядра
+	# вербуют синхронно, а таймер до следующей вербовки виден всегда (фаза 1).
+	if = { limit = { NOT = { check_variable = { player_coalition = 1 } } } MCKSP_ai_pick_target_1 = yes activate_decision = SOV_struggle_rival_move_reformers }
+	if = { limit = { NOT = { check_variable = { player_coalition = 2 } } } MCKSP_ai_pick_target_2 = yes activate_decision = SOV_struggle_rival_move_statists }
+	if = { limit = { NOT = { check_variable = { player_coalition = 3 } } } MCKSP_ai_pick_target_3 = yes activate_decision = SOV_struggle_rival_move_centrists }
+	if = { limit = { NOT = { check_variable = { player_coalition = 4 } } } MCKSP_ai_pick_target_4 = yes activate_decision = SOV_struggle_rival_move_socialists }
+	country_event = { id = struggle_event.4 hours = 1 }
 }
 MCKSP_struggle_enter_phase2 = {
 	MCKSP_pick_leader_targets = yes
 	set_variable = { mcksp_struggle_phase = 2 }
-	# Стартовая задержка пуша лидера ИИ (~6 недель ≈ 42 дня, КД как у вербовки).
-	set_variable = { push_cooldown_1 = 6 }
-	set_variable = { push_cooldown_2 = 6 }
-	set_variable = { push_cooldown_3 = 6 }
-	set_variable = { push_cooldown_4 = 6 }
 	MCKSP_sync_phase_flags = yes
 	MCKSP_publish_coalition_pops = yes
+	# Немедленный первый пуш ИИ (продвижение+очернение), затем таймеры решений на следующий
+	# (days_remove = 42 = виден ПОЛНЫЙ отсчёт до пуша, как в фазе 1). Кроме коалиции игрока.
+	MCKSP_ai_push_resolve_1 = yes
+	MCKSP_ai_push_resolve_2 = yes
+	MCKSP_ai_push_resolve_3 = yes
+	MCKSP_ai_push_resolve_4 = yes
+	if = { limit = { NOT = { check_variable = { player_coalition = 1 } } } activate_decision = SOV_struggle_rival_push_reformers }
+	if = { limit = { NOT = { check_variable = { player_coalition = 2 } } } activate_decision = SOV_struggle_rival_push_statists }
+	if = { limit = { NOT = { check_variable = { player_coalition = 3 } } } activate_decision = SOV_struggle_rival_push_centrists }
+	if = { limit = { NOT = { check_variable = { player_coalition = 4 } } } activate_decision = SOV_struggle_rival_push_socialists }
+	country_event = { id = struggle_event.5 hours = 1 }
 }
 MCKSP_struggle_enter_phase3 = {
 	set_variable = { mcksp_struggle_phase = 3 }
 	MCKSP_sync_phase_flags = yes
 	MCKSP_publish_coalition_pops = yes
+	country_event = { id = struggle_event.6 hours = 1 }
 }
 MCKSP_struggle_enter_phase4 = {
 	set_variable = { mcksp_struggle_phase = 4 }
 	MCKSP_sync_phase_flags = yes
 	set_country_flag = mcksp_struggle_endgame
 	MCKSP_publish_coalition_pops = yes
+	country_event = { id = struggle_event.7 hours = 1 }
 }
 
 MCKSP_sync_phase_flags = {
@@ -1060,6 +1407,12 @@ MCKSP_phase2_ai_tick = {
 	MCKSP_ai_push_coalition_4 = yes
 	MCKSP_decrement_push_cooldowns = yes
 }
+# Пуш ИИ-коалиции C (продвижение лидера + очернение врага). Темп задаёт таймер решения
+# SOV_struggle_rival_push_* (days_remove), как в фазе 1 — НЕ КД-тик. Без активации decision.
+MCKSP_ai_push_resolve_1 = { if = { limit = { has_country_flag = mcksp_phase_2 NOT = { check_variable = { player_coalition = 1 } } } set_temp_variable = { mcksp_tmp_leader = leader_target_1 } MCKSP_ai_promote_leader = yes set_temp_variable = { mcksp_tmp_ai_coal = 1 } MCKSP_ai_slander_enemy = yes } }
+MCKSP_ai_push_resolve_2 = { if = { limit = { has_country_flag = mcksp_phase_2 NOT = { check_variable = { player_coalition = 2 } } } set_temp_variable = { mcksp_tmp_leader = leader_target_2 } MCKSP_ai_promote_leader = yes set_temp_variable = { mcksp_tmp_ai_coal = 2 } MCKSP_ai_slander_enemy = yes } }
+MCKSP_ai_push_resolve_3 = { if = { limit = { has_country_flag = mcksp_phase_2 NOT = { check_variable = { player_coalition = 3 } } } set_temp_variable = { mcksp_tmp_leader = leader_target_3 } MCKSP_ai_promote_leader = yes set_temp_variable = { mcksp_tmp_ai_coal = 3 } MCKSP_ai_slander_enemy = yes } }
+MCKSP_ai_push_resolve_4 = { if = { limit = { has_country_flag = mcksp_phase_2 NOT = { check_variable = { player_coalition = 4 } } } set_temp_variable = { mcksp_tmp_leader = leader_target_4 } MCKSP_ai_promote_leader = yes set_temp_variable = { mcksp_tmp_ai_coal = 4 } MCKSP_ai_slander_enemy = yes } }
 MCKSP_decrement_push_cooldowns = {
 	if = { limit = { check_variable = { push_cooldown_1 > 0 } } subtract_from_variable = { push_cooldown_1 = 1 } }
 	if = { limit = { check_variable = { push_cooldown_2 > 0 } } subtract_from_variable = { push_cooldown_2 = 1 } }
@@ -1084,6 +1437,8 @@ MCKSP_ai_push_coalition_1 = {
 		limit = { NOT = { check_variable = { player_coalition = 1 } } check_variable = { push_cooldown_1 = 0 } }
 		set_temp_variable = { mcksp_tmp_leader = leader_target_1 }
 		MCKSP_ai_promote_leader = yes
+		set_temp_variable = { mcksp_tmp_ai_coal = 1 }
+		MCKSP_ai_slander_enemy = yes
 		set_country_flag = mcksp_rival_push_1
 		activate_decision = SOV_struggle_rival_push_reformers
 		set_variable = { push_cooldown_1 = 6 }
@@ -1094,6 +1449,8 @@ MCKSP_ai_push_coalition_2 = {
 		limit = { NOT = { check_variable = { player_coalition = 2 } } check_variable = { push_cooldown_2 = 0 } }
 		set_temp_variable = { mcksp_tmp_leader = leader_target_2 }
 		MCKSP_ai_promote_leader = yes
+		set_temp_variable = { mcksp_tmp_ai_coal = 2 }
+		MCKSP_ai_slander_enemy = yes
 		set_country_flag = mcksp_rival_push_2
 		activate_decision = SOV_struggle_rival_push_statists
 		set_variable = { push_cooldown_2 = 6 }
@@ -1104,6 +1461,8 @@ MCKSP_ai_push_coalition_3 = {
 		limit = { NOT = { check_variable = { player_coalition = 3 } } check_variable = { push_cooldown_3 = 0 } }
 		set_temp_variable = { mcksp_tmp_leader = leader_target_3 }
 		MCKSP_ai_promote_leader = yes
+		set_temp_variable = { mcksp_tmp_ai_coal = 3 }
+		MCKSP_ai_slander_enemy = yes
 		set_country_flag = mcksp_rival_push_3
 		activate_decision = SOV_struggle_rival_push_centrists
 		set_variable = { push_cooldown_3 = 6 }
@@ -1114,8 +1473,53 @@ MCKSP_ai_push_coalition_4 = {
 		limit = { NOT = { check_variable = { player_coalition = 4 } } check_variable = { push_cooldown_4 = 0 } }
 		set_temp_variable = { mcksp_tmp_leader = leader_target_4 }
 		MCKSP_ai_promote_leader = yes
+		set_temp_variable = { mcksp_tmp_ai_coal = 4 }
+		MCKSP_ai_slander_enemy = yes
 		set_country_flag = mcksp_rival_push_4
 		activate_decision = SOV_struggle_rival_push_socialists
 		set_variable = { push_cooldown_4 = 6 }
 	}
+}
+
+# ИИ-очернение (фаза 2): коалиция mcksp_tmp_ai_coal бьёт p_ случайного ВРАГА (в чужой
+# коалиции, жив). НЕ трогает доверие Сталина (это не игрок) и не шлёт ивент. -0.01 поп.
+MCKSP_ai_slander_enemy = {
+	random_list = {
+		10 = { modifier = { factor = 0 OR = { check_variable = { coalition_of_nikita = mcksp_tmp_ai_coal } NOT = { check_variable = { coalition_of_nikita > 0 } } has_country_flag = mcksp_guest_gone_nikita } } MCKSP_ai_slander_nikita = yes }
+		10 = { modifier = { factor = 0 OR = { check_variable = { coalition_of_arseny = mcksp_tmp_ai_coal } NOT = { check_variable = { coalition_of_arseny > 0 } } has_country_flag = mcksp_guest_gone_arseny } } MCKSP_ai_slander_arseny = yes }
+		10 = { modifier = { factor = 0 OR = { check_variable = { coalition_of_demokrit = mcksp_tmp_ai_coal } NOT = { check_variable = { coalition_of_demokrit > 0 } } has_country_flag = mcksp_guest_gone_demokrit } } MCKSP_ai_slander_demokrit = yes }
+		10 = { modifier = { factor = 0 OR = { check_variable = { coalition_of_gleb = mcksp_tmp_ai_coal } NOT = { check_variable = { coalition_of_gleb > 0 } } has_country_flag = mcksp_guest_gone_gleb } } MCKSP_ai_slander_gleb = yes }
+		10 = { modifier = { factor = 0 OR = { check_variable = { coalition_of_stepan = mcksp_tmp_ai_coal } NOT = { check_variable = { coalition_of_stepan > 0 } } has_country_flag = mcksp_guest_gone_stepan } } MCKSP_ai_slander_stepan = yes }
+		10 = { modifier = { factor = 0 OR = { check_variable = { coalition_of_ivan = mcksp_tmp_ai_coal } NOT = { check_variable = { coalition_of_ivan > 0 } } has_country_flag = mcksp_guest_gone_ivan } } MCKSP_ai_slander_ivan = yes }
+		10 = { modifier = { factor = 0 OR = { check_variable = { coalition_of_ilya = mcksp_tmp_ai_coal } NOT = { check_variable = { coalition_of_ilya > 0 } } has_country_flag = mcksp_guest_gone_ilya } } MCKSP_ai_slander_ilya = yes }
+		10 = { modifier = { factor = 0 OR = { check_variable = { coalition_of_evgeny = mcksp_tmp_ai_coal } NOT = { check_variable = { coalition_of_evgeny > 0 } } has_country_flag = mcksp_guest_gone_evgeny } } MCKSP_ai_slander_evgeny = yes }
+		10 = { modifier = { factor = 0 OR = { check_variable = { coalition_of_artem = mcksp_tmp_ai_coal } NOT = { check_variable = { coalition_of_artem > 0 } } has_country_flag = mcksp_guest_gone_artem } } MCKSP_ai_slander_artem = yes }
+		10 = { modifier = { factor = 0 OR = { check_variable = { coalition_of_ilgam = mcksp_tmp_ai_coal } NOT = { check_variable = { coalition_of_ilgam > 0 } } has_country_flag = mcksp_guest_gone_ilgam } } MCKSP_ai_slander_ilgam = yes }
+		12 = { }
+	}
+}
+MCKSP_ai_slander_nikita   = { subtract_from_variable = { p_nikita = 1 }   if = { limit = { check_variable = { p_nikita < 0 } }   set_variable = { p_nikita = 0 } }   add_popularity = { ideology = mcksp_social_liberalism popularity = -0.01 } }
+MCKSP_ai_slander_arseny   = { subtract_from_variable = { p_arseny = 1 }   if = { limit = { check_variable = { p_arseny < 0 } }   set_variable = { p_arseny = 0 } }   add_popularity = { ideology = mcksp_liberal_humanism popularity = -0.01 } }
+MCKSP_ai_slander_demokrit = { subtract_from_variable = { p_demokrit = 1 } if = { limit = { check_variable = { p_demokrit < 0 } } set_variable = { p_demokrit = 0 } } add_popularity = { ideology = mcksp_market_socialism popularity = -0.01 } }
+MCKSP_ai_slander_gleb     = { subtract_from_variable = { p_gleb = 1 }     if = { limit = { check_variable = { p_gleb < 0 } }     set_variable = { p_gleb = 0 } }     add_popularity = { ideology = mcksp_pragmatic_syncretism popularity = -0.01 } }
+MCKSP_ai_slander_stepan   = { subtract_from_variable = { p_stepan = 1 }   if = { limit = { check_variable = { p_stepan < 0 } }   set_variable = { p_stepan = 0 } }   add_popularity = { ideology = mcksp_christian_democracy popularity = -0.01 } }
+MCKSP_ai_slander_ivan     = { subtract_from_variable = { p_ivan = 1 }     if = { limit = { check_variable = { p_ivan < 0 } }     set_variable = { p_ivan = 0 } }     add_popularity = { ideology = mcksp_scientific_progressism popularity = -0.01 } }
+MCKSP_ai_slander_ilya     = { subtract_from_variable = { p_ilya = 1 }     if = { limit = { check_variable = { p_ilya < 0 } }     set_variable = { p_ilya = 0 } }     add_popularity = { ideology = mcksp_statist_technocratism popularity = -0.01 } }
+MCKSP_ai_slander_evgeny   = { subtract_from_variable = { p_evgeny = 1 }   if = { limit = { check_variable = { p_evgeny < 0 } }   set_variable = { p_evgeny = 0 } }   add_popularity = { ideology = mcksp_national_conservatism popularity = -0.01 } }
+MCKSP_ai_slander_artem    = { subtract_from_variable = { p_artem = 1 }    if = { limit = { check_variable = { p_artem < 0 } }    set_variable = { p_artem = 0 } }    add_popularity = { ideology = mcksp_democratic_socialism popularity = -0.01 } }
+MCKSP_ai_slander_ilgam    = { subtract_from_variable = { p_ilgam = 1 }    if = { limit = { check_variable = { p_ilgam < 0 } }    set_variable = { p_ilgam = 0 } }    add_popularity = { ideology = mcksp_placeholder_ilgam popularity = -0.01 } }
+
+# Случайный глагол клеветы НА КАЖДОГО гостя отдельно (mcksp_sverb_<g> = 1..4). Зовётся
+# при открытии меню клеветы -> у каждой цели свой глагол (найти компромат на X, очернить Y...).
+MCKSP_slander_roll_verbs = {
+	random_list = { 25 = { set_variable = { mcksp_sverb_nikita = 1 } }   25 = { set_variable = { mcksp_sverb_nikita = 2 } }   25 = { set_variable = { mcksp_sverb_nikita = 3 } }   25 = { set_variable = { mcksp_sverb_nikita = 4 } } }
+	random_list = { 25 = { set_variable = { mcksp_sverb_arseny = 1 } }   25 = { set_variable = { mcksp_sverb_arseny = 2 } }   25 = { set_variable = { mcksp_sverb_arseny = 3 } }   25 = { set_variable = { mcksp_sverb_arseny = 4 } } }
+	random_list = { 25 = { set_variable = { mcksp_sverb_demokrit = 1 } } 25 = { set_variable = { mcksp_sverb_demokrit = 2 } } 25 = { set_variable = { mcksp_sverb_demokrit = 3 } } 25 = { set_variable = { mcksp_sverb_demokrit = 4 } } }
+	random_list = { 25 = { set_variable = { mcksp_sverb_gleb = 1 } }     25 = { set_variable = { mcksp_sverb_gleb = 2 } }     25 = { set_variable = { mcksp_sverb_gleb = 3 } }     25 = { set_variable = { mcksp_sverb_gleb = 4 } } }
+	random_list = { 25 = { set_variable = { mcksp_sverb_stepan = 1 } }   25 = { set_variable = { mcksp_sverb_stepan = 2 } }   25 = { set_variable = { mcksp_sverb_stepan = 3 } }   25 = { set_variable = { mcksp_sverb_stepan = 4 } } }
+	random_list = { 25 = { set_variable = { mcksp_sverb_ivan = 1 } }     25 = { set_variable = { mcksp_sverb_ivan = 2 } }     25 = { set_variable = { mcksp_sverb_ivan = 3 } }     25 = { set_variable = { mcksp_sverb_ivan = 4 } } }
+	random_list = { 25 = { set_variable = { mcksp_sverb_ilya = 1 } }     25 = { set_variable = { mcksp_sverb_ilya = 2 } }     25 = { set_variable = { mcksp_sverb_ilya = 3 } }     25 = { set_variable = { mcksp_sverb_ilya = 4 } } }
+	random_list = { 25 = { set_variable = { mcksp_sverb_evgeny = 1 } }   25 = { set_variable = { mcksp_sverb_evgeny = 2 } }   25 = { set_variable = { mcksp_sverb_evgeny = 3 } }   25 = { set_variable = { mcksp_sverb_evgeny = 4 } } }
+	random_list = { 25 = { set_variable = { mcksp_sverb_artem = 1 } }    25 = { set_variable = { mcksp_sverb_artem = 2 } }    25 = { set_variable = { mcksp_sverb_artem = 3 } }    25 = { set_variable = { mcksp_sverb_artem = 4 } } }
+	random_list = { 25 = { set_variable = { mcksp_sverb_ilgam = 1 } }    25 = { set_variable = { mcksp_sverb_ilgam = 2 } }    25 = { set_variable = { mcksp_sverb_ilgam = 3 } }    25 = { set_variable = { mcksp_sverb_ilgam = 4 } } }
 }

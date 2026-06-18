@@ -34,7 +34,7 @@
  SOV_debug_kill_evgeny: "[DEBUG] Eliminate: Evgeny Okeanov"
  SOV_debug_kill_artem: "[DEBUG] Eliminate: Artem Ayusheev"
  SOV_debug_kill_ilgam: "[DEBUG] Eliminate: Ilgam Fagamanov"
- SOV_debug_kill_nikita_desc: "§RDebug (only -debug).§! Instantly shoots the guest via the real path: party → BANNED, bullet hole on the compass, +30% trust. No 50% RNG."
+ SOV_debug_kill_nikita_desc: "§RDebug (only -debug).§! Instantly shoots the guest via the real path: party -> BANNED, bullet hole on the compass, +30% trust. No 50% RNG."
  SOV_debug_kill_arseny_desc: "$SOV_debug_kill_nikita_desc$"
  SOV_debug_kill_stepan_desc: "$SOV_debug_kill_nikita_desc$"
  SOV_debug_kill_demokrit_desc: "$SOV_debug_kill_nikita_desc$"

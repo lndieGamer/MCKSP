@@ -1,0 +1,118 @@
+###############################################################################
+#  MCKSP — Фракционная борьба: событийные ивенты
+#  Файл: events/MCKSP_struggle_events.txt
+#
+#  .1 — КОНТЕСТ: спор при одновременной вербовке. Очередь MCKSP_contest_drain (по флагам
+#       mcksp_contested_<g>) ставит mcksp_contest_guest / mcksp_contest_coalition и шлёт
+#       ивент. Эффекты опций — MCKSP_contest_compromise / _donothing.
+#  .2 — «гость X вступил в коалицию» (оповещение). mcksp_join_guest/_coalition.
+#  .3 — «коалиция X сформирована» (оповещение, при размере 2). mcksp_join_coalition.
+#
+#  Имена/коалиции в тексте — через scripted_localisation (MCKSP_struggle_scripted_loc.txt):
+#  GetContestGuestName / GetContestCoal / GetJoinGuestName / GetJoinCoal.
+###############################################################################
+
+add_namespace = struggle_event
+
+# =============================================================================
+# .1 — Контест: спор за гостя, которого уже завербовал ИИ.
+# =============================================================================
+country_event = {
+	id = struggle_event.1
+	title = struggle_event.1.t
+	desc = struggle_event.1.d
+	picture = GFX_report_event_generic
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+	# Компромисс: пол-популярности игрока, удвоить поп. спорного, гость к игроку, ИИ скипает.
+	option = {
+		name = struggle_event.1.a
+		# Компромисс режет нашу популярность вдвое -> недоступен при <2% популярности партии.
+		trigger = { MCKSP_player_party_pop_ge_2pct = yes }
+		MCKSP_contest_compromise = yes
+		MCKSP_contest_clear_resolved = yes
+		clr_country_flag = mcksp_contest_in_progress
+		MCKSP_contest_drain = yes
+	}
+	# Ничего: +2% поп. игроку, гость остаётся у ИИ-вербовщика.
+	option = {
+		name = struggle_event.1.b
+		MCKSP_contest_donothing = yes
+		MCKSP_contest_clear_resolved = yes
+		clr_country_flag = mcksp_contest_in_progress
+		MCKSP_contest_drain = yes
+	}
+}
+
+# =============================================================================
+# .2 — Оповещение: гость вступил в коалицию.
+# =============================================================================
+country_event = {
+	id = struggle_event.2
+	title = struggle_event.2.t
+	desc = struggle_event.2.d
+	picture = GFX_report_event_generic
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = { name = struggle_event.2.a MCKSP_join_clear_resolved_guest = yes clr_country_flag = mcksp_join_in_progress MCKSP_join_drain = yes }
+}
+
+# =============================================================================
+# .3 — Оповещение: коалиция сформирована (достигла размера 2).
+# =============================================================================
+country_event = {
+	id = struggle_event.3
+	title = struggle_event.3.t
+	desc = struggle_event.3.d
+	picture = GFX_report_event_generic
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = { name = struggle_event.3.a MCKSP_join_clear_resolved_formed = yes clr_country_flag = mcksp_join_in_progress MCKSP_join_drain = yes }
+}
+
+# =============================================================================
+# .4–.7 — Служебные оповещения о смене фазы (0→1, 1→2, 2→3, 3→4). Шлются из
+# MCKSP_struggle_enter_phaseN. Текст-плейсхолдер «Фаза X → Y», автор оформит позже.
+# =============================================================================
+country_event = {
+	id = struggle_event.4
+	title = struggle_event.4.t
+	desc = struggle_event.4.d
+	picture = GFX_report_event_generic
+	is_triggered_only = yes
+	fire_only_once = no
+	option = { name = struggle_event.4.a }
+}
+country_event = {
+	id = struggle_event.5
+	title = struggle_event.5.t
+	desc = struggle_event.5.d
+	picture = GFX_report_event_generic
+	is_triggered_only = yes
+	fire_only_once = no
+	option = { name = struggle_event.5.a }
+}
+country_event = {
+	id = struggle_event.6
+	title = struggle_event.6.t
+	desc = struggle_event.6.d
+	picture = GFX_report_event_generic
+	is_triggered_only = yes
+	fire_only_once = no
+	option = { name = struggle_event.6.a }
+}
+country_event = {
+	id = struggle_event.7
+	title = struggle_event.7.t
+	desc = struggle_event.7.d
+	picture = GFX_report_event_generic
+	is_triggered_only = yes
+	fire_only_once = no
+	option = { name = struggle_event.7.a }
+}

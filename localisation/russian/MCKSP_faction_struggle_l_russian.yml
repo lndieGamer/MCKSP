@@ -3,9 +3,7 @@
 
  # --- Категории решений ---
  SOV_MCKSP_struggle_cat: "Борьба идеологий"
- SOV_MCKSP_struggle_cat_desc: "Гости из будущего сплотились в соперничающие коалиции и повели борьбу за власть в СССР. Формируйте союзы, продвигайте своих сторонников и ведите фракцию к торжеству — пока конкуренты делают то же самое за вашей спиной."
- SOV_MCKSP_struggle_intro_cat: "Борьба идеологий"
- SOV_MCKSP_struggle_intro_cat_desc: "Пришло время определиться. Откройте политический компас и кликните по одному из четырёх ядер — этот выбор решит, какую коалицию вы возглавите в грядущей борьбе."
+ SOV_MCKSP_struggle_cat_desc: "Гости из будущего сплотились в соперничающие коалиции и повели борьбу за власть в СССР. Формируйте союзы, продвигайте своих сторонников и ведите фракцию к торжеству — пока конкуренты делают то же самое за вашей спиной.\n\n§YРостер борьбы фракций§!\nВлияние (p) и отношение к вам каждого гостя, а также его коалиция.\n\nНикита — вл. [?p_nikita], отнош. [?attitude_nikita], [GetCoalOfNikita]\nАрсений — вл. [?p_arseny], отнош. [?attitude_arseny], [GetCoalOfArseny]\nДемокрит — вл. [?p_demokrit], отнош. [?attitude_demokrit], [GetCoalOfDemokrit]\nГлеб — вл. [?p_gleb], отнош. [?attitude_gleb], [GetCoalOfGleb]\nСтепан — вл. [?p_stepan], отнош. [?attitude_stepan], [GetCoalOfStepan]\nИван — вл. [?p_ivan], отнош. [?attitude_ivan], [GetCoalOfIvan]\nИлья — вл. [?p_ilya], отнош. [?attitude_ilya], [GetCoalOfIlya]\nЕвгений — вл. [?p_evgeny], отнош. [?attitude_evgeny], [GetCoalOfEvgeny]\nАртём — вл. [?p_artem], отнош. [?attitude_artem], [GetCoalOfArtem]\nИльгам — вл. [?p_ilgam], отнош. [?attitude_ilgam], [GetCoalOfIlgam]"
  SOV_MCKSP_struggle_debug_cat: "Борьба идеологий [ОТЛАДКА]"
  SOV_MCKSP_struggle_debug_cat_desc: "Отладочные решения для быстрой проверки фаз борьбы фракций."
 
@@ -56,13 +54,13 @@
 
  # --- Фаза 1: серые ходы соперников ---
  SOV_struggle_rival_move_reformers: "§RРеформисты вербуют сторонника§!"
- SOV_struggle_rival_move_reformers_desc: "Коалиция реформистов привлекает нового гостя."
+ SOV_struggle_rival_move_reformers_desc: "Коалиция реформистов вербует сторонников. Таймер — обратный отсчёт до следующей вербовки ядром."
  SOV_struggle_rival_move_statists: "§RГосударственники вербуют сторонника§!"
- SOV_struggle_rival_move_statists_desc: "Коалиция государственников привлекает нового гостя."
+ SOV_struggle_rival_move_statists_desc: "Коалиция государственников вербует сторонников. Таймер — обратный отсчёт до следующей вербовки ядром."
  SOV_struggle_rival_move_centrists: "§RЦентристы вербуют сторонника§!"
- SOV_struggle_rival_move_centrists_desc: "Коалиция центристов привлекает нового гостя."
+ SOV_struggle_rival_move_centrists_desc: "Коалиция центристов вербует сторонников. Таймер — обратный отсчёт до следующей вербовки ядром."
  SOV_struggle_rival_move_socialists: "§RСоциалисты вербуют сторонника§!"
- SOV_struggle_rival_move_socialists_desc: "Коалиция социалистов привлекает нового гостя."
+ SOV_struggle_rival_move_socialists_desc: "Коалиция социалистов вербует сторонников. Таймер — обратный отсчёт до следующей вербовки ядром."
 
  # --- Фаза 2: продвижение ---
  SOV_struggle_promote_nikita: "Продвигать Никиту"
@@ -89,16 +87,26 @@
  # --- Фаза 2: клевета ---
  SOV_struggle_slander: "Очернить соперника"
  SOV_struggle_slander_desc: "Снизить популярность гостя из чужой коалиции ценой доверия Сталина."
- SOV_struggle_slander_pick_nikita: "Очернить Никиту"
- SOV_struggle_slander_pick_arseny: "Очернить Арсения"
- SOV_struggle_slander_pick_demokrit: "Очернить Демокрита"
- SOV_struggle_slander_pick_gleb: "Очернить Глеба"
- SOV_struggle_slander_pick_stepan: "Очернить Степана"
- SOV_struggle_slander_pick_ivan: "Очернить Ивана"
- SOV_struggle_slander_pick_ilya: "Очернить Илью"
- SOV_struggle_slander_pick_evgeny: "Очернить Евгения"
- SOV_struggle_slander_pick_artem: "Очернить Артёма"
- SOV_struggle_slander_pick_ilgam: "Очернить Ильгама"
+ SOV_struggle_slander_pick_nikita: "[GetSlanderVerb_nikita] [GetCoalColorOf_nikita]Никиту§!"
+ SOV_struggle_slander_pick_arseny: "[GetSlanderVerb_arseny] [GetCoalColorOf_arseny]Арсения§!"
+ SOV_struggle_slander_pick_demokrit: "[GetSlanderVerb_demokrit] [GetCoalColorOf_demokrit]Демокрита§!"
+ SOV_struggle_slander_pick_gleb: "[GetSlanderVerb_gleb] [GetCoalColorOf_gleb]Глеба§!"
+ SOV_struggle_slander_pick_stepan: "[GetSlanderVerb_stepan] [GetCoalColorOf_stepan]Степана§!"
+ SOV_struggle_slander_pick_ivan: "[GetSlanderVerb_ivan] [GetCoalColorOf_ivan]Ивана§!"
+ SOV_struggle_slander_pick_ilya: "[GetSlanderVerb_ilya] [GetCoalColorOf_ilya]Илью§!"
+ SOV_struggle_slander_pick_evgeny: "[GetSlanderVerb_evgeny] [GetCoalColorOf_evgeny]Евгения§!"
+ SOV_struggle_slander_pick_artem: "[GetSlanderVerb_artem] [GetCoalColorOf_artem]Артёма§!"
+ SOV_struggle_slander_pick_ilgam: "[GetSlanderVerb_ilgam] [GetCoalColorOf_ilgam]Ильгама§!"
+ # --- Глаголы клеветы (случайный из 4) + цвета имён по коалиции (§R/§G/§B/§Y) ---
+ mcksp_slander_verb_1: "Найти компромат на"
+ mcksp_slander_verb_2: "Подставить"
+ mcksp_slander_verb_3: "Очернить"
+ mcksp_slander_verb_4: "Написать коллективный донос на"
+ mcksp_coalcol_0: ""
+ mcksp_coalcol_1: "§R"
+ mcksp_coalcol_2: "§O"
+ mcksp_coalcol_3: "§T"
+ mcksp_coalcol_4: "§Y"
 
  # --- Фаза 2: серые ходы соперников (пуш лидера) ---
  SOV_struggle_rival_push_reformers: "§RРеформисты продвигают лидера§!"
@@ -186,9 +194,36 @@
  MCKSP_coal_empty: "—"
 
  # --- Инфо-сводки борьбы фракций (неклибельные решения, заменили панель) ---
- SOV_struggle_info_coalitions: "§YРасклад§!: Реф [?coalition_pop_reformers|%0] · Гос [?coalition_pop_statists|%0] · Цен [?coalition_pop_centrists|%0] · Соц [?coalition_pop_socialists|%0]"
+ SOV_struggle_info_coalitions: "§YРасклад§!: Реф [?coalition_pop_reformers|%0] | Гос [?coalition_pop_statists|%0] | Цен [?coalition_pop_centrists|%0] | Соц [?coalition_pop_socialists|%0]"
  SOV_struggle_info_coalitions_desc: "Пулированная поддержка коалиций (сумма популярности партий-членов). Членство также показано на политическом компасе (ореолы).\n\nРеформисты — [?coalition_pop_reformers|%0], состав [?coalition_size_1], лидер [GetLeaderReformers]\nГосударственники — [?coalition_pop_statists|%0], состав [?coalition_size_2], лидер [GetLeaderStatists]\nЦентристы — [?coalition_pop_centrists|%0], состав [?coalition_size_3], лидер [GetLeaderCentrists]\nСоциалисты — [?coalition_pop_socialists|%0], состав [?coalition_size_4], лидер [GetLeaderSocialists]"
- SOV_struggle_info_roster: "§YРостер борьбы фракций§!"
- SOV_struggle_info_roster_desc: "Влияние (p) и отношение к вам каждого гостя, а также его коалиция.\n\nНикита — вл. [?p_nikita], отнош. [?attitude_nikita], [GetCoalOfNikita]\nАрсений — вл. [?p_arseny], отнош. [?attitude_arseny], [GetCoalOfArseny]\nДемокрит — вл. [?p_demokrit], отнош. [?attitude_demokrit], [GetCoalOfDemokrit]\nГлеб — вл. [?p_gleb], отнош. [?attitude_gleb], [GetCoalOfGleb]\nСтепан — вл. [?p_stepan], отнош. [?attitude_stepan], [GetCoalOfStepan]\nИван — вл. [?p_ivan], отнош. [?attitude_ivan], [GetCoalOfIvan]\nИлья — вл. [?p_ilya], отнош. [?attitude_ilya], [GetCoalOfIlya]\nЕвгений — вл. [?p_evgeny], отнош. [?attitude_evgeny], [GetCoalOfEvgeny]\nАртём — вл. [?p_artem], отнош. [?attitude_artem], [GetCoalOfArtem]\nИльгам — вл. [?p_ilgam], отнош. [?attitude_ilgam], [GetCoalOfIlgam]"
  SOV_struggle_info_status: "§YПоложение в борьбе§!"
  SOV_struggle_info_status_desc: "Фаза [?mcksp_struggle_phase].\nВаша коалиция: [GetPlayerCoalition].\nЛидирует/победила: [GetWinningCoalition], лидер [GetWinningLeader]."
+
+ # --- Контест (struggle_event.1) ---
+ struggle_event.1.t: "Спор за сторонника"
+ struggle_event.1.d: "[GetContestGuestName] уже примкнул к коалиции «[GetContestCoal]». Мы ещё можем перетянуть его на свою сторону — но вербовщик так просто не уступит."
+ struggle_event.1.a: "Пойти на компромисс: -½ нашей популярности, ×2 ему — и он наш"
+ struggle_event.1.b: "Ничего не делать: +2% нам, он остаётся у соперника"
+ # --- Оповещение: вступление ---
+ struggle_event.2.t: "Новый сторонник"
+ struggle_event.2.d: "[GetJoinGuestName] примкнул к коалиции «[GetJoinCoal]»."
+ struggle_event.2.a: "Учтём"
+ # --- Оповещение: коалиция сформирована ---
+ struggle_event.3.t: "Коалиция сформирована"
+ struggle_event.3.d: "Коалиция «[GetJoinCoal]» оформилась как сила в борьбе за власть."
+ struggle_event.3.a: "Хорошо"
+
+
+ # --- Служебные события смены фазы (struggle_event.4..7, плейсхолдер) ---
+ struggle_event.4.t: "Фаза 0 -> Фаза 1"
+ struggle_event.4.d: "Служебное уведомление о начале новой фазы. Текст и оформление — позже."
+ struggle_event.4.a: "Далее"
+ struggle_event.5.t: "Фаза 1 -> Фаза 2"
+ struggle_event.5.d: "Служебное уведомление о начале новой фазы. Текст и оформление — позже."
+ struggle_event.5.a: "Далее"
+ struggle_event.6.t: "Фаза 2 -> Фаза 3"
+ struggle_event.6.d: "Служебное уведомление о начале новой фазы. Текст и оформление — позже."
+ struggle_event.6.a: "Далее"
+ struggle_event.7.t: "Фаза 3 -> Фаза 4"
+ struggle_event.7.d: "Служебное уведомление о начале новой фазы. Текст и оформление — позже."
+ struggle_event.7.a: "Далее"

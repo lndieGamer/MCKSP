@@ -1,0 +1,24 @@
+###############################################################################
+#  MCKSP - Фракционная борьба: scripted_triggers
+#  Файл: common/scripted_triggers/MCKSP_struggle_triggers.txt
+#
+#  Популярность партии-группы текущего "я" игрока >= 2% (0.02). Диспетчер по
+#  канон-индексу player_self (1..10) -> своя группа. Используется как gate опции
+#  компромисса в struggle_event.1 (компромисс режет нашу популярность вдвое,
+#  потому при <2% запрещён). NOT < 0.02 = точное ">= 2%".
+###############################################################################
+
+MCKSP_player_party_pop_ge_2pct = {
+	OR = {
+		AND = { check_variable = { player_self = 1 }  NOT = { check_variable = { party_popularity@mcksp_social_liberalism < 0.02 } } }
+		AND = { check_variable = { player_self = 2 }  NOT = { check_variable = { party_popularity@mcksp_liberal_humanism < 0.02 } } }
+		AND = { check_variable = { player_self = 3 }  NOT = { check_variable = { party_popularity@mcksp_market_socialism < 0.02 } } }
+		AND = { check_variable = { player_self = 4 }  NOT = { check_variable = { party_popularity@mcksp_pragmatic_syncretism < 0.02 } } }
+		AND = { check_variable = { player_self = 5 }  NOT = { check_variable = { party_popularity@mcksp_christian_democracy < 0.02 } } }
+		AND = { check_variable = { player_self = 6 }  NOT = { check_variable = { party_popularity@mcksp_scientific_progressism < 0.02 } } }
+		AND = { check_variable = { player_self = 7 }  NOT = { check_variable = { party_popularity@mcksp_statist_technocratism < 0.02 } } }
+		AND = { check_variable = { player_self = 8 }  NOT = { check_variable = { party_popularity@mcksp_national_conservatism < 0.02 } } }
+		AND = { check_variable = { player_self = 9 }  NOT = { check_variable = { party_popularity@mcksp_democratic_socialism < 0.02 } } }
+		AND = { check_variable = { player_self = 10 } NOT = { check_variable = { party_popularity@mcksp_placeholder_ilgam < 0.02 } } }
+	}
+}

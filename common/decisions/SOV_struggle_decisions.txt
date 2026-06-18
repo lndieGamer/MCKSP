@@ -10,13 +10,16 @@
 ###############################################################################
 
 # =============================================================================
-# ФАЗА 0 — баннер «выберите фракцию». Выбор делается кликом по ядру на компасе.
+# Категория «Борьба идеологий» — ВСЕ фазы (0..4) в ОДНОЙ вкладке; видимость решений
+# гейтится по фазам. Дубль-категория intro_cat удалена (давала вторую вкладку, и при
+# выборе фракции одна панель исчезала, другая появлялась). Баннер фазы 0 — теперь здесь.
 # =============================================================================
-SOV_MCKSP_struggle_intro_cat = {
+SOV_MCKSP_struggle_cat = {
 
+	# ФАЗА 0 — баннер «выберите фракцию» (выбор кликом по ядру на компасе).
 	SOV_struggle_choose_faction_banner = {
 		icon = GFX_decision_generic_political_discourse
-				visible = {
+		visible = {
 			has_country_flag = SOV_factional_struggle_active
 			has_country_flag = mcksp_phase_0
 		}
@@ -24,12 +27,6 @@ SOV_MCKSP_struggle_intro_cat = {
 		complete_effect = { set_country_flag = SOV_compass_open }
 		fire_only_once = no
 	}
-}
-
-# =============================================================================
-# ФАЗЫ 1..4 — основная борьба.
-# =============================================================================
-SOV_MCKSP_struggle_cat = {
 
 	# -------------------------------------------------------------------------
 	# ИНФО-СВОДКИ (неклибельные: available=no, cost=0). Текст в name/desc через
@@ -45,14 +42,7 @@ SOV_MCKSP_struggle_cat = {
 		fire_only_once = no
 		priority = 2000
 	}
-	SOV_struggle_info_roster = {
-		icon = GFX_decision_generic_political_discourse
-		visible = { has_country_flag = mcksp_phase_1 }
-		available = { always = no }
-		cost = 0
-		fire_only_once = no
-		priority = 1999
-	}
+	# Ростер вынесен в desc категории SOV_MCKSP_struggle_cat (см. локали MCKSP_faction_struggle_l_*).
 	SOV_struggle_info_status = {
 		icon = GFX_decision_generic_political_discourse
 		visible = { OR = { has_country_flag = mcksp_phase_3 has_country_flag = mcksp_phase_4 } }
@@ -83,7 +73,8 @@ SOV_MCKSP_struggle_cat = {
 			set_temp_variable = { mcksp_tmp_cost = mcksp_invite_cost_arseny }
 			multiply_temp_variable = { mcksp_tmp_cost = -1 }
 			add_political_power = var:mcksp_tmp_cost
-			clr_country_flag = mcksp_inviting_arseny
+			set_country_flag = mcksp_inviting_arseny
+			if = { limit = { has_country_flag = mcksp_being_recruited_arseny } set_country_flag = mcksp_contested_arseny }
 		}
 		custom_cost_trigger = { has_political_power > mcksp_invite_cost_arseny }
 		custom_cost_text = SOV_struggle_invite_cost_arseny
@@ -104,7 +95,8 @@ SOV_MCKSP_struggle_cat = {
 			set_temp_variable = { mcksp_tmp_cost = mcksp_invite_cost_gleb }
 			multiply_temp_variable = { mcksp_tmp_cost = -1 }
 			add_political_power = var:mcksp_tmp_cost
-			clr_country_flag = mcksp_inviting_gleb
+			set_country_flag = mcksp_inviting_gleb
+			if = { limit = { has_country_flag = mcksp_being_recruited_gleb } set_country_flag = mcksp_contested_gleb }
 		}
 		custom_cost_trigger = { has_political_power > mcksp_invite_cost_gleb }
 		custom_cost_text = SOV_struggle_invite_cost_gleb
@@ -125,7 +117,8 @@ SOV_MCKSP_struggle_cat = {
 			set_temp_variable = { mcksp_tmp_cost = mcksp_invite_cost_ivan }
 			multiply_temp_variable = { mcksp_tmp_cost = -1 }
 			add_political_power = var:mcksp_tmp_cost
-			clr_country_flag = mcksp_inviting_ivan
+			set_country_flag = mcksp_inviting_ivan
+			if = { limit = { has_country_flag = mcksp_being_recruited_ivan } set_country_flag = mcksp_contested_ivan }
 		}
 		custom_cost_trigger = { has_political_power > mcksp_invite_cost_ivan }
 		custom_cost_text = SOV_struggle_invite_cost_ivan
@@ -146,7 +139,8 @@ SOV_MCKSP_struggle_cat = {
 			set_temp_variable = { mcksp_tmp_cost = mcksp_invite_cost_ilya }
 			multiply_temp_variable = { mcksp_tmp_cost = -1 }
 			add_political_power = var:mcksp_tmp_cost
-			clr_country_flag = mcksp_inviting_ilya
+			set_country_flag = mcksp_inviting_ilya
+			if = { limit = { has_country_flag = mcksp_being_recruited_ilya } set_country_flag = mcksp_contested_ilya }
 		}
 		custom_cost_trigger = { has_political_power > mcksp_invite_cost_ilya }
 		custom_cost_text = SOV_struggle_invite_cost_ilya
@@ -167,7 +161,8 @@ SOV_MCKSP_struggle_cat = {
 			set_temp_variable = { mcksp_tmp_cost = mcksp_invite_cost_artem }
 			multiply_temp_variable = { mcksp_tmp_cost = -1 }
 			add_political_power = var:mcksp_tmp_cost
-			clr_country_flag = mcksp_inviting_artem
+			set_country_flag = mcksp_inviting_artem
+			if = { limit = { has_country_flag = mcksp_being_recruited_artem } set_country_flag = mcksp_contested_artem }
 		}
 		custom_cost_trigger = { has_political_power > mcksp_invite_cost_artem }
 		custom_cost_text = SOV_struggle_invite_cost_artem
@@ -188,7 +183,8 @@ SOV_MCKSP_struggle_cat = {
 			set_temp_variable = { mcksp_tmp_cost = mcksp_invite_cost_ilgam }
 			multiply_temp_variable = { mcksp_tmp_cost = -1 }
 			add_political_power = var:mcksp_tmp_cost
-			clr_country_flag = mcksp_inviting_ilgam
+			set_country_flag = mcksp_inviting_ilgam
+			if = { limit = { has_country_flag = mcksp_being_recruited_ilgam } set_country_flag = mcksp_contested_ilgam }
 		}
 		custom_cost_trigger = { has_political_power > mcksp_invite_cost_ilgam }
 		custom_cost_text = SOV_struggle_invite_cost_ilgam
@@ -219,10 +215,19 @@ SOV_MCKSP_struggle_cat = {
 	# -------------------------------------------------------------------------
 	# ФАЗА 1 — серые ходы соперников (вербовка). Активирует движок (activate_decision).
 	# -------------------------------------------------------------------------
-	SOV_struggle_rival_move_reformers  = { icon = GFX_decision_generic_political_discourse visible = { has_country_flag = mcksp_phase_1 has_country_flag = mcksp_rival_move_1 NOT = { check_variable = { player_coalition = 1 } } } available = { always = yes } days_remove = 14 fire_only_once = no priority = 1000 remove_effect = { clr_country_flag = mcksp_rival_move_1 } }
-	SOV_struggle_rival_move_statists   = { icon = GFX_decision_generic_political_discourse visible = { has_country_flag = mcksp_phase_1 has_country_flag = mcksp_rival_move_2 NOT = { check_variable = { player_coalition = 2 } } } available = { always = yes } days_remove = 14 fire_only_once = no priority = 1000 remove_effect = { clr_country_flag = mcksp_rival_move_2 } }
-	SOV_struggle_rival_move_centrists  = { icon = GFX_decision_generic_political_discourse visible = { has_country_flag = mcksp_phase_1 has_country_flag = mcksp_rival_move_3 NOT = { check_variable = { player_coalition = 3 } } } available = { always = yes } days_remove = 14 fire_only_once = no priority = 1000 remove_effect = { clr_country_flag = mcksp_rival_move_3 } }
-	SOV_struggle_rival_move_socialists = { icon = GFX_decision_generic_political_discourse visible = { has_country_flag = mcksp_phase_1 has_country_flag = mcksp_rival_move_4 NOT = { check_variable = { player_coalition = 4 } } } available = { always = yes } days_remove = 14 fire_only_once = no priority = 1000 remove_effect = { clr_country_flag = mcksp_rival_move_4 } }
+	# Серый таймер вербовки коалиции-соперника. Виден ВСЕГДА в фазе 1 (кроме коалиции
+	# игрока), days_remove = 42 = единый отсчёт до следующей вербовки. По истечении ядро
+	# вербует ближайшего свободного гостя и решение перезапускает само себя (петля).
+	# Активируются все вместе в enter_phase1 -> синхронная вербовка всеми ядрами.
+	SOV_struggle_rival_move_reformers  = { icon = GFX_decision_generic_political_discourse visible = { has_country_flag = mcksp_phase_1 NOT = { check_variable = { player_coalition = 1 } } } available = { always = yes } days_remove = 42 fire_only_once = no priority = 1000 cancel_trigger = { NOT = { has_country_flag = mcksp_phase_1 } } remove_effect = { MCKSP_ai_resolve_1 = yes if = { limit = { has_country_flag = mcksp_phase_1 NOT = { check_variable = { player_coalition = 1 } } NOT = { has_country_flag = mcksp_recruit_pool_empty } } MCKSP_ai_pick_target_1 = yes activate_decision = SOV_struggle_rival_move_reformers } } }
+	SOV_struggle_rival_move_statists   = { icon = GFX_decision_generic_political_discourse visible = { has_country_flag = mcksp_phase_1 NOT = { check_variable = { player_coalition = 2 } } } available = { always = yes } days_remove = 42 fire_only_once = no priority = 1000 cancel_trigger = { NOT = { has_country_flag = mcksp_phase_1 } } remove_effect = { MCKSP_ai_resolve_2 = yes if = { limit = { has_country_flag = mcksp_phase_1 NOT = { check_variable = { player_coalition = 2 } } NOT = { has_country_flag = mcksp_recruit_pool_empty } } MCKSP_ai_pick_target_2 = yes activate_decision = SOV_struggle_rival_move_statists } } }
+	SOV_struggle_rival_move_centrists  = { icon = GFX_decision_generic_political_discourse visible = { has_country_flag = mcksp_phase_1 NOT = { check_variable = { player_coalition = 3 } } } available = { always = yes } days_remove = 42 fire_only_once = no priority = 1000 cancel_trigger = { NOT = { has_country_flag = mcksp_phase_1 } } remove_effect = { MCKSP_ai_resolve_3 = yes if = { limit = { has_country_flag = mcksp_phase_1 NOT = { check_variable = { player_coalition = 3 } } NOT = { has_country_flag = mcksp_recruit_pool_empty } } MCKSP_ai_pick_target_3 = yes activate_decision = SOV_struggle_rival_move_centrists } } }
+	SOV_struggle_rival_move_socialists = { icon = GFX_decision_generic_political_discourse visible = { has_country_flag = mcksp_phase_1 NOT = { check_variable = { player_coalition = 4 } } } available = { always = yes } days_remove = 42 fire_only_once = no priority = 1000 cancel_trigger = { NOT = { has_country_flag = mcksp_phase_1 } } remove_effect = { MCKSP_ai_resolve_4 = yes if = { limit = { has_country_flag = mcksp_phase_1 NOT = { check_variable = { player_coalition = 4 } } NOT = { has_country_flag = mcksp_recruit_pool_empty } } MCKSP_ai_pick_target_4 = yes activate_decision = SOV_struggle_rival_move_socialists } } }
+
+	# Отдельные решения-контеста удалены: конфликт одновременной вербовки решается через
+	# приглашение (телеграф mcksp_being_recruited -> mcksp_contested -> очередь -> struggle_event.1).
+
+	# Переходы фаз показываются СОБЫТИЯМИ struggle_event.4..7 (см. enter_phaseN), не решениями.
 
 	# -------------------------------------------------------------------------
 	# ФАЗА 2 — продвижение популярности (только члены своей коалиции).
@@ -247,7 +252,7 @@ SOV_MCKSP_struggle_cat = {
 		available = { always = yes }
 		cost = 35
 		fire_only_once = no
-		complete_effect = { set_country_flag = mcksp_slander_in_progress }
+		complete_effect = { set_country_flag = mcksp_slander_in_progress MCKSP_slander_roll_verbs = yes }
 	}
 	SOV_struggle_slander_pick_nikita   = { icon = GFX_decision_generic_break_treaty visible = { has_country_flag = mcksp_slander_in_progress NOT = { check_variable = { coalition_of_nikita = player_coalition } }   check_variable = { coalition_of_nikita > 0 }   NOT = { has_country_flag = mcksp_guest_gone_nikita } }   available = { always = yes } fire_only_once = no complete_effect = { clr_country_flag = mcksp_slander_in_progress MCKSP_slander_nikita = yes } }
 	SOV_struggle_slander_pick_arseny   = { icon = GFX_decision_generic_break_treaty visible = { has_country_flag = mcksp_slander_in_progress NOT = { check_variable = { coalition_of_arseny = player_coalition } }   check_variable = { coalition_of_arseny > 0 }   NOT = { has_country_flag = mcksp_guest_gone_arseny } }   available = { always = yes } fire_only_once = no complete_effect = { clr_country_flag = mcksp_slander_in_progress MCKSP_slander_arseny = yes } }
@@ -263,10 +268,13 @@ SOV_MCKSP_struggle_cat = {
 	# -------------------------------------------------------------------------
 	# ФАЗА 2 — серые ходы соперников (пуш лидера). Активирует движок.
 	# -------------------------------------------------------------------------
-	SOV_struggle_rival_push_reformers  = { icon = GFX_decision_generic_political_rally visible = { has_country_flag = mcksp_phase_2 has_country_flag = mcksp_rival_push_1 NOT = { check_variable = { player_coalition = 1 } } } available = { always = yes } days_remove = 10 fire_only_once = no priority = 1000 remove_effect = { clr_country_flag = mcksp_rival_push_1 } }
-	SOV_struggle_rival_push_statists   = { icon = GFX_decision_generic_political_rally visible = { has_country_flag = mcksp_phase_2 has_country_flag = mcksp_rival_push_2 NOT = { check_variable = { player_coalition = 2 } } } available = { always = yes } days_remove = 10 fire_only_once = no priority = 1000 remove_effect = { clr_country_flag = mcksp_rival_push_2 } }
-	SOV_struggle_rival_push_centrists  = { icon = GFX_decision_generic_political_rally visible = { has_country_flag = mcksp_phase_2 has_country_flag = mcksp_rival_push_3 NOT = { check_variable = { player_coalition = 3 } } } available = { always = yes } days_remove = 10 fire_only_once = no priority = 1000 remove_effect = { clr_country_flag = mcksp_rival_push_3 } }
-	SOV_struggle_rival_push_socialists = { icon = GFX_decision_generic_political_rally visible = { has_country_flag = mcksp_phase_2 has_country_flag = mcksp_rival_push_4 NOT = { check_variable = { player_coalition = 4 } } } available = { always = yes } days_remove = 10 fire_only_once = no priority = 1000 remove_effect = { clr_country_flag = mcksp_rival_push_4 } }
+	# Серый таймер пуша коалиции-соперника (фаза 2). Виден ВСЕГДА (кроме коалиции игрока),
+	# days_remove = 42 = единый отсчёт до следующего пуша. По истечении — продвижение лидера +
+	# очернение врага (MCKSP_ai_push_resolve_C) и перезапуск (петля). Активируются в enter_phase2.
+	SOV_struggle_rival_push_reformers  = { icon = GFX_decision_generic_political_rally visible = { has_country_flag = mcksp_phase_2 NOT = { check_variable = { player_coalition = 1 } } } available = { always = yes } days_remove = 42 fire_only_once = no priority = 1000 cancel_trigger = { NOT = { has_country_flag = mcksp_phase_2 } } remove_effect = { MCKSP_ai_push_resolve_1 = yes if = { limit = { has_country_flag = mcksp_phase_2 NOT = { check_variable = { player_coalition = 1 } } } activate_decision = SOV_struggle_rival_push_reformers } } }
+	SOV_struggle_rival_push_statists   = { icon = GFX_decision_generic_political_rally visible = { has_country_flag = mcksp_phase_2 NOT = { check_variable = { player_coalition = 2 } } } available = { always = yes } days_remove = 42 fire_only_once = no priority = 1000 cancel_trigger = { NOT = { has_country_flag = mcksp_phase_2 } } remove_effect = { MCKSP_ai_push_resolve_2 = yes if = { limit = { has_country_flag = mcksp_phase_2 NOT = { check_variable = { player_coalition = 2 } } } activate_decision = SOV_struggle_rival_push_statists } } }
+	SOV_struggle_rival_push_centrists  = { icon = GFX_decision_generic_political_rally visible = { has_country_flag = mcksp_phase_2 NOT = { check_variable = { player_coalition = 3 } } } available = { always = yes } days_remove = 42 fire_only_once = no priority = 1000 cancel_trigger = { NOT = { has_country_flag = mcksp_phase_2 } } remove_effect = { MCKSP_ai_push_resolve_3 = yes if = { limit = { has_country_flag = mcksp_phase_2 NOT = { check_variable = { player_coalition = 3 } } } activate_decision = SOV_struggle_rival_push_centrists } } }
+	SOV_struggle_rival_push_socialists = { icon = GFX_decision_generic_political_rally visible = { has_country_flag = mcksp_phase_2 NOT = { check_variable = { player_coalition = 4 } } } available = { always = yes } days_remove = 42 fire_only_once = no priority = 1000 cancel_trigger = { NOT = { has_country_flag = mcksp_phase_2 } } remove_effect = { MCKSP_ai_push_resolve_4 = yes if = { limit = { has_country_flag = mcksp_phase_2 NOT = { check_variable = { player_coalition = 4 } } } activate_decision = SOV_struggle_rival_push_socialists } } }
 
 	# -------------------------------------------------------------------------
 	# ФАЗА 3 — приход к власти (СКЕЛЕТ, стубы). Гейт: победившая коалиция игрока.
@@ -421,6 +429,6 @@ SOV_MCKSP_struggle_debug_cat = {
 	SOV_dbg_jump_phase4_cw = { icon = GFX_decision_generic_break_treaty visible = { is_debug = yes has_country_flag = guests_active } available = { always = yes } fire_only_once = no complete_effect = { MCKSP_struggle_enter_phase4 = yes set_country_flag = mcksp_cw_prep } }
 	SOV_dbg_recompute_all  = { icon = GFX_decision_generic_form_nation visible = { is_debug = yes has_country_flag = guests_active } available = { always = yes } fire_only_once = no complete_effect = { MCKSP_recompute_attitudes = yes MCKSP_recompute_sizes = yes MCKSP_publish_coalition_pops = yes MCKSP_compute_winner = yes } }
 	SOV_dbg_dump_state     = { icon = GFX_decision_generic_form_nation visible = { is_debug = yes has_country_flag = guests_active } available = { always = yes } fire_only_once = no complete_effect = { MCKSP_recompute_attitudes = yes MCKSP_publish_coalition_pops = yes } }
-	SOV_dbg_recruit_tick = { icon = GFX_decision_generic_form_nation visible = { is_debug = yes has_country_flag = guests_active } available = { always = yes } fire_only_once = no complete_effect = { set_variable = { recruit_cooldown_1 = 0 } set_variable = { recruit_cooldown_2 = 0 } set_variable = { recruit_cooldown_3 = 0 } set_variable = { recruit_cooldown_4 = 0 } MCKSP_recruitment_tick = yes } }
+	SOV_dbg_recruit_tick = { icon = GFX_decision_generic_form_nation visible = { is_debug = yes has_country_flag = guests_active } available = { always = yes } fire_only_once = no complete_effect = { MCKSP_recruit_for_coalition_1 = yes MCKSP_recruit_for_coalition_2 = yes MCKSP_recruit_for_coalition_3 = yes MCKSP_recruit_for_coalition_4 = yes MCKSP_recompute_sizes = yes MCKSP_check_phase1_end = yes } }
 	SOV_dbg_reset_struggle = { icon = GFX_decision_generic_form_nation visible = { is_debug = yes has_country_flag = guests_active } available = { always = yes } fire_only_once = no complete_effect = { MCKSP_reset_struggle = yes } }
 }
