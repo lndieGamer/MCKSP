@@ -400,14 +400,17 @@ guiTypes = {
 	# Пульс-подсказка на 4 ядрах: виден только в фазе 0 (выбор фракции). Гейт —
 	# scripted_gui MCKSP_pulse_* (SOV_compass_open + mcksp_phase_0). Центр glow 36px
 	# на точке: top-left = точка-11. Ядра: nikita(реформ) evgeny(гос) stepan(центр) demokrit(соц).
-	# Появление = слайд-влево синхронно с панелью (show_position x=0, show_animation 300).
-	# Исчезновение (выбор фракции ИЛИ закрытие панели) = МГНОВЕННО: hide_animation_type
-	# НЕ задан -> окно гаснет без слайда. Так выбор фракции не «вылетает влево» при
-	# открытой панели (фидбэк автора). Движок: одно окно не умеет slide-show + slide-hide
-	# раздельно от instant, но show-anim без hide-anim = слайд внутрь, снап наружу.
-	containerWindowType = { name = "pulse_nikita_win"   position = { x = -602 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated animation_time = 300 size = { width = 602 height = 700 } clipping = no iconType = { name = "pulse" position = { x = 247 y = 322 } quadTextureSprite = "GFX_MCKSP_core_pulse" alwaystransparent = yes } }
-	containerWindowType = { name = "pulse_evgeny_win"   position = { x = -602 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated animation_time = 300 size = { width = 602 height = 700 } clipping = no iconType = { name = "pulse" position = { x = 355 y = 88 }  quadTextureSprite = "GFX_MCKSP_core_pulse" alwaystransparent = yes } }
-	containerWindowType = { name = "pulse_stepan_win"   position = { x = -602 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated animation_time = 300 size = { width = 602 height = 700 } clipping = no iconType = { name = "pulse" position = { x = 319 y = 196 } quadTextureSprite = "GFX_MCKSP_core_pulse" alwaystransparent = yes } }
-	containerWindowType = { name = "pulse_demokrit_win" position = { x = -602 y = 0 } show_position = { x = 0 y = 0 } show_animation_type = decelerated animation_time = 300 size = { width = 602 height = 700 } clipping = no iconType = { name = "pulse" position = { x = 193 y = 214 } quadTextureSprite = "GFX_MCKSP_core_pulse" alwaystransparent = yes } }
+	# INSTANT-ОКНА (position x=0, без show/hide-анимации): появляются сразу на месте,
+	# на выборе фракции (mcksp_phase_0 -> false) ИСЧЕЗАЮТ МГНОВЕННО в месте, не уезжая влево.
+	# ВЫБОР АВТОРА: slide-вход НЕ совместим с instant-выходом на одном окне HOI4 — движок
+	# сбрасывает окно в базовый position только по завершении hide-анимации, значит для
+	# выезда нужен hide_animation_type, но он же даёт выезд-влево на скрытии (выбор фракции).
+	# Dual-трюк (как у ореолов) тут не спасает: скрытие гонит флаг mcksp_phase_0 в один тик,
+	# нет промежуточного кадра для передачи slide->instant, и в движке нет суб-секундного
+	# таймера. Приоритет — мгновенное исчезновение на пике; вход без выезда принят как цена.
+	containerWindowType = { name = "pulse_nikita_win"   position = { x = 0 y = 0 } size = { width = 602 height = 700 } clipping = no iconType = { name = "pulse" position = { x = 247 y = 322 } quadTextureSprite = "GFX_MCKSP_core_pulse" alwaystransparent = yes } }
+	containerWindowType = { name = "pulse_evgeny_win"   position = { x = 0 y = 0 } size = { width = 602 height = 700 } clipping = no iconType = { name = "pulse" position = { x = 355 y = 88 }  quadTextureSprite = "GFX_MCKSP_core_pulse" alwaystransparent = yes } }
+	containerWindowType = { name = "pulse_stepan_win"   position = { x = 0 y = 0 } size = { width = 602 height = 700 } clipping = no iconType = { name = "pulse" position = { x = 319 y = 196 } quadTextureSprite = "GFX_MCKSP_core_pulse" alwaystransparent = yes } }
+	containerWindowType = { name = "pulse_demokrit_win" position = { x = 0 y = 0 } size = { width = 602 height = 700 } clipping = no iconType = { name = "pulse" position = { x = 193 y = 214 } quadTextureSprite = "GFX_MCKSP_core_pulse" alwaystransparent = yes } }
 
 }
