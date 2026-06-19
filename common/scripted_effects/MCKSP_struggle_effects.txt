@@ -902,6 +902,9 @@ MCKSP_publish_coalition_pops = {
 	# Текущий лидер каждой коалиции = член с макс p_ (для текста инфо-решений).
 	# Индексы гостей: 1 nikita 2 arseny 3 demokrit 4 gleb 5 stepan 6 ivan 7 ilya
 	# 8 evgeny 9 artem 10 ilgam. mcksp_tmp_lead = бегущий максимум (старт -1, p_>=0).
+	# Пересчёт лидеров — ТОЛЬКО с фазы 3 (после конца фазы 2). В фазах 1-2 лидеры = ядра
+	# (заданы в enter_phase1), не меняются по популярности.
+	if = { limit = { OR = { has_country_flag = mcksp_phase_3 has_country_flag = mcksp_phase_4 } }
 	set_variable = { coalition_leader_1 = 0 }
 	set_temp_variable = { mcksp_tmp_lead = -1 }
 	if = { limit = { check_variable = { coalition_of_nikita = 1 }   check_variable = { p_nikita > mcksp_tmp_lead } }   set_temp_variable = { mcksp_tmp_lead = p_nikita }   set_variable = { coalition_leader_1 = 1 } }
@@ -953,6 +956,7 @@ MCKSP_publish_coalition_pops = {
 	if = { limit = { check_variable = { coalition_of_evgeny = 4 }   check_variable = { p_evgeny > mcksp_tmp_lead } }   set_temp_variable = { mcksp_tmp_lead = p_evgeny }   set_variable = { coalition_leader_4 = 8 } }
 	if = { limit = { check_variable = { coalition_of_artem = 4 }    check_variable = { p_artem > mcksp_tmp_lead } }    set_temp_variable = { mcksp_tmp_lead = p_artem }    set_variable = { coalition_leader_4 = 9 } }
 	if = { limit = { check_variable = { coalition_of_ilgam = 4 }    check_variable = { p_ilgam > mcksp_tmp_lead } }    set_temp_variable = { mcksp_tmp_lead = p_ilgam }    set_variable = { coalition_leader_4 = 10 } }
+	}
 }
 
 # ----------------------------------------------------------------------------
@@ -1231,40 +1235,24 @@ MCKSP_recompute_attitudes = {
 MCKSP_pick_faction_reformers = {
 	set_variable = { player_coalition = 1 }
 	set_variable = { player_self = 1 }
-	clr_country_flag = SOV_player_core_statists
-	clr_country_flag = SOV_player_core_centrists
-	clr_country_flag = SOV_player_core_socialists
-	set_country_flag = SOV_player_core_reformers
 	MCKSP_struggle_enter_phase1 = yes
 	MCKSP_mark_self_instant_cores = yes
 }
 MCKSP_pick_faction_statists = {
 	set_variable = { player_coalition = 2 }
 	set_variable = { player_self = 8 }
-	clr_country_flag = SOV_player_core_reformers
-	clr_country_flag = SOV_player_core_centrists
-	clr_country_flag = SOV_player_core_socialists
-	set_country_flag = SOV_player_core_statists
 	MCKSP_struggle_enter_phase1 = yes
 	MCKSP_mark_self_instant_cores = yes
 }
 MCKSP_pick_faction_centrists = {
 	set_variable = { player_coalition = 3 }
 	set_variable = { player_self = 5 }
-	clr_country_flag = SOV_player_core_reformers
-	clr_country_flag = SOV_player_core_statists
-	clr_country_flag = SOV_player_core_socialists
-	set_country_flag = SOV_player_core_centrists
 	MCKSP_struggle_enter_phase1 = yes
 	MCKSP_mark_self_instant_cores = yes
 }
 MCKSP_pick_faction_socialists = {
 	set_variable = { player_coalition = 4 }
 	set_variable = { player_self = 3 }
-	clr_country_flag = SOV_player_core_reformers
-	clr_country_flag = SOV_player_core_statists
-	clr_country_flag = SOV_player_core_centrists
-	set_country_flag = SOV_player_core_socialists
 	MCKSP_struggle_enter_phase1 = yes
 	MCKSP_mark_self_instant_cores = yes
 }
@@ -1333,6 +1321,14 @@ MCKSP_compute_invite_costs = {
 MCKSP_struggle_enter_phase1 = {
 	set_variable = { mcksp_struggle_phase = 1 }
 	MCKSP_sync_phase_flags = yes
+	# Стартовые лидеры коалиций = их ЯДРА (1 nikita, 8 evgeny, 5 stepan, 3 demokrit).
+	# В фазах 1-2 не пересчитываются по популярности — лидер коалиции определяется
+	# только с фазы 3 (см. гейт в MCKSP_publish_coalition_pops). Флаги компаса читают
+	# coalition_leader_*, поэтому в 1-2 стоят на ядрах, с фазы 3 переезжают на лидеров.
+	set_variable = { coalition_leader_1 = 1 }
+	set_variable = { coalition_leader_2 = 8 }
+	set_variable = { coalition_leader_3 = 5 }
+	set_variable = { coalition_leader_4 = 3 }
 	MCKSP_compute_invite_costs = yes
 	MCKSP_recompute_sizes = yes
 	MCKSP_recompute_attitudes = yes
@@ -1399,10 +1395,6 @@ MCKSP_reset_struggle = {
 	set_variable = { player_self = 0 }
 	set_variable = { winning_coalition = 0 }
 	set_variable = { winning_leader = 0 }
-	clr_country_flag = SOV_player_core_reformers
-	clr_country_flag = SOV_player_core_statists
-	clr_country_flag = SOV_player_core_centrists
-	clr_country_flag = SOV_player_core_socialists
 	clr_country_flag = mcksp_struggle_endgame
 	set_variable = { coalition_of_nikita = 1 }
 	set_variable = { coalition_of_evgeny = 2 }
