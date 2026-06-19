@@ -118,62 +118,8 @@ defined_text = {
 	text = { trigger = { always = yes } localization_key = mcksp_struggle_cat_desc_p0 }
 }
 
-# --- Группировка по коалициям (фаза 2: «кто в какой коалиции»). ---
-# GetMem<C>_<g> = имя гостя+пробел (mcksp_nm_<g>), если coalition_of_<g> = C, иначе "" (mcksp_nm_empty).
-# Конкатенация в desc строит список членов коалиции: «Реформисты: [GetMem1_nikita][GetMem1_arseny]...».
-# Фаза 2 нейтралов не имеет (вербовка завершена в фазе 1) — группа 0 не нужна.
-defined_text = { name = GetMem1_nikita   text = { trigger = { check_variable = { coalition_of_nikita = 1 } }   localization_key = mcksp_nm_nikita }   text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem1_arseny   text = { trigger = { check_variable = { coalition_of_arseny = 1 } }   localization_key = mcksp_nm_arseny }   text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem1_demokrit text = { trigger = { check_variable = { coalition_of_demokrit = 1 } } localization_key = mcksp_nm_demokrit } text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem1_gleb     text = { trigger = { check_variable = { coalition_of_gleb = 1 } }     localization_key = mcksp_nm_gleb }     text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem1_stepan   text = { trigger = { check_variable = { coalition_of_stepan = 1 } }   localization_key = mcksp_nm_stepan }   text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem1_ivan     text = { trigger = { check_variable = { coalition_of_ivan = 1 } }     localization_key = mcksp_nm_ivan }     text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem1_ilya     text = { trigger = { check_variable = { coalition_of_ilya = 1 } }     localization_key = mcksp_nm_ilya }     text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem1_evgeny   text = { trigger = { check_variable = { coalition_of_evgeny = 1 } }   localization_key = mcksp_nm_evgeny }   text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem1_artem    text = { trigger = { check_variable = { coalition_of_artem = 1 } }    localization_key = mcksp_nm_artem }    text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem1_ilgam    text = { trigger = { check_variable = { coalition_of_ilgam = 1 } }    localization_key = mcksp_nm_ilgam }    text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-
-defined_text = { name = GetMem2_nikita   text = { trigger = { check_variable = { coalition_of_nikita = 2 } }   localization_key = mcksp_nm_nikita }   text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem2_arseny   text = { trigger = { check_variable = { coalition_of_arseny = 2 } }   localization_key = mcksp_nm_arseny }   text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem2_demokrit text = { trigger = { check_variable = { coalition_of_demokrit = 2 } } localization_key = mcksp_nm_demokrit } text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem2_gleb     text = { trigger = { check_variable = { coalition_of_gleb = 2 } }     localization_key = mcksp_nm_gleb }     text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem2_stepan   text = { trigger = { check_variable = { coalition_of_stepan = 2 } }   localization_key = mcksp_nm_stepan }   text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem2_ivan     text = { trigger = { check_variable = { coalition_of_ivan = 2 } }     localization_key = mcksp_nm_ivan }     text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem2_ilya     text = { trigger = { check_variable = { coalition_of_ilya = 2 } }     localization_key = mcksp_nm_ilya }     text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem2_evgeny   text = { trigger = { check_variable = { coalition_of_evgeny = 2 } }   localization_key = mcksp_nm_evgeny }   text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem2_artem    text = { trigger = { check_variable = { coalition_of_artem = 2 } }    localization_key = mcksp_nm_artem }    text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem2_ilgam    text = { trigger = { check_variable = { coalition_of_ilgam = 2 } }    localization_key = mcksp_nm_ilgam }    text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-
-defined_text = { name = GetMem3_nikita   text = { trigger = { check_variable = { coalition_of_nikita = 3 } }   localization_key = mcksp_nm_nikita }   text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem3_arseny   text = { trigger = { check_variable = { coalition_of_arseny = 3 } }   localization_key = mcksp_nm_arseny }   text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem3_demokrit text = { trigger = { check_variable = { coalition_of_demokrit = 3 } } localization_key = mcksp_nm_demokrit } text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem3_gleb     text = { trigger = { check_variable = { coalition_of_gleb = 3 } }     localization_key = mcksp_nm_gleb }     text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem3_stepan   text = { trigger = { check_variable = { coalition_of_stepan = 3 } }   localization_key = mcksp_nm_stepan }   text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem3_ivan     text = { trigger = { check_variable = { coalition_of_ivan = 3 } }     localization_key = mcksp_nm_ivan }     text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem3_ilya     text = { trigger = { check_variable = { coalition_of_ilya = 3 } }     localization_key = mcksp_nm_ilya }     text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem3_evgeny   text = { trigger = { check_variable = { coalition_of_evgeny = 3 } }   localization_key = mcksp_nm_evgeny }   text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem3_artem    text = { trigger = { check_variable = { coalition_of_artem = 3 } }    localization_key = mcksp_nm_artem }    text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem3_ilgam    text = { trigger = { check_variable = { coalition_of_ilgam = 3 } }    localization_key = mcksp_nm_ilgam }    text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-
-defined_text = { name = GetMem4_nikita   text = { trigger = { check_variable = { coalition_of_nikita = 4 } }   localization_key = mcksp_nm_nikita }   text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem4_arseny   text = { trigger = { check_variable = { coalition_of_arseny = 4 } }   localization_key = mcksp_nm_arseny }   text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem4_demokrit text = { trigger = { check_variable = { coalition_of_demokrit = 4 } } localization_key = mcksp_nm_demokrit } text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem4_gleb     text = { trigger = { check_variable = { coalition_of_gleb = 4 } }     localization_key = mcksp_nm_gleb }     text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem4_stepan   text = { trigger = { check_variable = { coalition_of_stepan = 4 } }   localization_key = mcksp_nm_stepan }   text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem4_ivan     text = { trigger = { check_variable = { coalition_of_ivan = 4 } }     localization_key = mcksp_nm_ivan }     text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem4_ilya     text = { trigger = { check_variable = { coalition_of_ilya = 4 } }     localization_key = mcksp_nm_ilya }     text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem4_evgeny   text = { trigger = { check_variable = { coalition_of_evgeny = 4 } }   localization_key = mcksp_nm_evgeny }   text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem4_artem    text = { trigger = { check_variable = { coalition_of_artem = 4 } }    localization_key = mcksp_nm_artem }    text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetMem4_ilgam    text = { trigger = { check_variable = { coalition_of_ilgam = 4 } }    localization_key = mcksp_nm_ilgam }    text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-
-# Маркер коалиции игрока «(вы)» (mcksp_you_mark) для подсветки своей строки в desc.
-defined_text = { name = GetYou1 text = { trigger = { check_variable = { player_coalition = 1 } } localization_key = mcksp_you_mark } text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetYou2 text = { trigger = { check_variable = { player_coalition = 2 } } localization_key = mcksp_you_mark } text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetYou3 text = { trigger = { check_variable = { player_coalition = 3 } } localization_key = mcksp_you_mark } text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-defined_text = { name = GetYou4 text = { trigger = { check_variable = { player_coalition = 4 } } localization_key = mcksp_you_mark } text = { trigger = { always = yes } localization_key = mcksp_nm_empty } }
-
-# --- Колонка «Коалиция» таблицы desc: короткий цветной тег коалиции гостя (или «—» нейтрал). ---
-# Заменяет группировку GetMem (та теперь не используется desc — оставлена мёртвой).
+# --- Колонка «Коалиция» ростер-окна: короткий цветной тег коалиции гостя (или «-» нейтрал). ---
+# Обёртки rcoal_<g> (loc) ссылаются на эти GetCoalTag_<g>; питают textbox cl_<g> в .gui.
 defined_text = { name = GetCoalTag_nikita   text = { trigger = { check_variable = { coalition_of_nikita = 1 } } localization_key = mcksp_ctag_1 } text = { trigger = { check_variable = { coalition_of_nikita = 2 } } localization_key = mcksp_ctag_2 } text = { trigger = { check_variable = { coalition_of_nikita = 3 } } localization_key = mcksp_ctag_3 } text = { trigger = { check_variable = { coalition_of_nikita = 4 } } localization_key = mcksp_ctag_4 } text = { trigger = { always = yes } localization_key = mcksp_ctag_0 } }
 defined_text = { name = GetCoalTag_arseny   text = { trigger = { check_variable = { coalition_of_arseny = 1 } } localization_key = mcksp_ctag_1 } text = { trigger = { check_variable = { coalition_of_arseny = 2 } } localization_key = mcksp_ctag_2 } text = { trigger = { check_variable = { coalition_of_arseny = 3 } } localization_key = mcksp_ctag_3 } text = { trigger = { check_variable = { coalition_of_arseny = 4 } } localization_key = mcksp_ctag_4 } text = { trigger = { always = yes } localization_key = mcksp_ctag_0 } }
 defined_text = { name = GetCoalTag_demokrit text = { trigger = { check_variable = { coalition_of_demokrit = 1 } } localization_key = mcksp_ctag_1 } text = { trigger = { check_variable = { coalition_of_demokrit = 2 } } localization_key = mcksp_ctag_2 } text = { trigger = { check_variable = { coalition_of_demokrit = 3 } } localization_key = mcksp_ctag_3 } text = { trigger = { check_variable = { coalition_of_demokrit = 4 } } localization_key = mcksp_ctag_4 } text = { trigger = { always = yes } localization_key = mcksp_ctag_0 } }

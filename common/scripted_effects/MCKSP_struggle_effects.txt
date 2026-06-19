@@ -1411,28 +1411,15 @@ MCKSP_reset_struggle = {
 }
 
 # ----------------------------------------------------------------------------
-# Фаза 2: ИИ-коалиции пушат своих лидер-таргетов (иначе игрок побеждает даром).
-# ~50% недель на коалицию: промоут лидера + серый инфо-decision на КД.
+# Фаза 2: пуш ИИ идёт ТАЙМЕРАМИ решений SOV_struggle_rival_push_* -> MCKSP_ai_push_resolve_*.
+# (Мёртвый КД-тик MCKSP_phase2_ai_tick + MCKSP_ai_push_coalition_* + push_cooldown_* удалены.)
 # ----------------------------------------------------------------------------
-MCKSP_phase2_ai_tick = {
-	MCKSP_ai_push_coalition_1 = yes
-	MCKSP_ai_push_coalition_2 = yes
-	MCKSP_ai_push_coalition_3 = yes
-	MCKSP_ai_push_coalition_4 = yes
-	MCKSP_decrement_push_cooldowns = yes
-}
 # Пуш ИИ-коалиции C (продвижение лидера + очернение врага). Темп задаёт таймер решения
 # SOV_struggle_rival_push_* (days_remove), как в фазе 1 — НЕ КД-тик. Без активации decision.
 MCKSP_ai_push_resolve_1 = { if = { limit = { has_country_flag = mcksp_phase_2 NOT = { check_variable = { player_coalition = 1 } } } set_temp_variable = { mcksp_tmp_leader = leader_target_1 } MCKSP_ai_promote_leader = yes set_temp_variable = { mcksp_tmp_ai_coal = 1 } MCKSP_ai_slander_enemy = yes } }
 MCKSP_ai_push_resolve_2 = { if = { limit = { has_country_flag = mcksp_phase_2 NOT = { check_variable = { player_coalition = 2 } } } set_temp_variable = { mcksp_tmp_leader = leader_target_2 } MCKSP_ai_promote_leader = yes set_temp_variable = { mcksp_tmp_ai_coal = 2 } MCKSP_ai_slander_enemy = yes } }
 MCKSP_ai_push_resolve_3 = { if = { limit = { has_country_flag = mcksp_phase_2 NOT = { check_variable = { player_coalition = 3 } } } set_temp_variable = { mcksp_tmp_leader = leader_target_3 } MCKSP_ai_promote_leader = yes set_temp_variable = { mcksp_tmp_ai_coal = 3 } MCKSP_ai_slander_enemy = yes } }
 MCKSP_ai_push_resolve_4 = { if = { limit = { has_country_flag = mcksp_phase_2 NOT = { check_variable = { player_coalition = 4 } } } set_temp_variable = { mcksp_tmp_leader = leader_target_4 } MCKSP_ai_promote_leader = yes set_temp_variable = { mcksp_tmp_ai_coal = 4 } MCKSP_ai_slander_enemy = yes } }
-MCKSP_decrement_push_cooldowns = {
-	if = { limit = { check_variable = { push_cooldown_1 > 0 } } subtract_from_variable = { push_cooldown_1 = 1 } }
-	if = { limit = { check_variable = { push_cooldown_2 > 0 } } subtract_from_variable = { push_cooldown_2 = 1 } }
-	if = { limit = { check_variable = { push_cooldown_3 > 0 } } subtract_from_variable = { push_cooldown_3 = 1 } }
-	if = { limit = { check_variable = { push_cooldown_4 > 0 } } subtract_from_variable = { push_cooldown_4 = 1 } }
-}
 MCKSP_ai_promote_leader = {
 	# Промоутит гостя с id = mcksp_tmp_leader (лидер-таргет коалиции).
 	if = { limit = { check_variable = { mcksp_tmp_leader = 1 } } MCKSP_promote_nikita = yes }
@@ -1445,54 +1432,6 @@ MCKSP_ai_promote_leader = {
 	else_if = { limit = { check_variable = { mcksp_tmp_leader = 8 } } MCKSP_promote_evgeny = yes }
 	else_if = { limit = { check_variable = { mcksp_tmp_leader = 9 } } MCKSP_promote_artem = yes }
 	else_if = { limit = { check_variable = { mcksp_tmp_leader = 10 } } MCKSP_promote_ilgam = yes }
-}
-MCKSP_ai_push_coalition_1 = {
-	if = {
-		limit = { NOT = { check_variable = { player_coalition = 1 } } check_variable = { push_cooldown_1 = 0 } }
-		set_temp_variable = { mcksp_tmp_leader = leader_target_1 }
-		MCKSP_ai_promote_leader = yes
-		set_temp_variable = { mcksp_tmp_ai_coal = 1 }
-		MCKSP_ai_slander_enemy = yes
-		set_country_flag = mcksp_rival_push_1
-		activate_decision = SOV_struggle_rival_push_reformers
-		set_variable = { push_cooldown_1 = 6 }
-	}
-}
-MCKSP_ai_push_coalition_2 = {
-	if = {
-		limit = { NOT = { check_variable = { player_coalition = 2 } } check_variable = { push_cooldown_2 = 0 } }
-		set_temp_variable = { mcksp_tmp_leader = leader_target_2 }
-		MCKSP_ai_promote_leader = yes
-		set_temp_variable = { mcksp_tmp_ai_coal = 2 }
-		MCKSP_ai_slander_enemy = yes
-		set_country_flag = mcksp_rival_push_2
-		activate_decision = SOV_struggle_rival_push_statists
-		set_variable = { push_cooldown_2 = 6 }
-	}
-}
-MCKSP_ai_push_coalition_3 = {
-	if = {
-		limit = { NOT = { check_variable = { player_coalition = 3 } } check_variable = { push_cooldown_3 = 0 } }
-		set_temp_variable = { mcksp_tmp_leader = leader_target_3 }
-		MCKSP_ai_promote_leader = yes
-		set_temp_variable = { mcksp_tmp_ai_coal = 3 }
-		MCKSP_ai_slander_enemy = yes
-		set_country_flag = mcksp_rival_push_3
-		activate_decision = SOV_struggle_rival_push_centrists
-		set_variable = { push_cooldown_3 = 6 }
-	}
-}
-MCKSP_ai_push_coalition_4 = {
-	if = {
-		limit = { NOT = { check_variable = { player_coalition = 4 } } check_variable = { push_cooldown_4 = 0 } }
-		set_temp_variable = { mcksp_tmp_leader = leader_target_4 }
-		MCKSP_ai_promote_leader = yes
-		set_temp_variable = { mcksp_tmp_ai_coal = 4 }
-		MCKSP_ai_slander_enemy = yes
-		set_country_flag = mcksp_rival_push_4
-		activate_decision = SOV_struggle_rival_push_socialists
-		set_variable = { push_cooldown_4 = 6 }
-	}
 }
 
 # ИИ-очернение (фаза 2): коалиция mcksp_tmp_ai_coal бьёт p_ случайного ВРАГА (в чужой
