@@ -141,7 +141,7 @@ guiTypes = {
 				name = "lg_nikita"
 				position = { x = 0 y = 4 } size = { width = 296 height = 40 } clipping = no
 				buttonType = { name = "row_btn_nikita" position = { x = 0 y = 0 } quadTextureSprite = "GFX_MCKSP_legend_row_bg" pdx_tooltip = "MCKSP_PT_NIKITA" }
-				iconType = { name = "sym" position = { x = 5 y = 7 } quadTextureSprite = "GFX_MCKSP_ideo_symbols" frame = 1 pdx_tooltip = "MCKSP_PT_NIKITA" }
+				iconType = { name = "sym" position = { x = 4 y = 6 } scale = 1.9 quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 1 pdx_tooltip = "MCKSP_PT_NIKITA" }
 				instantTextboxType = { name = "nm"   position = { x = 37  y = 3  } font = "hoi_16mbs" text = "SOV_nikita_iakushin" maxWidth = 255 maxHeight = 16 format = left pdx_tooltip = "MCKSP_PT_NIKITA" }
 				instantTextboxType = { name = "ideo" position = { x = 37  y = 20 } font = "hoi_16mbs" text = "mcksp_social_liberalism" maxWidth = 255 maxHeight = 26 format = left pdx_tooltip = "MCKSP_PT_NIKITA" }
 			}
@@ -150,7 +150,7 @@ guiTypes = {
 				name = "lg_demokrit"
 				position = { x = 0 y = 46 } size = { width = 296 height = 40 } clipping = no
 				buttonType = { name = "row_btn_demokrit" position = { x = 0 y = 0 } quadTextureSprite = "GFX_MCKSP_legend_row_bg" pdx_tooltip = "MCKSP_PT_DEMOKRIT" }
-				iconType = { name = "sym" position = { x = 5 y = 7 } quadTextureSprite = "GFX_MCKSP_ideo_symbols" frame = 3 pdx_tooltip = "MCKSP_PT_DEMOKRIT" }
+				iconType = { name = "sym" position = { x = 4 y = 6 } scale = 1.9 quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 3 pdx_tooltip = "MCKSP_PT_DEMOKRIT" }
 				instantTextboxType = { name = "nm"   position = { x = 37  y = 3  } font = "hoi_16mbs" text = "SOV_demokrit_ikonomidi" maxWidth = 255 maxHeight = 16 format = left pdx_tooltip = "MCKSP_PT_DEMOKRIT" }
 				instantTextboxType = { name = "ideo" position = { x = 37  y = 20 } font = "hoi_16mbs" text = "mcksp_market_socialism" maxWidth = 255 maxHeight = 26 format = left pdx_tooltip = "MCKSP_PT_DEMOKRIT" }
 			}
@@ -159,7 +159,7 @@ guiTypes = {
 				name = "lg_stepan"
 				position = { x = 0 y = 88 } size = { width = 296 height = 40 } clipping = no
 				buttonType = { name = "row_btn_stepan" position = { x = 0 y = 0 } quadTextureSprite = "GFX_MCKSP_legend_row_bg" pdx_tooltip = "MCKSP_PT_STEPAN" }
-				iconType = { name = "sym" position = { x = 5 y = 7 } quadTextureSprite = "GFX_MCKSP_ideo_symbols" frame = 5 pdx_tooltip = "MCKSP_PT_STEPAN" }
+				iconType = { name = "sym" position = { x = 4 y = 6 } scale = 1.9 quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 5 pdx_tooltip = "MCKSP_PT_STEPAN" }
 				instantTextboxType = { name = "nm"   position = { x = 37  y = 3  } font = "hoi_16mbs" text = "SOV_stepan_pavlov" maxWidth = 255 maxHeight = 16 format = left pdx_tooltip = "MCKSP_PT_STEPAN" }
 				instantTextboxType = { name = "ideo" position = { x = 37  y = 20 } font = "hoi_16mbs" text = "mcksp_christian_democracy" maxWidth = 255 maxHeight = 26 format = left pdx_tooltip = "MCKSP_PT_STEPAN" }
 			}
@@ -168,7 +168,7 @@ guiTypes = {
 				name = "lg_ilya"
 				position = { x = 0 y = 130 } size = { width = 296 height = 40 } clipping = no
 				buttonType = { name = "row_btn_ilya" position = { x = 0 y = 0 } quadTextureSprite = "GFX_MCKSP_legend_row_bg" pdx_tooltip = "MCKSP_PT_ILYA" }
-				iconType = { name = "sym" position = { x = 5 y = 7 } quadTextureSprite = "GFX_MCKSP_ideo_symbols" frame = 7 pdx_tooltip = "MCKSP_PT_ILYA" }
+				iconType = { name = "sym" position = { x = 4 y = 6 } scale = 1.9 quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 7 pdx_tooltip = "MCKSP_PT_ILYA" }
 				instantTextboxType = { name = "nm"   position = { x = 37  y = 3  } font = "hoi_16mbs" text = "SOV_ilya_popov" maxWidth = 255 maxHeight = 16 format = left pdx_tooltip = "MCKSP_PT_ILYA" }
 				instantTextboxType = { name = "ideo" position = { x = 37  y = 20 } font = "hoi_16mbs" text = "mcksp_statist_technocratism" maxWidth = 255 maxHeight = 26 format = left pdx_tooltip = "MCKSP_PT_ILYA" }
 			}
@@ -177,7 +177,7 @@ guiTypes = {
 				name = "lg_artem"
 				position = { x = 0 y = 172 } size = { width = 296 height = 40 } clipping = no
 				buttonType = { name = "row_btn_artem" position = { x = 0 y = 0 } quadTextureSprite = "GFX_MCKSP_legend_row_bg" pdx_tooltip = "MCKSP_PT_ARTEM" }
-				iconType = { name = "sym" position = { x = 5 y = 7 } quadTextureSprite = "GFX_MCKSP_ideo_symbols" frame = 9 pdx_tooltip = "MCKSP_PT_ARTEM" }
+				iconType = { name = "sym" position = { x = 4 y = 6 } scale = 1.9 quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 9 pdx_tooltip = "MCKSP_PT_ARTEM" }
 				instantTextboxType = { name = "nm"   position = { x = 37  y = 3  } font = "hoi_16mbs" text = "SOV_artem_ayusheev" maxWidth = 255 maxHeight = 16 format = left pdx_tooltip = "MCKSP_PT_ARTEM" }
 				instantTextboxType = { name = "ideo" position = { x = 37  y = 20 } font = "hoi_16mbs" text = "mcksp_democratic_socialism" maxWidth = 255 maxHeight = 26 format = left pdx_tooltip = "MCKSP_PT_ARTEM" }
 			}
@@ -186,7 +186,7 @@ guiTypes = {
 				name = "lg_arseny"
 				position = { x = 316 y = 4 } size = { width = 296 height = 40 } clipping = no
 				buttonType = { name = "row_btn_arseny" position = { x = 0 y = 0 } quadTextureSprite = "GFX_MCKSP_legend_row_bg" pdx_tooltip = "MCKSP_PT_ARSENY" }
-				iconType = { name = "sym" position = { x = 5 y = 7 } quadTextureSprite = "GFX_MCKSP_ideo_symbols" frame = 2 pdx_tooltip = "MCKSP_PT_ARSENY" }
+				iconType = { name = "sym" position = { x = 4 y = 6 } scale = 1.9 quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 2 pdx_tooltip = "MCKSP_PT_ARSENY" }
 				instantTextboxType = { name = "nm"   position = { x = 37  y = 3  } font = "hoi_16mbs" text = "SOV_arseny_pavlov" maxWidth = 255 maxHeight = 16 format = left pdx_tooltip = "MCKSP_PT_ARSENY" }
 				instantTextboxType = { name = "ideo" position = { x = 37  y = 20 } font = "hoi_16mbs" text = "mcksp_liberal_humanism" maxWidth = 255 maxHeight = 26 format = left pdx_tooltip = "MCKSP_PT_ARSENY" }
 			}
@@ -195,7 +195,7 @@ guiTypes = {
 				name = "lg_gleb"
 				position = { x = 316 y = 46 } size = { width = 296 height = 40 } clipping = no
 				buttonType = { name = "row_btn_gleb" position = { x = 0 y = 0 } quadTextureSprite = "GFX_MCKSP_legend_row_bg" pdx_tooltip = "MCKSP_PT_GLEB" }
-				iconType = { name = "sym" position = { x = 5 y = 7 } quadTextureSprite = "GFX_MCKSP_ideo_symbols" frame = 4 pdx_tooltip = "MCKSP_PT_GLEB" }
+				iconType = { name = "sym" position = { x = 4 y = 6 } scale = 1.9 quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 4 pdx_tooltip = "MCKSP_PT_GLEB" }
 				instantTextboxType = { name = "nm"   position = { x = 37  y = 3  } font = "hoi_16mbs" text = "SOV_gleb_rychkov" maxWidth = 255 maxHeight = 16 format = left pdx_tooltip = "MCKSP_PT_GLEB" }
 				instantTextboxType = { name = "ideo" position = { x = 37  y = 20 } font = "hoi_16mbs" text = "mcksp_pragmatic_syncretism" maxWidth = 255 maxHeight = 26 format = left pdx_tooltip = "MCKSP_PT_GLEB" }
 			}
@@ -204,7 +204,7 @@ guiTypes = {
 				name = "lg_ivan"
 				position = { x = 316 y = 88 } size = { width = 296 height = 40 } clipping = no
 				buttonType = { name = "row_btn_ivan" position = { x = 0 y = 0 } quadTextureSprite = "GFX_MCKSP_legend_row_bg" pdx_tooltip = "MCKSP_PT_IVAN" }
-				iconType = { name = "sym" position = { x = 5 y = 7 } quadTextureSprite = "GFX_MCKSP_ideo_symbols" frame = 6 pdx_tooltip = "MCKSP_PT_IVAN" }
+				iconType = { name = "sym" position = { x = 4 y = 6 } scale = 1.9 quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 6 pdx_tooltip = "MCKSP_PT_IVAN" }
 				instantTextboxType = { name = "nm"   position = { x = 37  y = 3  } font = "hoi_16mbs" text = "SOV_ivan_danchenko" maxWidth = 255 maxHeight = 16 format = left pdx_tooltip = "MCKSP_PT_IVAN" }
 				instantTextboxType = { name = "ideo" position = { x = 37  y = 20 } font = "hoi_16mbs" text = "mcksp_scientific_progressism" maxWidth = 255 maxHeight = 26 format = left pdx_tooltip = "MCKSP_PT_IVAN" }
 			}
@@ -213,7 +213,7 @@ guiTypes = {
 				name = "lg_evgeny"
 				position = { x = 316 y = 130 } size = { width = 296 height = 40 } clipping = no
 				buttonType = { name = "row_btn_evgeny" position = { x = 0 y = 0 } quadTextureSprite = "GFX_MCKSP_legend_row_bg" pdx_tooltip = "MCKSP_PT_EVGENY" }
-				iconType = { name = "sym" position = { x = 5 y = 7 } quadTextureSprite = "GFX_MCKSP_ideo_symbols" frame = 8 pdx_tooltip = "MCKSP_PT_EVGENY" }
+				iconType = { name = "sym" position = { x = 4 y = 6 } scale = 1.9 quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 8 pdx_tooltip = "MCKSP_PT_EVGENY" }
 				instantTextboxType = { name = "nm"   position = { x = 37  y = 3  } font = "hoi_16mbs" text = "SOV_evgeny_okeanov" maxWidth = 255 maxHeight = 16 format = left pdx_tooltip = "MCKSP_PT_EVGENY" }
 				instantTextboxType = { name = "ideo" position = { x = 37  y = 20 } font = "hoi_16mbs" text = "mcksp_national_conservatism" maxWidth = 255 maxHeight = 26 format = left pdx_tooltip = "MCKSP_PT_EVGENY" }
 			}
@@ -222,7 +222,7 @@ guiTypes = {
 				name = "lg_ilgam"
 				position = { x = 316 y = 172 } size = { width = 296 height = 40 } clipping = no
 				buttonType = { name = "row_btn_ilgam" position = { x = 0 y = 0 } quadTextureSprite = "GFX_MCKSP_legend_row_bg" pdx_tooltip = "MCKSP_PT_ILGAM" }
-				iconType = { name = "sym" position = { x = 5 y = 7 } quadTextureSprite = "GFX_MCKSP_ideo_symbols" frame = 10 pdx_tooltip = "MCKSP_PT_ILGAM" }
+				iconType = { name = "sym" position = { x = 4 y = 6 } scale = 1.9 quadTextureSprite = "GFX_MCKSP_compass_dot_strip" frame = 10 pdx_tooltip = "MCKSP_PT_ILGAM" }
 				instantTextboxType = { name = "nm"   position = { x = 37  y = 3  } font = "hoi_16mbs" text = "SOV_ilgam_fagamanov" maxWidth = 255 maxHeight = 16 format = left pdx_tooltip = "MCKSP_PT_ILGAM" }
 				instantTextboxType = { name = "ideo" position = { x = 37  y = 20 } font = "hoi_16mbs" text = "mcksp_justicialism" maxWidth = 255 maxHeight = 26 format = left pdx_tooltip = "MCKSP_PT_ILGAM" }
 			}

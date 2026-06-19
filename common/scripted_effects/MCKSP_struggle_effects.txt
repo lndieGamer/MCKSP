@@ -1231,6 +1231,9 @@ MCKSP_recompute_attitudes = {
 MCKSP_pick_faction_reformers = {
 	set_variable = { player_coalition = 1 }
 	set_variable = { player_self = 1 }
+	clr_country_flag = SOV_player_core_statists
+	clr_country_flag = SOV_player_core_centrists
+	clr_country_flag = SOV_player_core_socialists
 	set_country_flag = SOV_player_core_reformers
 	MCKSP_struggle_enter_phase1 = yes
 	MCKSP_mark_self_instant_cores = yes
@@ -1238,6 +1241,9 @@ MCKSP_pick_faction_reformers = {
 MCKSP_pick_faction_statists = {
 	set_variable = { player_coalition = 2 }
 	set_variable = { player_self = 8 }
+	clr_country_flag = SOV_player_core_reformers
+	clr_country_flag = SOV_player_core_centrists
+	clr_country_flag = SOV_player_core_socialists
 	set_country_flag = SOV_player_core_statists
 	MCKSP_struggle_enter_phase1 = yes
 	MCKSP_mark_self_instant_cores = yes
@@ -1245,6 +1251,9 @@ MCKSP_pick_faction_statists = {
 MCKSP_pick_faction_centrists = {
 	set_variable = { player_coalition = 3 }
 	set_variable = { player_self = 5 }
+	clr_country_flag = SOV_player_core_reformers
+	clr_country_flag = SOV_player_core_statists
+	clr_country_flag = SOV_player_core_socialists
 	set_country_flag = SOV_player_core_centrists
 	MCKSP_struggle_enter_phase1 = yes
 	MCKSP_mark_self_instant_cores = yes
@@ -1252,6 +1261,9 @@ MCKSP_pick_faction_centrists = {
 MCKSP_pick_faction_socialists = {
 	set_variable = { player_coalition = 4 }
 	set_variable = { player_self = 3 }
+	clr_country_flag = SOV_player_core_reformers
+	clr_country_flag = SOV_player_core_statists
+	clr_country_flag = SOV_player_core_centrists
 	set_country_flag = SOV_player_core_socialists
 	MCKSP_struggle_enter_phase1 = yes
 	MCKSP_mark_self_instant_cores = yes
