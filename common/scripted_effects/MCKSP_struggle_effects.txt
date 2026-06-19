@@ -314,7 +314,7 @@ MCKSP_contest_pop_halve_player = {
 	else_if = { limit = { check_variable = { player_self = 7 } }  set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_statist_technocratism } multiply_temp_variable = { mcksp_tmp_pop = -0.5 } add_popularity = { ideology = mcksp_statist_technocratism popularity = var:mcksp_tmp_pop } }
 	else_if = { limit = { check_variable = { player_self = 8 } }  set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_national_conservatism } multiply_temp_variable = { mcksp_tmp_pop = -0.5 } add_popularity = { ideology = mcksp_national_conservatism popularity = var:mcksp_tmp_pop } }
 	else_if = { limit = { check_variable = { player_self = 9 } }  set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_democratic_socialism }  multiply_temp_variable = { mcksp_tmp_pop = -0.5 } add_popularity = { ideology = mcksp_democratic_socialism popularity = var:mcksp_tmp_pop } }
-	else_if = { limit = { check_variable = { player_self = 10 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_placeholder_ilgam }   multiply_temp_variable = { mcksp_tmp_pop = -0.5 } add_popularity = { ideology = mcksp_placeholder_ilgam popularity = var:mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { player_self = 10 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_justicialism }   multiply_temp_variable = { mcksp_tmp_pop = -0.5 } add_popularity = { ideology = mcksp_justicialism popularity = var:mcksp_tmp_pop } }
 }
 # Удвоить ванильную популярность партии-группы спорного гостя (mcksp_contest_guest).
 MCKSP_contest_pop_double_target = {
@@ -327,7 +327,7 @@ MCKSP_contest_pop_double_target = {
 	else_if = { limit = { check_variable = { mcksp_contest_guest = 7 } }  set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_statist_technocratism } add_popularity = { ideology = mcksp_statist_technocratism popularity = var:mcksp_tmp_pop } }
 	else_if = { limit = { check_variable = { mcksp_contest_guest = 8 } }  set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_national_conservatism } add_popularity = { ideology = mcksp_national_conservatism popularity = var:mcksp_tmp_pop } }
 	else_if = { limit = { check_variable = { mcksp_contest_guest = 9 } }  set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_democratic_socialism }  add_popularity = { ideology = mcksp_democratic_socialism popularity = var:mcksp_tmp_pop } }
-	else_if = { limit = { check_variable = { mcksp_contest_guest = 10 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_placeholder_ilgam }   add_popularity = { ideology = mcksp_placeholder_ilgam popularity = var:mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { mcksp_contest_guest = 10 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_justicialism }   add_popularity = { ideology = mcksp_justicialism popularity = var:mcksp_tmp_pop } }
 }
 # +0.02 к ванильной популярности партии-группы игрока (опция «ничего не делать»).
 MCKSP_contest_pop_add2_player = {
@@ -340,7 +340,7 @@ MCKSP_contest_pop_add2_player = {
 	else_if = { limit = { check_variable = { player_self = 7 } }  add_popularity = { ideology = mcksp_statist_technocratism popularity = 0.02 } }
 	else_if = { limit = { check_variable = { player_self = 8 } }  add_popularity = { ideology = mcksp_national_conservatism popularity = 0.02 } }
 	else_if = { limit = { check_variable = { player_self = 9 } }  add_popularity = { ideology = mcksp_democratic_socialism popularity = 0.02 } }
-	else_if = { limit = { check_variable = { player_self = 10 } } add_popularity = { ideology = mcksp_placeholder_ilgam popularity = 0.02 } }
+	else_if = { limit = { check_variable = { player_self = 10 } } add_popularity = { ideology = mcksp_justicialism popularity = 0.02 } }
 }
 # Перевести спорного гостя в коалицию игрока (компромисс: ИИ его «скипает»).
 MCKSP_contest_move_target_to_player = {
@@ -847,7 +847,7 @@ MCKSP_publish_coalition_pops = {
 	set_variable = { pp_ilya = party_popularity@mcksp_statist_technocratism }
 	set_variable = { pp_evgeny = party_popularity@mcksp_national_conservatism }
 	set_variable = { pp_artem = party_popularity@mcksp_democratic_socialism }
-	set_variable = { pp_ilgam = party_popularity@mcksp_placeholder_ilgam }
+	set_variable = { pp_ilgam = party_popularity@mcksp_justicialism }
 
 	if = { limit = { check_variable = { coalition_of_nikita = 1 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_social_liberalism } add_to_variable = { coalition_pop_reformers = mcksp_tmp_pop } }
 	else_if = { limit = { check_variable = { coalition_of_nikita = 2 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_social_liberalism } add_to_variable = { coalition_pop_statists = mcksp_tmp_pop } }
@@ -894,10 +894,10 @@ MCKSP_publish_coalition_pops = {
 	else_if = { limit = { check_variable = { coalition_of_artem = 3 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_democratic_socialism } add_to_variable = { coalition_pop_centrists = mcksp_tmp_pop } }
 	else_if = { limit = { check_variable = { coalition_of_artem = 4 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_democratic_socialism } add_to_variable = { coalition_pop_socialists = mcksp_tmp_pop } }
 
-	if = { limit = { check_variable = { coalition_of_ilgam = 1 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_placeholder_ilgam } add_to_variable = { coalition_pop_reformers = mcksp_tmp_pop } }
-	else_if = { limit = { check_variable = { coalition_of_ilgam = 2 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_placeholder_ilgam } add_to_variable = { coalition_pop_statists = mcksp_tmp_pop } }
-	else_if = { limit = { check_variable = { coalition_of_ilgam = 3 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_placeholder_ilgam } add_to_variable = { coalition_pop_centrists = mcksp_tmp_pop } }
-	else_if = { limit = { check_variable = { coalition_of_ilgam = 4 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_placeholder_ilgam } add_to_variable = { coalition_pop_socialists = mcksp_tmp_pop } }
+	if = { limit = { check_variable = { coalition_of_ilgam = 1 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_justicialism } add_to_variable = { coalition_pop_reformers = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_ilgam = 2 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_justicialism } add_to_variable = { coalition_pop_statists = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_ilgam = 3 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_justicialism } add_to_variable = { coalition_pop_centrists = mcksp_tmp_pop } }
+	else_if = { limit = { check_variable = { coalition_of_ilgam = 4 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_justicialism } add_to_variable = { coalition_pop_socialists = mcksp_tmp_pop } }
 
 	# Текущий лидер каждой коалиции = член с макс p_ (для текста инфо-решений).
 	# Индексы гостей: 1 nikita 2 arseny 3 demokrit 4 gleb 5 stepan 6 ivan 7 ilya
@@ -1087,7 +1087,7 @@ MCKSP_promote_artem = {
 }
 MCKSP_promote_ilgam = {
 	add_to_variable = { p_ilgam = 1 }
-	add_popularity = { ideology = mcksp_placeholder_ilgam popularity = 0.01 }
+	add_popularity = { ideology = mcksp_justicialism popularity = 0.01 }
 	add_power_balance_value = { id = SOV_stalin_trust_balance value = 0.02 }
 }
 
@@ -1151,7 +1151,7 @@ MCKSP_slander_artem = {
 MCKSP_slander_ilgam = {
 	subtract_from_variable = { p_ilgam = 1 }
 	if = { limit = { check_variable = { p_ilgam < 0 } } set_variable = { p_ilgam = 0 } }
-	add_popularity = { ideology = mcksp_placeholder_ilgam popularity = -0.01 }
+	add_popularity = { ideology = mcksp_justicialism popularity = -0.01 }
 	add_power_balance_value = { id = SOV_stalin_trust_balance value = -0.05 }
 }
 
@@ -1460,7 +1460,7 @@ MCKSP_ai_slander_ivan     = { subtract_from_variable = { p_ivan = 1 }     if = {
 MCKSP_ai_slander_ilya     = { subtract_from_variable = { p_ilya = 1 }     if = { limit = { check_variable = { p_ilya < 0 } }     set_variable = { p_ilya = 0 } }     add_popularity = { ideology = mcksp_statist_technocratism popularity = -0.01 } }
 MCKSP_ai_slander_evgeny   = { subtract_from_variable = { p_evgeny = 1 }   if = { limit = { check_variable = { p_evgeny < 0 } }   set_variable = { p_evgeny = 0 } }   add_popularity = { ideology = mcksp_national_conservatism popularity = -0.01 } }
 MCKSP_ai_slander_artem    = { subtract_from_variable = { p_artem = 1 }    if = { limit = { check_variable = { p_artem < 0 } }    set_variable = { p_artem = 0 } }    add_popularity = { ideology = mcksp_democratic_socialism popularity = -0.01 } }
-MCKSP_ai_slander_ilgam    = { subtract_from_variable = { p_ilgam = 1 }    if = { limit = { check_variable = { p_ilgam < 0 } }    set_variable = { p_ilgam = 0 } }    add_popularity = { ideology = mcksp_placeholder_ilgam popularity = -0.01 } }
+MCKSP_ai_slander_ilgam    = { subtract_from_variable = { p_ilgam = 1 }    if = { limit = { check_variable = { p_ilgam < 0 } }    set_variable = { p_ilgam = 0 } }    add_popularity = { ideology = mcksp_justicialism popularity = -0.01 } }
 
 # Случайный глагол клеветы НА КАЖДОГО гостя отдельно (mcksp_sverb_<g> = 1..4). Зовётся
 # при открытии меню клеветы -> у каждой цели свой глагол (найти компромат на X, очернить Y...).

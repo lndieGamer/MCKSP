@@ -224,7 +224,7 @@ guiTypes = {
 				buttonType = { name = "row_btn_ilgam" position = { x = 0 y = 0 } quadTextureSprite = "GFX_MCKSP_legend_row_bg" pdx_tooltip = "MCKSP_PT_ILGAM" }
 				iconType = { name = "sym" position = { x = 5 y = 7 } quadTextureSprite = "GFX_MCKSP_ideo_symbols" frame = 10 pdx_tooltip = "MCKSP_PT_ILGAM" }
 				instantTextboxType = { name = "nm"   position = { x = 37  y = 3  } font = "hoi_16mbs" text = "SOV_ilgam_fagamanov" maxWidth = 255 maxHeight = 16 format = left pdx_tooltip = "MCKSP_PT_ILGAM" }
-				instantTextboxType = { name = "ideo" position = { x = 37  y = 20 } font = "hoi_16mbs" text = "mcksp_placeholder_ilgam" maxWidth = 255 maxHeight = 26 format = left pdx_tooltip = "MCKSP_PT_ILGAM" }
+				instantTextboxType = { name = "ideo" position = { x = 37  y = 20 } font = "hoi_16mbs" text = "mcksp_justicialism" maxWidth = 255 maxHeight = 26 format = left pdx_tooltip = "MCKSP_PT_ILGAM" }
 			}
 		}
 	}

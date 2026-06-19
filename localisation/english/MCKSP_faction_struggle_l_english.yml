@@ -152,7 +152,7 @@
  mcksp_coalcol_1: "§R"
  mcksp_coalcol_2: "§O"
  mcksp_coalcol_3: "§T"
- mcksp_coalcol_4: "§Y"
+ mcksp_coalcol_4: "§R"
 
  # --- Phase 2: rival grey moves (push leader) ---
  SOV_struggle_rival_push_reformers: "§RReformers promote their leader§!"

@@ -19,6 +19,6 @@ MCKSP_player_party_pop_ge_2pct = {
 		AND = { check_variable = { player_self = 7 }  NOT = { check_variable = { party_popularity@mcksp_statist_technocratism < 0.02 } } }
 		AND = { check_variable = { player_self = 8 }  NOT = { check_variable = { party_popularity@mcksp_national_conservatism < 0.02 } } }
 		AND = { check_variable = { player_self = 9 }  NOT = { check_variable = { party_popularity@mcksp_democratic_socialism < 0.02 } } }
-		AND = { check_variable = { player_self = 10 } NOT = { check_variable = { party_popularity@mcksp_placeholder_ilgam < 0.02 } } }
+		AND = { check_variable = { player_self = 10 } NOT = { check_variable = { party_popularity@mcksp_justicialism < 0.02 } } }
 	}
 }

@@ -12,7 +12,7 @@ activate_guests_system = {
 	set_party_name = { ideology = mcksp_statist_technocratism long_name = mcksp_uso_party_long name = mcksp_uso_party }
 	set_party_name = { ideology = mcksp_national_conservatism long_name = mcksp_rsu_party_long name = mcksp_rsu_party }
 	set_party_name = { ideology = mcksp_democratic_socialism long_name = mcksp_progress_party_long name = mcksp_progress_party }
-	set_party_name = { ideology = mcksp_placeholder_ilgam long_name = mcksp_pf_party_long name = mcksp_pf_party }
+	set_party_name = { ideology = mcksp_justicialism long_name = mcksp_pf_party_long name = mcksp_pf_party }
 
 	promote_character = SOV_nikita_iakushin
 	promote_character = SOV_arseny_pavlov
@@ -37,7 +37,7 @@ activate_guests_system = {
 		mcksp_statist_technocratism = 2
 		mcksp_national_conservatism = 2
 		mcksp_democratic_socialism = 2
-		mcksp_placeholder_ilgam = 2
+		mcksp_justicialism = 2
 	}
 
 	# p_<name> — параллельная popularity на человека (vanilla считает на группу).
@@ -204,7 +204,7 @@ MCKSP_agitation_tick = {
 	add_popularity = { ideology = mcksp_statist_technocratism popularity = 0.001 }
 	add_popularity = { ideology = mcksp_national_conservatism popularity = 0.001 }
 	add_popularity = { ideology = mcksp_democratic_socialism popularity = 0.001 }
-	add_popularity = { ideology = mcksp_placeholder_ilgam popularity = 0.001 }
+	add_popularity = { ideology = mcksp_justicialism popularity = 0.001 }
 }
 
 # 2-е «Самовольная инициатива»: разовый +5 п.п. блоку суммарно (0.005 × 10 партий).
@@ -218,7 +218,7 @@ MCKSP_initiative_popularity = {
 	add_popularity = { ideology = mcksp_statist_technocratism popularity = 0.005 }
 	add_popularity = { ideology = mcksp_national_conservatism popularity = 0.005 }
 	add_popularity = { ideology = mcksp_democratic_socialism popularity = 0.005 }
-	add_popularity = { ideology = mcksp_placeholder_ilgam popularity = 0.005 }
+	add_popularity = { ideology = mcksp_justicialism popularity = 0.005 }
 }
 
 # 2-б «Публичная присяга Вождю»: партии с >=10% теряют 10 п.п., партии с <10%
@@ -233,7 +233,7 @@ MCKSP_public_oath_popularity = {
 	MCKSP_oath_cut_mcksp_statist_technocratism = yes
 	MCKSP_oath_cut_mcksp_national_conservatism = yes
 	MCKSP_oath_cut_mcksp_democratic_socialism = yes
-	MCKSP_oath_cut_mcksp_placeholder_ilgam = yes
+	MCKSP_oath_cut_mcksp_justicialism = yes
 }
 
 MCKSP_oath_cut_mcksp_social_liberalism = {
@@ -335,15 +335,15 @@ MCKSP_oath_cut_mcksp_democratic_socialism = {
 		add_popularity = { ideology = mcksp_democratic_socialism popularity = var:mcksp_tmp_pop }
 	}
 }
-MCKSP_oath_cut_mcksp_placeholder_ilgam = {
+MCKSP_oath_cut_mcksp_justicialism = {
 	if = {
-		limit = { mcksp_placeholder_ilgam > 0.099 }
-		add_popularity = { ideology = mcksp_placeholder_ilgam popularity = -0.1 }
+		limit = { mcksp_justicialism > 0.099 }
+		add_popularity = { ideology = mcksp_justicialism popularity = -0.1 }
 	}
 	else = {
-		set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_placeholder_ilgam }
+		set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_justicialism }
 		multiply_temp_variable = { mcksp_tmp_pop = -0.5 }
-		add_popularity = { ideology = mcksp_placeholder_ilgam popularity = var:mcksp_tmp_pop }
+		add_popularity = { ideology = mcksp_justicialism popularity = var:mcksp_tmp_pop }
 	}
 }
 
@@ -446,10 +446,10 @@ MCKSP_scapegoat_resolve = {
 		limit = { has_country_flag = mcksp_scapegoat_target_ilgam }
 		retire_character = SOV_ilgam_fagamanov
 		set_country_flag = mcksp_guest_gone_ilgam
-		set_party_name = { ideology = mcksp_placeholder_ilgam long_name = MCKSP_redacted name = MCKSP_redacted }
-		set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_placeholder_ilgam }
+		set_party_name = { ideology = mcksp_justicialism long_name = MCKSP_redacted name = MCKSP_redacted }
+		set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_justicialism }
 		multiply_temp_variable = { mcksp_tmp_pop = -1 }
-		add_popularity = { ideology = mcksp_placeholder_ilgam popularity = var:mcksp_tmp_pop }
+		add_popularity = { ideology = mcksp_justicialism popularity = var:mcksp_tmp_pop }
 		set_variable = { p_ilgam = 0 }
 	}
 
@@ -512,7 +512,7 @@ MCKSP_purge_guests_effect = {
 		mcksp_statist_technocratism = 0
 		mcksp_national_conservatism = 0
 		mcksp_democratic_socialism = 0
-		mcksp_placeholder_ilgam = 0
+		mcksp_justicialism = 0
 	}
 
 	set_party_name = { ideology = mcksp_social_liberalism long_name = MCKSP_redacted name = MCKSP_redacted }
@@ -524,7 +524,7 @@ MCKSP_purge_guests_effect = {
 	set_party_name = { ideology = mcksp_statist_technocratism long_name = MCKSP_redacted name = MCKSP_redacted }
 	set_party_name = { ideology = mcksp_national_conservatism long_name = MCKSP_redacted name = MCKSP_redacted }
 	set_party_name = { ideology = mcksp_democratic_socialism long_name = MCKSP_redacted name = MCKSP_redacted }
-	set_party_name = { ideology = mcksp_placeholder_ilgam long_name = MCKSP_redacted name = MCKSP_redacted }
+	set_party_name = { ideology = mcksp_justicialism long_name = MCKSP_redacted name = MCKSP_redacted }
 
 	clr_country_flag = guests_active
 	MCKSP_sync_dead_from_coalitions = yes

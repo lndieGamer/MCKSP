@@ -86,7 +86,7 @@ SOV_MCKSP_trust_cat = {
 				mcksp_statist_technocratism > 0.099
 				mcksp_national_conservatism > 0.099
 				mcksp_democratic_socialism > 0.099
-				mcksp_placeholder_ilgam > 0.099
+				mcksp_justicialism > 0.099
 			}
 		}
 

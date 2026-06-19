@@ -19,6 +19,7 @@ characters = {
 		country_leader = { ideology = mcksp_statist_technocratism_t expire = "1965.1.1.1" id = -1 }
 		country_leader = { ideology = mcksp_national_conservatism_t expire = "1965.1.1.1" id = -1 }
 		country_leader = { ideology = mcksp_democratic_socialism_t expire = "1965.1.1.1" id = -1 }
+		country_leader = { ideology = mcksp_justicialism_t expire = "1965.1.1.1" id = -1 }
 	}
 
 }

@@ -135,7 +135,7 @@ characters = {
 		}
 	}
 
-	# ПФ — Партия Фагаманова (placeholder)
+	# ПФ — Партия Фагаманова (Хустисиализм)
 	SOV_ilgam_fagamanov = {
 		name = SOV_ilgam_fagamanov
 		portraits = {
@@ -144,7 +144,7 @@ characters = {
 			}
 		}
 		country_leader = {
-			ideology = mcksp_placeholder_ilgam_t
+			ideology = mcksp_justicialism_t
 			expire = "1965.1.1.1"
 			id = -1
 		}

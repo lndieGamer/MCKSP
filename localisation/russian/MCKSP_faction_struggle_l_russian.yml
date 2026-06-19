@@ -152,7 +152,7 @@
  mcksp_coalcol_1: "§R"
  mcksp_coalcol_2: "§O"
  mcksp_coalcol_3: "§T"
- mcksp_coalcol_4: "§Y"
+ mcksp_coalcol_4: "§R"
 
  # --- Фаза 2: серые ходы соперников (пуш лидера) ---
  SOV_struggle_rival_push_reformers: "§RРеформисты продвигают лидера§!"

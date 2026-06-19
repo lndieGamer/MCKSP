@@ -351,7 +351,7 @@ ideologies = {
 		types = {
 			mcksp_market_socialism_t = { can_be_randomly_selected = no }
 		}
-		color = { 224 158 38 }
+		color = { 192 33 80 }
 		war_impact_on_world_tension = 0.25
 		faction_impact_on_world_tension = 0.1
 		rules = {
@@ -485,7 +485,7 @@ ideologies = {
 		types = {
 			mcksp_democratic_socialism_t = { can_be_randomly_selected = no }
 		}
-		color = { 180 200 60 }
+		color = { 255 128 0 }
 		war_impact_on_world_tension = 0.25
 		faction_impact_on_world_tension = 0.1
 		rules = {
@@ -507,12 +507,12 @@ ideologies = {
 		ai_give_core_state_control_threshold = 10000
 	}
 
-	# PLACEHOLDER: партия Ильгама Фагаманова (0, 0 на компасе, временно).
-	mcksp_placeholder_ilgam = {
+	# Хустисиализм — Ильгам Фагаманов (-3, +5 на компасе). Доктрина «третьего пути».
+	mcksp_justicialism = {
 		types = {
-			mcksp_placeholder_ilgam_t = { can_be_randomly_selected = no }
+			mcksp_justicialism_t = { can_be_randomly_selected = no }
 		}
-		color = { 170 170 170 }
+		color = { 216 64 64 }
 		war_impact_on_world_tension = 0.25
 		faction_impact_on_world_tension = 0.1
 		rules = {
