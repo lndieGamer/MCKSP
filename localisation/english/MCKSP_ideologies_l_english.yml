@@ -2,7 +2,7 @@
 # MCKSP Mod - English ideologies localisation file
 # Static names + descriptions. Pre-activation hiding for parties_grid + pie chart
 # is done via initial set_party_name = MCKSP_redacted in on_actions/on_startup.
-# Ideology popup (click) uses these locales directly — minor leak pre-trigger.
+# Ideology popup (click) uses these locales directly - minor leak pre-trigger.
 
  mcksp_social_liberalism: "Social-Liberalism"
  mcksp_social_liberalism_desc: "Doctrine of progressive democracy. Welfare state, civil liberties, regulated market, and an active role of the state in providing equal opportunity."
@@ -55,8 +55,8 @@
  mcksp_democratic_socialism_t: "Democratic Socialism"
  mcksp_democratic_socialism_t_desc: "Socialism with a human face. Perestroika and glasnost, partial transition to market mechanisms while preserving public ownership of key industries. A reform course modelled on Gorbachev and Deng Xiaoping: modernisation without abandoning the socialist foundation."
 
-# PLACEHOLDER ideology for Ilgam — rename via set_party_name once concept is defined.
+# PLACEHOLDER ideology for Ilgam - rename via set_party_name once concept is defined.
  mcksp_placeholder_ilgam: "Fagamanov's Party"
- mcksp_placeholder_ilgam_desc: "PLACEHOLDER. Ideology of Ilgam Fagamanov's party — concept TBD."
+ mcksp_placeholder_ilgam_desc: "PLACEHOLDER. Ideology of Ilgam Fagamanov's party - concept TBD."
  mcksp_placeholder_ilgam_t: "Fagamanov's Party"
- mcksp_placeholder_ilgam_t_desc: "PLACEHOLDER. Ideology of Ilgam Fagamanov's party — concept TBD."
+ mcksp_placeholder_ilgam_t_desc: "PLACEHOLDER. Ideology of Ilgam Fagamanov's party - concept TBD."

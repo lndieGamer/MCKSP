@@ -1,0 +1,13 @@
+# Привязка окна-ростера к панели категории решений «Борьба идеологий».
+# context_type = decision_category + window_name -> HOI4 рисует окно внутри панели
+# категории, у которой в определении указано scripted_gui = mcksp_struggle_roster_ui
+# (см. common/decisions/categories/SOV_MCKSP_decisions.txt). Образец — ванильное
+# bul_internal_factions_decision_ui (Болгария, BUL_internal_factions_scripted_gui.txt).
+scripted_gui = {
+
+	mcksp_struggle_roster_ui = {
+		context_type = decision_category
+		window_name = "mcksp_struggle_roster_window"
+	}
+
+}

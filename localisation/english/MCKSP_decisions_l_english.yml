@@ -5,9 +5,9 @@ SOV_MCKSP_decisions_cat: "Measures to cover up the 'B Incident'"
   SOV_MCKSP_decisions_cat_desc: "The events that transpired in Moscow have been dubbed the 'B Incident'. Unfortunately, information about people from another time has already leaked beyond government offices. We must take measures to prevent further dissemination of this information."
 
   SOV_debug_finish_coverup: "[DEBUG] Finish cover-up"
-  SOV_debug_finish_coverup_desc: "§RDebug decision (only in -debug mode).§! Instantly clears all levels of the Incident B idea — the cover-up counts as complete, then the interrogation fires."
+  SOV_debug_finish_coverup_desc: "§RDebug decision (only in -debug mode).§! Instantly clears all levels of the Incident B idea - the cover-up counts as complete, then the interrogation fires."
 
-  # decision_cost_CP_15/20/30/40 — removed: these are vanilla keys (decisions_l_*.yml);
+  # decision_cost_CP_15/20/30/40 - removed: these are vanilla keys (decisions_l_*.yml);
   # duplicating them caused loc collisions. custom_cost_text resolves to the vanilla keys.
 
   SOV_involve_army: "Involve the Army"

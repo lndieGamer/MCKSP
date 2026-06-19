@@ -1,0 +1,79 @@
+# Окно-ростер борьбы фракций внутри панели категории решений «Борьба идеологий».
+# Образец — ванильное BUL_internal_factions: scripted_gui c context_type = decision_category.
+# Абсолютные позиции дают РЕАЛЬНЫЕ выровненные колонки.
+# Раскладка: КРУПНАЯ иконка-DDS партии слева (GFX_MCKSP_party_big_<g>, ~48x48, как болгарские
+# decision_faction_bul_*), весь текст сдвинут к правой границе; строки разведены по вертикали
+# (шаг 46), чтобы крупной иконке хватало места, текст центрирован по вертикали относительно иконки.
+# Колонки текста: Имя | Коалиция | Влияние. Динамика — loc-ключи с [GetCoalTag_<g>] / [?pp_<g>|%0].
+
+@ICON_X = 18
+@NAME_X = 120
+@COAL_X = 252
+@POP_X  = 382
+@HDR_Y  = 12
+
+guiTypes = {
+
+	containerWindowType = {
+		name = "mcksp_struggle_roster_window"
+		position = { x = 0 y = 0 }
+		size = { width = 100% height = 510 }
+
+		# --- Шапка колонок (над правым текстовым блоком) ---
+		instantTextBoxType = { name = "hdr_name" position = { x = @NAME_X y = @HDR_Y } font = "hoi_18mbs" text = "SOV_struggle_hdr_name" format = left   maxHeight = 24 maxwidth = 120 }
+		instantTextBoxType = { name = "hdr_coal" position = { x = @COAL_X y = @HDR_Y } font = "hoi_18mbs" text = "SOV_struggle_hdr_coal" format = center maxHeight = 24 maxwidth = 100 }
+		instantTextBoxType = { name = "hdr_pop"  position = { x = @POP_X  y = @HDR_Y } font = "hoi_18mbs" text = "SOV_struggle_hdr_pop"  format = center maxHeight = 24 maxwidth = 90 }
+
+		# --- Строки: крупная иконка слева (y = icon), текст справа (y = icon+15, центр по вертикали) ---
+		# 1 Никита
+		iconType           = { name = "ico_nikita"  spriteType = "GFX_MCKSP_party_big_nikita"  position = { x = @ICON_X y = 44 } }
+		instantTextBoxType = { name = "nm_nikita"   position = { x = @NAME_X y = 59 } font = "hoi_18mbs" text = "SOV_struggle_rname_nikita"  format = left   maxHeight = 24 maxwidth = 120 }
+		instantTextBoxType = { name = "cl_nikita"   position = { x = @COAL_X y = 59 } font = "hoi_18mbs" text = "SOV_struggle_rcoal_nikita"  format = center maxHeight = 24 maxwidth = 100 }
+		instantTextBoxType = { name = "pp_nikita"   position = { x = @POP_X  y = 59 } font = "hoi_18mbs" text = "SOV_struggle_pop_nikita"    format = center maxHeight = 24 maxwidth = 90 }
+		# 2 Арсений
+		iconType           = { name = "ico_arseny"  spriteType = "GFX_MCKSP_party_big_arseny"  position = { x = @ICON_X y = 90 } }
+		instantTextBoxType = { name = "nm_arseny"   position = { x = @NAME_X y = 105 } font = "hoi_18mbs" text = "SOV_struggle_rname_arseny" format = left   maxHeight = 24 maxwidth = 120 }
+		instantTextBoxType = { name = "cl_arseny"   position = { x = @COAL_X y = 105 } font = "hoi_18mbs" text = "SOV_struggle_rcoal_arseny" format = center maxHeight = 24 maxwidth = 100 }
+		instantTextBoxType = { name = "pp_arseny"   position = { x = @POP_X  y = 105 } font = "hoi_18mbs" text = "SOV_struggle_pop_arseny"   format = center maxHeight = 24 maxwidth = 90 }
+		# 3 Демокрит
+		iconType           = { name = "ico_demokrit" spriteType = "GFX_MCKSP_party_big_demokrit" position = { x = @ICON_X y = 136 } }
+		instantTextBoxType = { name = "nm_demokrit" position = { x = @NAME_X y = 151 } font = "hoi_18mbs" text = "SOV_struggle_rname_demokrit" format = left   maxHeight = 24 maxwidth = 120 }
+		instantTextBoxType = { name = "cl_demokrit" position = { x = @COAL_X y = 151 } font = "hoi_18mbs" text = "SOV_struggle_rcoal_demokrit" format = center maxHeight = 24 maxwidth = 100 }
+		instantTextBoxType = { name = "pp_demokrit" position = { x = @POP_X  y = 151 } font = "hoi_18mbs" text = "SOV_struggle_pop_demokrit"   format = center maxHeight = 24 maxwidth = 90 }
+		# 4 Глеб
+		iconType           = { name = "ico_gleb"    spriteType = "GFX_MCKSP_party_big_gleb"    position = { x = @ICON_X y = 182 } }
+		instantTextBoxType = { name = "nm_gleb"     position = { x = @NAME_X y = 197 } font = "hoi_18mbs" text = "SOV_struggle_rname_gleb"   format = left   maxHeight = 24 maxwidth = 120 }
+		instantTextBoxType = { name = "cl_gleb"     position = { x = @COAL_X y = 197 } font = "hoi_18mbs" text = "SOV_struggle_rcoal_gleb"   format = center maxHeight = 24 maxwidth = 100 }
+		instantTextBoxType = { name = "pp_gleb"     position = { x = @POP_X  y = 197 } font = "hoi_18mbs" text = "SOV_struggle_pop_gleb"     format = center maxHeight = 24 maxwidth = 90 }
+		# 5 Степан
+		iconType           = { name = "ico_stepan"  spriteType = "GFX_MCKSP_party_big_stepan"  position = { x = @ICON_X y = 228 } }
+		instantTextBoxType = { name = "nm_stepan"   position = { x = @NAME_X y = 243 } font = "hoi_18mbs" text = "SOV_struggle_rname_stepan" format = left   maxHeight = 24 maxwidth = 120 }
+		instantTextBoxType = { name = "cl_stepan"   position = { x = @COAL_X y = 243 } font = "hoi_18mbs" text = "SOV_struggle_rcoal_stepan" format = center maxHeight = 24 maxwidth = 100 }
+		instantTextBoxType = { name = "pp_stepan"   position = { x = @POP_X  y = 243 } font = "hoi_18mbs" text = "SOV_struggle_pop_stepan"   format = center maxHeight = 24 maxwidth = 90 }
+		# 6 Иван
+		iconType           = { name = "ico_ivan"    spriteType = "GFX_MCKSP_party_big_ivan"    position = { x = @ICON_X y = 274 } }
+		instantTextBoxType = { name = "nm_ivan"     position = { x = @NAME_X y = 289 } font = "hoi_18mbs" text = "SOV_struggle_rname_ivan"   format = left   maxHeight = 24 maxwidth = 120 }
+		instantTextBoxType = { name = "cl_ivan"     position = { x = @COAL_X y = 289 } font = "hoi_18mbs" text = "SOV_struggle_rcoal_ivan"   format = center maxHeight = 24 maxwidth = 100 }
+		instantTextBoxType = { name = "pp_ivan"     position = { x = @POP_X  y = 289 } font = "hoi_18mbs" text = "SOV_struggle_pop_ivan"     format = center maxHeight = 24 maxwidth = 90 }
+		# 7 Илья
+		iconType           = { name = "ico_ilya"    spriteType = "GFX_MCKSP_party_big_ilya"    position = { x = @ICON_X y = 320 } }
+		instantTextBoxType = { name = "nm_ilya"     position = { x = @NAME_X y = 335 } font = "hoi_18mbs" text = "SOV_struggle_rname_ilya"   format = left   maxHeight = 24 maxwidth = 120 }
+		instantTextBoxType = { name = "cl_ilya"     position = { x = @COAL_X y = 335 } font = "hoi_18mbs" text = "SOV_struggle_rcoal_ilya"   format = center maxHeight = 24 maxwidth = 100 }
+		instantTextBoxType = { name = "pp_ilya"     position = { x = @POP_X  y = 335 } font = "hoi_18mbs" text = "SOV_struggle_pop_ilya"     format = center maxHeight = 24 maxwidth = 90 }
+		# 8 Евгений
+		iconType           = { name = "ico_evgeny"  spriteType = "GFX_MCKSP_party_big_evgeny"  position = { x = @ICON_X y = 366 } }
+		instantTextBoxType = { name = "nm_evgeny"   position = { x = @NAME_X y = 381 } font = "hoi_18mbs" text = "SOV_struggle_rname_evgeny" format = left   maxHeight = 24 maxwidth = 120 }
+		instantTextBoxType = { name = "cl_evgeny"   position = { x = @COAL_X y = 381 } font = "hoi_18mbs" text = "SOV_struggle_rcoal_evgeny" format = center maxHeight = 24 maxwidth = 100 }
+		instantTextBoxType = { name = "pp_evgeny"   position = { x = @POP_X  y = 381 } font = "hoi_18mbs" text = "SOV_struggle_pop_evgeny"   format = center maxHeight = 24 maxwidth = 90 }
+		# 9 Артём
+		iconType           = { name = "ico_artem"   spriteType = "GFX_MCKSP_party_big_artem"   position = { x = @ICON_X y = 412 } }
+		instantTextBoxType = { name = "nm_artem"    position = { x = @NAME_X y = 427 } font = "hoi_18mbs" text = "SOV_struggle_rname_artem"  format = left   maxHeight = 24 maxwidth = 120 }
+		instantTextBoxType = { name = "cl_artem"    position = { x = @COAL_X y = 427 } font = "hoi_18mbs" text = "SOV_struggle_rcoal_artem"  format = center maxHeight = 24 maxwidth = 100 }
+		instantTextBoxType = { name = "pp_artem"    position = { x = @POP_X  y = 427 } font = "hoi_18mbs" text = "SOV_struggle_pop_artem"    format = center maxHeight = 24 maxwidth = 90 }
+		# 10 Ильгам
+		iconType           = { name = "ico_ilgam"   spriteType = "GFX_MCKSP_party_big_ilgam"   position = { x = @ICON_X y = 458 } }
+		instantTextBoxType = { name = "nm_ilgam"    position = { x = @NAME_X y = 473 } font = "hoi_18mbs" text = "SOV_struggle_rname_ilgam"  format = left   maxHeight = 24 maxwidth = 120 }
+		instantTextBoxType = { name = "cl_ilgam"    position = { x = @COAL_X y = 473 } font = "hoi_18mbs" text = "SOV_struggle_rcoal_ilgam"  format = center maxHeight = 24 maxwidth = 100 }
+		instantTextBoxType = { name = "pp_ilgam"    position = { x = @POP_X  y = 473 } font = "hoi_18mbs" text = "SOV_struggle_pop_ilgam"    format = center maxHeight = 24 maxwidth = 90 }
+	}
+}

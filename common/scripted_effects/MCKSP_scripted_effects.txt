@@ -105,6 +105,7 @@ activate_guests_system = {
 	set_variable = { attitude_delta_ilgam = 0 }
 	set_country_flag = SOV_factional_struggle_active
 	MCKSP_recompute_sizes = yes
+	MCKSP_publish_coalition_pops = yes   # засев pp_/coalition_pop с фазы 0 (ростер-окно показывается сразу)
 	MCKSP_sync_phase_flags = yes
 }
 

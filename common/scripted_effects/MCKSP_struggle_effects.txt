@@ -836,6 +836,19 @@ MCKSP_publish_coalition_pops = {
 	set_variable = { coalition_pop_centrists = 0 }
 	set_variable = { coalition_pop_socialists = 0 }
 
+	# pp_<name> — реальная популярность партии гостя (party_popularity@группа, 0..1) для desc фаз 3-4.
+	# Та же популярность, что суммируется в coalition_pop_* ниже (партия / коалиция в тексте desc).
+	set_variable = { pp_nikita = party_popularity@mcksp_social_liberalism }
+	set_variable = { pp_arseny = party_popularity@mcksp_liberal_humanism }
+	set_variable = { pp_demokrit = party_popularity@mcksp_market_socialism }
+	set_variable = { pp_gleb = party_popularity@mcksp_pragmatic_syncretism }
+	set_variable = { pp_stepan = party_popularity@mcksp_christian_democracy }
+	set_variable = { pp_ivan = party_popularity@mcksp_scientific_progressism }
+	set_variable = { pp_ilya = party_popularity@mcksp_statist_technocratism }
+	set_variable = { pp_evgeny = party_popularity@mcksp_national_conservatism }
+	set_variable = { pp_artem = party_popularity@mcksp_democratic_socialism }
+	set_variable = { pp_ilgam = party_popularity@mcksp_placeholder_ilgam }
+
 	if = { limit = { check_variable = { coalition_of_nikita = 1 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_social_liberalism } add_to_variable = { coalition_pop_reformers = mcksp_tmp_pop } }
 	else_if = { limit = { check_variable = { coalition_of_nikita = 2 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_social_liberalism } add_to_variable = { coalition_pop_statists = mcksp_tmp_pop } }
 	else_if = { limit = { check_variable = { coalition_of_nikita = 3 } } set_temp_variable = { mcksp_tmp_pop = party_popularity@mcksp_social_liberalism } add_to_variable = { coalition_pop_centrists = mcksp_tmp_pop } }
@@ -1311,6 +1324,7 @@ MCKSP_struggle_enter_phase1 = {
 	MCKSP_compute_invite_costs = yes
 	MCKSP_recompute_sizes = yes
 	MCKSP_recompute_attitudes = yes
+	MCKSP_publish_coalition_pops = yes	# pp_/coalition_pop для desc-таблицы фазы 1
 	# Запуск таймеров авто-вербовки ИИ: активируем решения 3 коалиций-соперников
 	# (кроме коалиции игрока). Все стартуют одновременно (days_remove = 42) -> ядра
 	# вербуют синхронно, а таймер до следующей вербовки виден всегда (фаза 1).

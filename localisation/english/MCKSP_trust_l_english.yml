@@ -72,7 +72,7 @@
 
  # --- Ideas / national spirit ---
  guests_from_future_weakened_idea: "Guests from the future"
- guests_from_future_weakened_idea_desc: "Our best minds are busy dissecting the technologies handed to the Leader — the research bonus is temporarily halved.\n\n§R-25%§! political power gain\n§R-20%§! stability\n§Y+50%§! research speed"
+ guests_from_future_weakened_idea_desc: "Our best minds are busy dissecting the technologies handed to the Leader - the research bonus is temporarily halved.\n\n§R-25%§! political power gain\n§R-20%§! stability\n§Y+50%§! research speed"
 
  mcksp_secret_agitation_idea: "Secret Party Agitation"
  mcksp_secret_agitation_idea_desc: "Underground agitators recruit supporters for the guest parties day after day.\n\n§Y+20 pp total§! popularity to the guest bloc over 140 days\n§R-5%§! political power gain"
@@ -104,7 +104,7 @@
  SOV_scapegoat_pick_ilgam_desc: "Brand this guest an enemy of the people and begin preparing the arrest. Picking one victim closes the others."
 
  scapegoat_event.2.t: "Preparing the Arrest"
- scapegoat_event.2.d: "The NKVD is ready to move. The papers are signed, the route mapped. All that remains is to give the order — or back off while there is still time."
+ scapegoat_event.2.d: "The NKVD is ready to move. The papers are signed, the route mapped. All that remains is to give the order - or back off while there is still time."
  scapegoat_event.2.order: "Give the order"
  scapegoat_event.2.order_tt: "§RThis will lead to unpredictable consequences...§!"
  scapegoat_event.2.cancel: "Call off the operation"

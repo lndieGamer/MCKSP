@@ -62,7 +62,7 @@ on_actions = {
 			# Фаза 2: пуш ИИ гонят таймеры решений SOV_struggle_rival_push_* (как в фазе 1),
 			# еженедельный тик не нужен.
 			if = {
-				limit = { has_country_flag = guests_active check_variable = { mcksp_struggle_phase > 1 } }
+				limit = { has_country_flag = guests_active check_variable = { mcksp_struggle_phase > 0 } }
 				MCKSP_publish_coalition_pops = yes
 			}
 		}

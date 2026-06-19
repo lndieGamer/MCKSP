@@ -62,6 +62,20 @@ spriteTypes = {
 	spriteType = { name = "GFX_MCKSP_ideo_sym_artem"    texturefile = "gfx/interface/MCKSP/compass/ideo_sym_artem.dds" }
 	spriteType = { name = "GFX_MCKSP_ideo_sym_ilgam"    texturefile = "gfx/interface/MCKSP/compass/ideo_sym_ilgam.dds" }
 
+	# Крупные иконки партий для ростер-окна борьбы (scripted_gui mcksp_struggle_roster_window).
+	# Размер как ванильные decision_faction_bul_* (~48x48). Рисует пользователь:
+	# gfx/interface/MCKSP/compass/party_big_<g>.dds. Отдельны от ideo_sym (те 24x24 для текста/тултипов).
+	spriteType = { name = "GFX_MCKSP_party_big_nikita"   texturefile = "gfx/interface/MCKSP/compass/party_big_nikita.dds" }
+	spriteType = { name = "GFX_MCKSP_party_big_arseny"   texturefile = "gfx/interface/MCKSP/compass/party_big_arseny.dds" }
+	spriteType = { name = "GFX_MCKSP_party_big_demokrit" texturefile = "gfx/interface/MCKSP/compass/party_big_demokrit.dds" }
+	spriteType = { name = "GFX_MCKSP_party_big_gleb"     texturefile = "gfx/interface/MCKSP/compass/party_big_gleb.dds" }
+	spriteType = { name = "GFX_MCKSP_party_big_stepan"   texturefile = "gfx/interface/MCKSP/compass/party_big_stepan.dds" }
+	spriteType = { name = "GFX_MCKSP_party_big_ivan"     texturefile = "gfx/interface/MCKSP/compass/party_big_ivan.dds" }
+	spriteType = { name = "GFX_MCKSP_party_big_ilya"     texturefile = "gfx/interface/MCKSP/compass/party_big_ilya.dds" }
+	spriteType = { name = "GFX_MCKSP_party_big_evgeny"   texturefile = "gfx/interface/MCKSP/compass/party_big_evgeny.dds" }
+	spriteType = { name = "GFX_MCKSP_party_big_artem"    texturefile = "gfx/interface/MCKSP/compass/party_big_artem.dds" }
+	spriteType = { name = "GFX_MCKSP_party_big_ilgam"    texturefile = "gfx/interface/MCKSP/compass/party_big_ilgam.dds" }
+
 	# Шапка окна компаса под ширину 602.
 	spriteType = {
 		name = "GFX_MCKSP_compass_header_bg"

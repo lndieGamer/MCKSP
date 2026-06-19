@@ -28,6 +28,10 @@ SOV_MCKSP_struggle_cat = {
 	}
 	# Видна во ВСЕХ фазах (0..4) — единая вкладка; баннер фазы 0 и решения фаз 1+ гейтятся
 	# каждое своей фазой. (Раньше фаза 0 жила в отдельной intro_cat = вторая вкладка.)
+	# Окно-ростер (таблица icon|имя|коалиция|влияние) рисуется поверх панели категории —
+	# scripted_gui mcksp_struggle_roster_ui (common/scripted_guis/MCKSP_struggle_roster_scripted_gui.txt),
+	# образец — ванильный BUL_internal_factions. Колонки выровнены абсолютными позициями.
+	scripted_gui = mcksp_struggle_roster_ui
 	visible = {
 		has_country_flag = SOV_factional_struggle_active
 	}
