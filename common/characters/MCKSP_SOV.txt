@@ -135,7 +135,7 @@ characters = {
 		}
 	}
 
-	# ПФ — Партия Фагаманова (Хустисиализм)
+	# Ак Тулпар — партия Ильгама (Хустисиализм)
 	SOV_ilgam_fagamanov = {
 		name = SOV_ilgam_fagamanov
 		portraits = {
